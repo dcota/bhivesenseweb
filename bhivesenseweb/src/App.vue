@@ -1,26 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <section>
+<!--<Header />-->
+  <!--<Nav />-->
+  <Sidebar />
+  <Loader v-if="showLoader"></Loader>
+  <section id="content"><router-view></router-view></section>
+  <!--<Footer />-->
+  </section>
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Nav from "./components/Nav.vue";
+import Sidebar from "./components/Sidebar.vue"
+//import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import Loader from "./components/Loader.vue";
+import { mapState } from "vuex";
+import { AUTO_LOGIN_ACTION } from "./store/storeconstants";
 export default {
-  name: 'App',
+  name: "App",
+  computed: {
+    ...mapState({
+      showLoader: (state) => state.showLoader,
+      autoLogout: (state) => state.auth.autoLogout,
+    }),
+  }, 
+  watch: {
+    autoLogout(curValue, oldValue) {
+      if (curValue && curValue != oldValue) {
+        this.$router.replace("/Login");
+      }
+    },
+  },
   components: {
-    HelloWorld
-  }
-}
+    //Header,
+    Sidebar,
+    Nav,
+    Loader,
+    //Footer,
+  },
+  created() {
+    this.$store.dispatch(`auth/${AUTO_LOGIN_ACTION}`);
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
