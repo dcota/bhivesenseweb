@@ -5,7 +5,7 @@ Description: implementation of the navbar
 */
 
 <template>
-  <nav class="navbar navbar-expand-lg fixed-top">
+  <nav class="navbar navbar-expand-lg fixed-top  bg-light">
     <section class="container-fluid">
       <a class="navbar-brand" href="#"></a>
       <button

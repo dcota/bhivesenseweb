@@ -1,6 +1,6 @@
 <template>
   <section>
-<!--<Header />-->
+<Header />
   <!--<Nav />-->
   <Sidebar />
   <Loader v-if="showLoader"></Loader>
@@ -38,7 +38,7 @@ export default {
     Sidebar,
     Nav,
     Loader,
-    //Footer,
+    Footer,
   },
   created() {
     this.$store.dispatch(`auth/${AUTO_LOGIN_ACTION}`);

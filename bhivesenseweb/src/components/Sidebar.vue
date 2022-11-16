@@ -64,12 +64,9 @@
             </ul>
           </div>
         </li>
-
-
       </ul>
 
-      <hr>
-      <div class="dropdown">
+      <div class="dropdown mb-3">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
           data-bs-toggle="dropdown" aria-expanded="false">
           <img src="../assets/cota.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
@@ -89,17 +86,17 @@
     </div>
 
     <div class="b-example-vr" style="width:0px!important"></div>
-    <div>
-
-    </div>
 
     <div class="container-fluid d-flex justify-content-center overflow-auto"
       style="background-color:#ebc002;height:100vh;">
-      <!--<div class="container justify-content-center">
+
+      
+
+      <div class="container justify-content-center">
         <div class="row mt-5">
           <div class="col-12 col-md-6 col-lg-3">
             <div class="card mb-5 mh-100" style="border-radius: 35px;">
-              <img src="IMG_1220.PNG" class="card-img-top" alt="..."
+              <img src="../assets/IMG1220.png" class="card-img-top" alt="..."
                 style="width: 50%;display: block;margin-right: auto;margin-left: auto;">
               <hr>
               <div class="card-body">
@@ -115,7 +112,7 @@
 
           <div class="col-12 col-md-6 col-lg-3">
             <div class="card mb-5 mh-100" style="border-radius: 35px;">
-              <img src="IMG_1220.PNG" class="card-img-top" alt="..."
+              <img src="../assets/IMG1220.png" class="card-img-top" alt="..."
                 style="width: 50%;display: block;margin-right: auto;margin-left: auto;">
               <hr>
               <div class="card-body">
@@ -130,7 +127,7 @@
           </div>
           <div class="col-12 col-md-6 col-lg-3">
             <div class="card mb-5 mh-100" style="border-radius: 35px;">
-              <img src="IMG_1220.PNG" class="card-img-top" alt="..."
+              <img src="../assets/IMG1220.png" class="card-img-top" alt="..."
                 style="width: 50%;display: block;margin-right: auto;margin-left: auto;">
               <hr>
               <div class="card-body">
@@ -145,7 +142,7 @@
           </div>
           <div class="col-12 col-md-6 col-lg-3">
             <div class="card mb-5 mh-100" style="border-radius: 35px;">
-              <img src="IMG_1220.PNG" class="card-img-top" alt="..."
+              <img src="../assets/IMG1220.png" class="card-img-top" alt="..."
                 style="width: 50%;display: block;margin-right: auto;margin-left: auto;">
               <hr>
               <div class="card-body">
@@ -162,13 +159,70 @@
         </div>
 
 
-    </div>-->
     </div>
 
+    <div class="row text-center" style="position: fixed; bottom:0px">
+        <div class="col-12 social-media footer">
+          <ul>
+          <li>
+            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fa fa-linkedin-square" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+        <p><strong>© Copyright 2022 BHiveSense - todos os direitos reservados</strong></p>
+        </div>
+</div>
+
+    </div>
   </main>
 </template>
 
 <style scoped>
+.footer a {
+  color:rgb(44, 43, 43);
+}
+.footer a:hover {
+  opacity: 0.5;
+}
+.footer p {
+  color:rgb(44, 43, 43);
+}
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+.footer li {
+  display: inline;
+  padding-right: 0.5em;
+}
+ul.social-media {
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .footer {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .footer li {
+    font-size: 2em;
+  }
+}
+
 .bd-placeholder-img {
       font-size: 1.125rem;
       text-anchor: middle;
