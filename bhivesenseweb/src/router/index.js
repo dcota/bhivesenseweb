@@ -13,9 +13,36 @@ import Notif from '../views/Notif.vue'
 import store from '../store/store'
 import News from '../views/News.vue'
 import Conta from '../views/Conta.vue'
+import Dashboard from '../views/Dashboard'
 import { IS_USER_AUTHENTICATED_GETTER } from '../store/storeconstants'
 
 const routes = [{
+    path: '',
+    component: Dashboard,
+    children: [{
+            path: '',
+            component: () =>
+                import ( /* webpackChunkName: "Overview" */ '../views/Home.vue')
+        },
+        {
+            path: 'messages',
+            component: () =>
+                import ( /* webpackChunkName: "Overview" */ '../views/Login.vue')
+        },
+        {
+            path: 'profile',
+            component: () =>
+                import ( /* webpackChunkName: "Overview" */ '../views/Home.vue')
+        },
+        {
+            path: 'settings',
+            component: () =>
+                import ( /* webpackChunkName: "Overview" */ '../views/Home.vue')
+        }
+    ]
+}]
+
+/*const routes = [{
         path: '/',
         name: 'Home',
         component: Home,
@@ -57,7 +84,7 @@ const routes = [{
         component: Conta,
         meta: { auth: true }
     }
-]
+]*/
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),

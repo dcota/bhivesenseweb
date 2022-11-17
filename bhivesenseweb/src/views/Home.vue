@@ -5,25 +5,26 @@ Description: implementation of the view Home
 */
 
 <template>
-  <section class="container-fluid my-body">
-    <img class="my-img" src="../assets/img.png" alt="image" />
-    <h3>robótica && programação para todos</h3>
+  <section class="jumbotron d-flex align-items-center min-vh-100 ">
+    <section class="text-center">
+      <img class="my-img" src="../assets/IMG1224.png" alt="image" />
+    </section>
+    
   </section>
 </template>
 
 <style scoped>
 .my-body {
-  background-color: white !important;
-  text-align: center;
-  padding-block: 100px;
+  display: flex;
+  align-items: center;
 }
 
 .my-img {
-  max-width: 100%;
+  max-width: 50%;
   height: auto;
-  margin-left: auto;
-  margin-right: auto;
+
 }
+
 
 h3 {
   color: #c55a11 !important;
