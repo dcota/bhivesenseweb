@@ -1,8 +1,8 @@
 <template>
   <main class="d-flex flex-nowrap">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 300px"> 
       <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <img width="auto" height="100" src="../assets/IMG1223.png">
+          <img width="auto" height="100" :src="logo"/> 
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
@@ -13,7 +13,8 @@
           </button>
           <div class="collapse" id="apiaries-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-              <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">All apiaries</a></li>
+              <!--<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">All apiaries</a></li>-->
+              <li ><router-link to="/messages" class="link-dark d-inline-flex text-decoration-none rounded" style="text-decoration: none;">Inscrições</router-link></li>
               <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Create apiary</a></li>
               <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Register hive in apiary</a>
               </li>
@@ -89,138 +90,57 @@
 
     <div class="container-fluid d-flex justify-content-center overflow-auto"
       style="background-color:#ebc002;height:100vh;">
-
-      
-
-      <div class="container justify-content-center">
-        <div class="row mt-5">
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="card mb-5 mh-100" style="border-radius: 35px;">
-              <img src="../assets/IMG1220.png" class="card-img-top" alt="..."
-                style="width: 50%;display: block;margin-right: auto;margin-left: auto;">
-              <hr>
-              <div class="card-body">
-                <h5 class="card-title text-center">Apiary</h5>
-                <p class="card-text text-center">Furnas</p>
-                <div class="text-center">
-                  <a href="#" class="btn text-center bn "><strong>Get
-                      inside</strong></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="card mb-5 mh-100" style="border-radius: 35px;">
-              <img src="../assets/IMG1220.png" class="card-img-top" alt="..."
-                style="width: 50%;display: block;margin-right: auto;margin-left: auto;">
-              <hr>
-              <div class="card-body">
-                <h5 class="card-title text-center">Apiary</h5>
-                <p class="card-text text-center">Furnas</p>
-                <div class="text-center">
-                  <a href="#" class="btn text-center bn "><strong>Get
-                      inside</strong></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="card mb-5 mh-100" style="border-radius: 35px;">
-              <img src="../assets/IMG1220.png" class="card-img-top" alt="..."
-                style="width: 50%;display: block;margin-right: auto;margin-left: auto;">
-              <hr>
-              <div class="card-body">
-                <h5 class="card-title text-center">Apiary</h5>
-                <p class="card-text text-center">Furnas</p>
-                <div class="text-center">
-                  <a href="#" class="btn text-center bn "><strong>Get
-                      inside</strong></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="card mb-5 mh-100" style="border-radius: 35px;">
-              <img src="../assets/IMG1220.png" class="card-img-top" alt="..."
-                style="width: 50%;display: block;margin-right: auto;margin-left: auto;">
-              <hr>
-              <div class="card-body">
-                <h5 class="card-title text-center">Apiary</h5>
-                <p class="card-text text-center">Furnas</p>
-                <div class="text-center">
-                  <a href="#" class="btn text-center bn"><strong>Get
-                      inside</strong></a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-
-    </div>
-
-    <div class="row text-center" style="position: fixed; bottom:0px">
-        <div class="col-12 social-media footer">
-          <ul>
-          <li>
-            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-          </li>
-          <li>
-            <a href="#"
-              ><i class="fa fa-linkedin-square" aria-hidden="true"></i
-            ></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-          </li>
-          <li>
-            <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-          </li>
-        </ul>
-        <p><strong>© Copyright 2022 BHiveSense - todos os direitos reservados</strong></p>
-        </div>
-</div>
-
     </div>
   </main>
 </template>
 
 <style scoped>
-.footer a {
-  color:rgb(44, 43, 43);
+.dropdown-toggle {
+    outline: 0;
 }
-.footer a:hover {
-  opacity: 0.5;
+
+.btn-toggle {
+    padding: .25rem .5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .65);
+    background-color: transparent;
 }
-.footer p {
-  color:rgb(44, 43, 43);
+
+.btn-toggle:hover,
+.btn-toggle:focus {
+    color: rgba(0, 0, 0, .85);
+    background-color: #ebc002;
 }
-.footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: visible;
+
+.btn-toggle::before {
+    width: 1.25em;
+    line-height: 0;
+    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+    transition: transform .35s ease;
+    transform-origin: .5em 50%;
 }
-.footer li {
-  display: inline;
-  padding-right: 0.5em;
+
+.btn-toggle[aria-expanded="true"] {
+    color: rgba(0, 0, 0, .85);
 }
-ul.social-media {
-  padding: 0;
+
+.btn-toggle[aria-expanded="true"]::before {
+    transform: rotate(90deg);
 }
-@media (min-width: 768px) {
-  .footer {
-    flex-direction: row;
-    justify-content: center;
-  }
-  .footer li {
-    font-size: 2em;
-  }
+
+.btn-toggle-nav a {
+    padding: .1875rem .5rem;
+    margin-top: .125rem;
+    margin-left: 1.25rem;
+}
+
+.btn-toggle-nav a:hover,
+.btn-toggle-nav a:focus {
+    background-color: #d2f4ea;
+}
+
+.scrollarea {
+    overflow-y: auto;
 }
 
 .bd-placeholder-img {
@@ -285,7 +205,15 @@ ul.social-media {
 
 <script>
 
+export default {
+name: 'Header',
+data: function() {
+return {
+logo: require('../assets/IMG1223.png')
+}
+}
 
+}
 </script>
 
 
