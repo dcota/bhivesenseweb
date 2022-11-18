@@ -6,28 +6,15 @@ Description: implementation of the view Login
 
 <template>
   <section class="container">
-    <section class="wrapper">
-      <form class="form-signin" v-on:submit.prevent="login">
+    <section class="jumbotron d-flex align-items-center min-vh-100 ">
+      <form class="form-signin" v-on:submit.prevent="login" style="border-radius: 30px ;">
         <section class="alert alert-danger" v-if="error">{{ error }}</section>
         <h2 class="form-signin-heading">Login</h2>
-        <input
-          type="text"
-          v-model="form.username"
-          class="form-control mt-4"
-          id="username"
-          placeholder="username"
-          required=""
-          autofocus=""
-        />
-        <input
-          type="password"
-          v-model="form.password"
-          class="form-control mt-4"
-          id="password"
-          placeholder="password"
-          required=""
-        />
-        <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">
+        <input type="text" v-model="form.username" class="form-control mt-4" id="username" placeholder="username"
+          required="" autofocus="" />
+        <input type="password" v-model="form.password" class="form-control mt-4" id="password" placeholder="password"
+          required="" />
+        <button class="btn btn-lg btn-primary btn-block mt-4 bn" type="submit">
           Submeter
         </button>
       </form>
@@ -36,9 +23,14 @@ Description: implementation of the view Login
 </template>
 
 <style scoped>
-.wrapper {
-  margin-top: 80px;
-  margin-bottom: 80px;
+.bn {
+  background-color: #ebc002;
+  border-color: #ebc002
+}
+
+.bn:hover {
+  background-color: #947902;
+  border-color: #947902;
 }
 
 .form-signin {
