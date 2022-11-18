@@ -1,8 +1,9 @@
 <template>
   <main class="d-flex flex-nowrap">
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px">
-      <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <img :src="logo" />
+      <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+        <!--<img :src="logo" />-->
+        <router-link to="/"><img :src="logo" alt="" /></router-link>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
