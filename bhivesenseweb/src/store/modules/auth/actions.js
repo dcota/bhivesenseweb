@@ -68,7 +68,7 @@ export default {
 
         if (response.data.http === 200) {
             let expirationTime = +response.data.body.expiresIn * 1000
-                //let expirationTime = 5000
+            //let expirationTime = 5000
             timer = setTimeout(() => {
                 context.dispatch(AUTO_LOGOUT_ACTION)
             }, expirationTime)
@@ -77,6 +77,7 @@ export default {
                 firstname: response.data.body.firstname,
                 lastname: response.data.body.lastname,
                 level: response.data.body.level,
+                img: response.data.body.img,
                 expiresIn: expirationTime,
                 token: response.headers.authorization
             }

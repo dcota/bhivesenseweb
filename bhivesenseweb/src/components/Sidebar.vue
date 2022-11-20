@@ -2,12 +2,11 @@
   <main class="d-flex flex-nowrap">
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px">
       <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <!--<img :src="logo" />-->
         <router-link to="/"><img :src="logo" alt="" /></router-link>
       </a>
-      <hr>
+      <hr v-if="isAuthenticated">
       <ul class="nav nav-pills flex-column mb-auto">
-        <li class="mb-1">
+        <li class="mb-1" v-if="isAuthenticated">
           <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse" data-bs-target="#apiaries-collapse" aria-expanded="false">
             Apiaries
@@ -16,7 +15,7 @@
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <!--<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">All apiaries</a></li>-->
               <li>
-                <router-link to="/messages" class="link-dark d-inline-flex text-decoration-none rounded"
+                <router-link to="/login" class="link-dark d-inline-flex text-decoration-none rounded"
                   style="text-decoration: none;">Inscrições</router-link>
               </li>
               <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Create apiary</a></li>
@@ -28,7 +27,7 @@
             </ul>
           </div>
         </li>
-        <li class="mb-1">
+        <li class="mb-1" v-if="isAuthenticated">
           <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse" data-bs-target="#hives-collapse" aria-expanded="false">
             Hives
@@ -40,7 +39,7 @@
             </ul>
           </div>
         </li>
-        <li class="mb-1">
+        <li class="mb-1" v-if="isAuthenticated">
           <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
             Dashboard
@@ -55,36 +54,42 @@
         </li>
 
         <li class="border-top my-3"></li>
-        <li class="mb-1">
+        <li class="mb-1" v-if="!isAuthenticated">
           <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
             Account
           </button>
           <div class="collapse" id="account-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-              <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New...</a></li>
-              <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Profile</a></li>
-              <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Settings</a></li>
-              <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">Sign out</a></li>
+              <li>
+                <router-link to="/login" class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none;">Login</router-link>
+              </li>
+
+              <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New account</a></li>
             </ul>
           </div>
         </li>
       </ul>
 
-      <div class="dropdown mb-3">
+      <div class="dropdown-toogle mb-3" v-if="isAuthenticated">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
           data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="../assets/cota.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong>Duarte Cota</strong>
+          <img :src="img" alt="" width="32" height="32" class="rounded-circle me-2">
+          <strong>{{ name }}</strong>
         </a>
         <ul class="dropdown-menu text-small shadow">
-          <li><a class="dropdown-item" href="#">New project...</a></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
           <li><a class="dropdown-item" href="#">Profile</a></li>
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
+          <!--<li>
+            <a class="dropdown-item" href="#">Sign out</a></li>-->
+
+          <li>
+            <router-link to="" class="dropdown-item" style="text-decoration: none;" @click.prevent="logout()">Logout
+            </router-link>
+          </li>
         </ul>
       </div>
 
@@ -93,7 +98,7 @@
     <div class="b-example-vr" style="width:0px!important"></div>
 
     <div class="container-fluid d-flex justify-content-center overflow-auto"
-      style="background-color:#ebc002;height:100vh;">
+      style="background-color:#ebc002; height:100vh;">
     </div>
   </main>
 </template>
@@ -209,15 +214,47 @@
 
 <script>
 
+/*export default {
+  name: 'Header',
+  data: function () {
+    return {
+      logo: require('../assets/logo.png')
+    }
+  },*/
+import { mapActions, mapGetters } from "vuex";
+import {
+  IS_USER_AUTHENTICATED_GETTER,
+  LOGOUT_ACTION,
+  GET_USER_LEVEL_GETTER,
+  GET_USER_NAME_GETTER,
+  GET_USER_AVATAR_GETTER
+} from "../store/storeconstants";
 export default {
   name: 'Header',
   data: function () {
     return {
       logo: require('../assets/logo.png')
     }
-  }
+  },
+  computed: {
+    ...mapGetters("auth", {
+      isAuthenticated: IS_USER_AUTHENTICATED_GETTER,
+      level: GET_USER_LEVEL_GETTER,
+      name: GET_USER_NAME_GETTER,
+      img: GET_USER_AVATAR_GETTER
+    }),
+  },
+  methods: {
+    ...mapActions("auth", {
+      _logout: LOGOUT_ACTION,
+    }),
+    logout() {
+      this._logout();
+      this.$router.replace("/");
+    },
+  },
+};
 
-}
 </script>
 
 

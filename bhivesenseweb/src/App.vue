@@ -6,8 +6,11 @@
   <Loader v-if="showLoader"></Loader>
   <section id="content"><router-view></router-view></section>
   </section>-->
-  <div id="app"><router-view></router-view></div>
-  
+  <Loader v-if="showLoader"></Loader>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+
 </template>
 
 <script>
@@ -25,7 +28,7 @@ export default {
       showLoader: (state) => state.showLoader,
       autoLogout: (state) => state.auth.autoLogout,
     }),
-  }, 
+  },
   watch: {
     autoLogout(curValue, oldValue) {
       if (curValue && curValue != oldValue) {

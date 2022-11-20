@@ -9,7 +9,8 @@ import {
     IS_USER_AUTHENTICATED_GETTER,
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
-    GET_USER_NAME_GETTER
+    GET_USER_NAME_GETTER,
+    GET_USER_AVATAR_GETTER,
 } from "../../storeconstants";
 
 export default {
@@ -29,5 +30,9 @@ export default {
     [GET_USER_NAME_GETTER]: state => {
         let name = state.firstname + ' ' + state.lastname
         return name
+    },
+    [GET_USER_AVATAR_GETTER]: state => {
+        console.log(state.img)
+        return state.img
     }
 }

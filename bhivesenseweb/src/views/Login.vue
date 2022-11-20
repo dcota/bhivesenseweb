@@ -15,7 +15,7 @@ Description: implementation of the view Login
         <input type="password" v-model="form.password" class="form-control mt-4" id="password" placeholder="password"
           required="" />
         <button class="btn btn-lg btn-primary btn-block mt-4 bn" type="submit">
-          Submeter
+          Submit
         </button>
       </form>
     </section>
@@ -85,7 +85,7 @@ export default {
       });
       if (response) {
         this.showLoader(false);
-        if (this.level == "admin") this.$router.replace("/Admin");
+        if (this.level == "admin") this.$router.replace("/");
         else if (this.level == "beekeeper") this.$router.replace("/");
       } else {
         this.error = "Username ou password incorreta!";

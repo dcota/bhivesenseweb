@@ -1,8 +1,8 @@
 <template>
     <div class="dashboard">
-        <Sidebar/>
+        <Sidebar />
         <div class="content text-center">
-            <router-view/>
+            <router-view />
         </div>
     </div>
 </template>
@@ -17,7 +17,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .dashboard {
     display: grid;
     grid-template-columns: 300px auto;

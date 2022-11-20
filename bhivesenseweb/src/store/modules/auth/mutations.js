@@ -13,6 +13,7 @@ export default {
         state.lastname = payload.lastname
         state.level = payload.level
         state.token = payload.token
+        state.img = payload.img
         state.autoLogout = false
     },
 

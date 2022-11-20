@@ -20,25 +20,25 @@ const routes = [{
     path: '',
     component: Dashboard,
     children: [{
-            path: '',
-            component: () =>
-                import ( /* webpackChunkName: "Overview" */ '../views/Home.vue')
-        },
-        {
-            path: 'messages',
-            component: () =>
-                import ( /* webpackChunkName: "Overview" */ '../views/Login.vue')
-        },
-        {
-            path: 'profile',
-            component: () =>
-                import ( /* webpackChunkName: "Overview" */ '../views/Home.vue')
-        },
-        {
-            path: 'settings',
-            component: () =>
-                import ( /* webpackChunkName: "Overview" */ '../views/Home.vue')
-        }
+        path: '',
+        component: () =>
+            import( /* webpackChunkName: "Overview" */ '../views/Home.vue')
+    },
+    {
+        path: 'login',
+        component: () =>
+            import( /* webpackChunkName: "Overview" */ '../views/Login.vue')
+    },
+    {
+        path: 'profile',
+        component: () =>
+            import( /* webpackChunkName: "Overview" */ '../views/Home.vue')
+    },
+    {
+        path: 'settings',
+        component: () =>
+            import( /* webpackChunkName: "Overview" */ '../views/Home.vue')
+    }
     ]
 }]
 
