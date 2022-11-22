@@ -1,6 +1,9 @@
 <template>
     <div class="dashboard">
-        <Sidebar />
+        <div class="sb">
+            <Sidebar />
+        </div>
+        
         <div class="content text-center">
             <router-view />
         </div>
@@ -28,4 +31,5 @@ export default {
 .content {
     background-color: #ebc002;
 }
+
 </style>

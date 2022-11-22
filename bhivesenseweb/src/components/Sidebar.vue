@@ -1,9 +1,15 @@
 <template>
   <main class="d-flex flex-nowrap">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px">
-      <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+    <div class="d-flex flex-column flex-shrink-0 p-3 " style="width: 280px">
+      <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" >
         <router-link to="/"><img :src="logo" alt="" /></router-link>
       </a>
+      <section class="d-flex justify-content-center">
+        <select class="form-select mt-2" name="lang" v-model="lang" @change="handleChange($event)" aria-label="Default select example" style="width:70px">
+        <option value="en">en</option>
+        <option value="pt">pt</option>
+      </select>
+      </section>
       <hr v-if="isAuthenticated">
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="mb-1" v-if="isAuthenticated">
@@ -57,16 +63,18 @@
         <li class="mb-1" v-if="!isAuthenticated">
           <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-            Account
+            {{translate("sbarAccLabel")}}
           </button>
           <div class="collapse" id="account-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
                 <router-link to="/login" class="link-dark d-inline-flex text-decoration-none rounded"
-                  style="text-decoration: none;">Login</router-link>
+                  style="text-decoration: none;">{{translate('sbarAccLogin')}}</router-link>
               </li>
-
-              <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">New account</a></li>
+              <li>
+                <router-link to="/newaccount" class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none;">{{translate('sbarAccNew')}}</router-link>
+              </li>
             </ul>
           </div>
         </li>
@@ -75,7 +83,7 @@
       <div class="dropdown-toogle mb-3" v-if="isAuthenticated">
         <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
           data-bs-toggle="dropdown" aria-expanded="false">
-          <img :src="img" alt="" width="32" height="32" class="rounded-circle me-2">
+          <img :src="img" alt="" width="55" height="55" class="rounded-circle me-2">
           <strong>{{ name }}</strong>
         </a>
         <ul class="dropdown-menu text-small shadow">
@@ -213,14 +221,8 @@
 </style >
 
 <script>
-
-/*export default {
-  name: 'Header',
-  data: function () {
-    return {
-      logo: require('../assets/logo.png')
-    }
-  },*/
+import en from '../assets/en.js'
+import pt from '../assets/pt.js'
 import { mapActions, mapGetters } from "vuex";
 import {
   IS_USER_AUTHENTICATED_GETTER,
@@ -231,9 +233,12 @@ import {
 } from "../store/storeconstants";
 export default {
   name: 'Header',
+  mixins: [en,pt],
   data: function () {
+    const lang = localStorage.getItem('lang')||'en';
     return {
-      logo: require('../assets/logo.png')
+      logo: require('../assets/logo.png'),
+      lang: lang
     }
   },
   computed: {
@@ -252,9 +257,15 @@ export default {
       this._logout();
       this.$router.replace("/");
     },
+    handleChange(event) {
+      localStorage.setItem('lang',event.target.value),
+      window.location.reload()
+    },
+    translate(prop) {
+      return this[this.lang][prop]
+    }
   },
 };
-
 </script>
 
 

@@ -5,9 +5,9 @@ Description: implementation of the view Ficha de Inscrição
 */
 
 <template>
-  <section class="scrolling-component" ref="scrollcomponent">
+  <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
-      <h1 class="text-center mt-5">FICHA DE INSCRIÇÃO</h1>
+      <h1 class="text-center mt-5">{{translate("newAccFormTitle")}}</h1>
       <section v-if=isShow
         class="alert mt-3"
         role="alert"
@@ -181,12 +181,16 @@ select option[disabled]:first-child {
 </style>
 
 <script>
+import en from '../assets/en.js'
+import pt from '../assets/pt.js'
 import axios from "axios";
 import { mapMutations } from "vuex";
 import { LOADING_SPINNER_SHOW_MUTATION } from "../store/storeconstants";
 export default {
   name: "submit",
+  mixins: [en,pt],
   data() {
+    const lang = localStorage.getItem('lang')||'en';
     return {
       form: {
         firstname: "",
@@ -207,7 +211,8 @@ export default {
         type: "",
         msg: "",
       },
-      isShow:false
+      isShow:false,
+      lang: lang
     };
   },
   methods: {
@@ -301,6 +306,9 @@ export default {
         return true;
       else return false;
     },
+    translate(prop) {
+      return this[this.lang][prop]
+    }
   },
 };
 </script>

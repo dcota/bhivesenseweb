@@ -1,15 +1,17 @@
 <template>
-  <!--<section>
+  <section>
   <Header />
   <Nav />
   <Sidebar />
   <Loader v-if="showLoader"></Loader>
   <section id="content"><router-view></router-view></section>
-  </section>-->
-  <Loader v-if="showLoader"></Loader>
+  </section>
+  <!--
+<Loader v-if="showLoader"></Loader>
   <div id="app">
     <router-view></router-view>
   </div>
+  -->
 
 </template>
 
