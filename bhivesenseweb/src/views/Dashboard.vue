@@ -4,7 +4,7 @@
             <Sidebar />
         </div>
         
-        <div class="content text-center">
+        <div class="content">
             <router-view />
         </div>
     </div>

@@ -18,100 +18,111 @@ Description: implementation of the view Ficha de Inscrição
       <form class="form-signin" v-on:submit.prevent="send">
         <section class="row mt-4">
           <section class="col-md-2 g-4">
+            <label for="firstname" class="form-label">{{translate('newAccFnamePh')}}</label>
             <input
               type="text"
               v-model="form.firstname"
               class="form-control"
               id="firstname"
-              placeholder="primeiro nome..."
+              style="font-size: small"
             />
           </section>
           <section class="col-md-2 g-4">
+            <label for="lastname" class="form-label">{{translate('newAccLnamePh')}}</label>
             <input
               type="text"
               v-model="form.lastname"
               class="form-control"
               id="lastname"
-              placeholder="último nome..."
+              style="font-size: small"
             />
           </section>
           <section class="col-md-8 g-4">
+            <label for="lastname" class="form-label">{{translate('newAccNamePh')}}</label>
             <input
               type="text"
               v-model="form.name"
               class="form-control"
               id="name"
               placeholder="nome completo..."
+              style="font-size: small"
             />
           </section>
         </section>
         <section class="row">
-          <section class="col-md-8 g-4">
+          <section class="col-md-4 g-4">
+            <label for="type" class="form-label">{{translate('selectLbl')}}</label>
+            <select class="form-select" 
+              aria-label="Default select example"
+              style="font-size: small">
+              <option value="1">{{translate('typeOp1')}}</option>
+              <option value="2">{{translate('typeOp2')}}</option>
+              <option value="3">{{translate('typeOp3')}}</option>
+            </select>
+          </section>
+          <section class="col-md-4 g-4">
+            <label for="nif" class="form-label">{{translate('newAccNifPh')}}</label>
             <input
               type="text"
-              v-model="form.course"
+              v-model="form.nif"
               class="form-control"
               id="course"
-              placeholder="curso..."
+              style="font-size: small"
             />
           </section>
           <section class="col-md-4 g-4">
-            <input
-              type="text"
-              v-model="form.class"
-              class="form-control"
-              id="class"
-              placeholder="turma..."
-            />
-          </section>
-        </section>
-        <section class="row">
-          <section class="col-md-4 g-4">
+            <label for="nif" class="form-label">{{translate('newAccEmailPh')}}</label>
             <input
               type="text"
               v-model="form.email"
               class="form-control"
               id="email"
-              placeholder="email..."
+              style="font-size: small"
             />
           </section>
-          <section class="col-md-4 g-4">
+        </section>
+        <section class="row">
+          <section class="col-md-6 g-4">
+            <label for="nif" class="form-label">{{translate('newAccMobilePh')}}</label>
             <input
               type="text"
               v-model="form.mobile"
               class="form-control"
               id="mobile"
-              placeholder="telemóvel..."
+              style="font-size: small"
             />
           </section>
-          <section class="col-md-4 g-4">
+          <section class="col-md-6 g-4">
+            <label for="nif" class="form-label">{{translate('newAccBdatePh')}}</label>
             <input
-              placeholder="Data de nascimento"
               class="form-control textbox-n"
               type="text"
               v-model="form.bdate"
               onfocus="(this.type = 'date')"
               id="bdate"
+              style="font-size: small"
             />
           </section>
         </section>
         <section class="row">
-          <section class="col-md-4 g-4">
+          <section class="col-md-6 g-4">
+            <label for="nif" class="form-label">{{translate('newAccUserPh')}}</label>
             <input
               type="text"
               v-model="form.auth.username"
               class="form-control"
               id="username"
-              placeholder="username..."
+              style="font-size: small"
             />
           </section>
-          <section class="col-md-4 g-4">
+          <section class="col-md-6 g-4">
+            <label for="nif" class="form-label">{{translate('newAccPassPh')}}</label>
             <input
               type="password"
               v-model="form.auth.password"
               class="form-control"
               id="password"
-              placeholder="password..."
+              style="font-size: small"
             />
           </section>
         </section>
@@ -125,9 +136,10 @@ Description: implementation of the view Ficha de Inscrição
                 value=""
                 id="subscribenews"
                 checked
+                style="text-align: left: important;"
               />
               <label class="form-check-label" for="subscribenews">
-                Subscrever notificações?</label
+                {{translate('newAccSubs')}}</label
               >
             </section>
           </section>
@@ -135,27 +147,34 @@ Description: implementation of the view Ficha de Inscrição
         <section class="text-center">
           <button
             type="submit"
-            class="btn btn-outline-primary mt-4 me-4 my-button"
+            class="btn mt-4 me-4 my-button"
           >
-            SUBMETER
+          {{translate('btnSubmit')}}
           </button>
           <button
             @click="cleanForm()"
             type="button"
-            class="btn btn-outline-primary mt-4 me-4 my-button"
+            class="btn mt-4 me-4 my-button"
           >
-            LIMPAR
+          {{translate('btnClean')}}
           </button>
           <button
             @click="back()"
             type="button"
-            class="btn btn-outline-primary mt-4 my-button"
+            class="btn mt-4 my-button"
           >
-            VOLTAR
+          {{translate('btnBack')}}
           </button>
         </section>
       </form>
-
+      <section class="text-center">
+        <section v-if=!isShow class="text-center">
+          <div class="spinner-border mt-4" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <section class="mb-2"> {{translate('spinnerTxt')}}</section>
+        </section>
+      </section>
       <section class="spacer"></section>
     </section>
   </section>
@@ -164,6 +183,13 @@ Description: implementation of the view Ficha de Inscrição
 <style scoped>
 .my-button {
   width: 120px;
+  background-color: black;
+  color:white;
+}
+
+.my-button:hover {
+  background-color: white;
+  color:black;
 }
 select option[disabled]:first-child {
   display: none;
@@ -196,8 +222,8 @@ export default {
         firstname: "",
         lastname: "",
         name: "",
-        course: "",
-        class: "",
+        nif: "",
+        type: "",
         email: "",
         mobile: "",
         bdate: "",
