@@ -8,6 +8,12 @@ Description: implementation of the view Login
   <section class="container">
     <section class="jumbotron d-flex align-items-center min-vh-100 ">
       <form class="form-signin" v-on:submit.prevent="login" style="border-radius: 30px ;">
+        <section v-if=isShow>
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <section class="mb-2">Please wait...</section>
+        </section>
         <section class="alert alert-danger" v-if="error">{{ error }}</section>
         <h2 class="form-signin-heading">Login</h2>
         <input type="text" v-model="form.username" class="form-control mt-4" id="username" placeholder="username"
@@ -59,6 +65,7 @@ export default {
         password: "",
       },
       error: "",
+      isShow: false
     };
   },
   computed: {
@@ -75,21 +82,21 @@ export default {
     }),
     async login() {
       this.error = "";
-      this.showLoader(true);
+      this.isShow = true
       let response = await this._login({
         username: this.form.username,
         password: this.form.password,
       }).catch(() => {
         this.error = "Username ou password incorreta!";
-        this.showLoader(false);
+        this.isShow = false
       });
       if (response) {
-        this.showLoader(false);
+        this.isShow = false
         if (this.level == "admin") this.$router.replace("/");
         else if (this.level == "beekeeper") this.$router.replace("/");
       } else {
         this.error = "Username ou password incorreta!";
-        this.showLoader(false);
+        this.isShow = false
       }
     },
   },
