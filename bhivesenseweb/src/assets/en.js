@@ -24,7 +24,12 @@ export default {
                 btnSubmit: "SUBMIT",
                 btnClean: "RESET",
                 btnBack: "BACK",
-
+                profilePhoto: "Profile photo",
+                photoButton: "File",
+                mesNewAccount: 'Account successfully created.',
+                mesUserExists: 'User already exists.',
+                mesProblem: 'Server problem, please try again...',
+                mesFields: 'Please fill all fields.'
             }
         }
     }

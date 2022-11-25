@@ -24,6 +24,12 @@ export default {
                 btnSubmit: "SUBMETER",
                 btnClean: "LIMPAR",
                 btnBack: "VOLTAR",
+                profilePhoto: "Foto de perfil",
+                photoButton: "Ficheiro",
+                mesNewAccount: 'Conta criada com sucesso.',
+                mesUserExists: 'Utilizador existente.',
+                mesProblem: 'Erro de servidor. Tente de novo...',
+                mesFields: 'Preencha todos os campos.'
             }
         }
     }

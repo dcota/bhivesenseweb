@@ -24,8 +24,6 @@ export default {
 .dashboard {
     display: grid;
     grid-template-columns: 300px auto;
-    /*height: 100vh;
-    width: 100vw;*/
 }
 
 .content {
