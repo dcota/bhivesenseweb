@@ -26,6 +26,7 @@ Description: implementation of the view Ficha de Inscrição
         <section class="col-md-4 d-flex justify-content-center">
           <div id="preview">
               <img v-if="item.imageUrl" :src="item.imageUrl" width="100" height="100" class="rounded-circle me-2" />
+              <img v-else src='../assets/avatar.png' width="100" height="100" class="rounded-circle me-2" style="background-color: white;"/>
           </div>
         </section>
       </section>
