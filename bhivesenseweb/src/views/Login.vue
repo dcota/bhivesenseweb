@@ -6,20 +6,37 @@ Description: implementation of the view Login
 
 <template>
   <section class="container">
-    <section class="jumbotron d-flex align-items-center min-vh-100 ">
-      <form class="form-signin" v-on:submit.prevent="login" style="border-radius: 30px ;">
-        <section v-if=isShow>
-          <div class="spinner-border" role="status">
+    <section class="jumbotron d-flex align-items-center min-vh-100">
+      <form
+        class="form-signin"
+        v-on:submit.prevent="login"
+        style="border-radius: 30px"
+      >
+        <section v-if="isShow">
+          <section class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
-          </div>
+          </section>
           <section class="mb-2">Please wait...</section>
         </section>
         <section class="alert alert-danger" v-if="error">{{ error }}</section>
         <h2 class="form-signin-heading">Login</h2>
-        <input type="text" v-model="form.username" class="form-control mt-4" id="username" placeholder="username"
-          required="" autofocus="" />
-        <input type="password" v-model="form.password" class="form-control mt-4" id="password" placeholder="password"
-          required="" />
+        <input
+          type="text"
+          v-model="form.username"
+          class="form-control mt-4"
+          id="username"
+          placeholder="username"
+          required=""
+          autofocus=""
+        />
+        <input
+          type="password"
+          v-model="form.password"
+          class="form-control mt-4"
+          id="password"
+          placeholder="password"
+          required=""
+        />
         <button class="btn btn-lg btn-primary btn-block mt-4 bn" type="submit">
           Submit
         </button>
@@ -31,7 +48,7 @@ Description: implementation of the view Login
 <style scoped>
 .bn {
   background-color: #ebc002;
-  border-color: #ebc002
+  border-color: #ebc002;
 }
 
 .bn:hover {
@@ -50,55 +67,55 @@ Description: implementation of the view Login
 </style>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
-import {
-  LOADING_SPINNER_SHOW_MUTATION,
-  LOGIN_ACTION,
-  GET_USER_LEVEL_GETTER,
-} from "../store/storeconstants";
-export default {
-  name: "login",
-  data() {
-    return {
-      form: {
-        username: "",
-        password: "",
-      },
-      error: "",
-      isShow: false
-    };
-  },
-  computed: {
-    ...mapGetters("auth", {
-      level: GET_USER_LEVEL_GETTER,
-    }),
-  },
-  methods: {
-    ...mapActions("auth", {
-      _login: LOGIN_ACTION,
-    }),
-    ...mapMutations({
-      showLoader: LOADING_SPINNER_SHOW_MUTATION,
-    }),
-    async login() {
-      this.error = "";
-      this.isShow = true
-      let response = await this._login({
-        username: this.form.username,
-        password: this.form.password,
-      }).catch(() => {
-        this.error = "Username ou password incorreta!";
-        this.isShow = false
-      });
-      if (response) {
-        this.isShow = false
-        if (this.level == "admin") this.$router.replace("/");
-        else if (this.level == "beekeeper") this.$router.replace("/");
-      } else {
-        this.error = "Username ou password incorreta!";
-        this.isShow = false
-      }
+  import { mapActions, mapGetters, mapMutations } from "vuex";
+  import {
+    LOADING_SPINNER_SHOW_MUTATION,
+    LOGIN_ACTION,
+    GET_USER_LEVEL_GETTER,
+  } from "../store/storeconstants";
+  export default {
+    name: "login",
+    data() {
+      return {
+        form: {
+          username: "",
+          password: "",
+        },
+        error: "",
+        isShow: false,
+      };
     },
-  },
-};
+    computed: {
+      ...mapGetters("auth", {
+        level: GET_USER_LEVEL_GETTER,
+      }),
+    },
+    methods: {
+      ...mapActions("auth", {
+        _login: LOGIN_ACTION,
+      }),
+      ...mapMutations({
+        showLoader: LOADING_SPINNER_SHOW_MUTATION,
+      }),
+      async login() {
+        this.error = "";
+        this.isShow = true;
+        let response = await this._login({
+          username: this.form.username,
+          password: this.form.password,
+        }).catch(() => {
+          this.error = "Username ou password incorreta!";
+          this.isShow = false;
+        });
+        if (response) {
+          this.isShow = false;
+          if (this.level == "admin") this.$router.replace("/");
+          else if (this.level == "beekeeper") this.$router.replace("/");
+        } else {
+          this.error = "Username ou password incorreta!";
+          this.isShow = false;
+        }
+      },
+    },
+  };
 </script>

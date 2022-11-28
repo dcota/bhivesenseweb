@@ -5,11 +5,10 @@ Description: implementation of the view Home
 */
 
 <template>
-  <section class="jumbotron d-flex align-items-center min-vh-100 ">
+  <section class="jumbotron d-flex align-items-center min-vh-100">
     <section class="text-center">
       <img class="my-img" src="../assets/IMG1224.png" alt="image" />
     </section>
-    
   </section>
 </template>
 
@@ -22,9 +21,7 @@ Description: implementation of the view Home
 .my-img {
   max-width: 50%;
   height: auto;
-
 }
-
 
 h3 {
   color: #c55a11 !important;
