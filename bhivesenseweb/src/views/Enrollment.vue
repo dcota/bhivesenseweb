@@ -337,6 +337,7 @@ select option[disabled]:first-child {
         postData.append("img", this.item.image);
         postData.append("username", this.form.auth.username);
         postData.append("password", this.form.auth.password);
+        postData.append("lang", this.lang);
         if (this.checkForm() == true) {
           this.isShow = true;
           await axios
