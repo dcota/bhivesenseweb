@@ -11,6 +11,7 @@ export default {
             firstname: '',
             lastname: '',
             level: '',
+            img: '',
             expiresIn: 'sss',
             autoLogout: false
         }

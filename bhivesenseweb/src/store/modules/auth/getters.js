@@ -23,7 +23,6 @@ export default {
     [GET_USER_LEVEL_GETTER]: state => {
         return state.level
     },
-
     [GET_USER_ID_GETTER]: state => {
         return state._id
     },
@@ -32,7 +31,6 @@ export default {
         return name
     },
     [GET_USER_AVATAR_GETTER]: state => {
-        console.log(state.img)
         return state.img
     }
 }

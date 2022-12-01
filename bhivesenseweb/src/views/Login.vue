@@ -103,6 +103,7 @@ Description: implementation of the view Login
         let response = await this._login({
           username: this.form.username,
           password: this.form.password,
+          device: "",
         }).catch(() => {
           this.error = "Username ou password incorreta!";
           this.isShow = false;

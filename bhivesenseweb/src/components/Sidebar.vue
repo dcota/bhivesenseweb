@@ -227,12 +227,18 @@
           <strong>{{ name }}</strong>
         </a>
         <ul class="dropdown-menu text-small shadow">
-          <li><a class="dropdown-item" href="#">Profile</a></li>
+          <li>
+            <router-link
+              to=""
+              class="dropdown-item"
+              style="text-decoration: none"
+              @click.prevent="account()"
+              >{{ translate("userMenuProfile") }}
+            </router-link>
+          </li>
           <li>
             <hr class="dropdown-sectionider" />
           </li>
-          <!--<li>
-            <a class="dropdown-item" href="#">Sign out</a></li>-->
 
           <li>
             <router-link
@@ -240,7 +246,7 @@
               class="dropdown-item"
               style="text-decoration: none"
               @click.prevent="logout()"
-              >Logout
+              >{{ translate("userMenuLogout") }}
             </router-link>
           </li>
         </ul>
@@ -378,10 +384,10 @@
     GET_USER_AVATAR_GETTER,
   } from "../store/storeconstants";
   export default {
-    name: "Header",
+    name: "Sidebar",
     mixins: [en, pt],
     data: function () {
-      const lang = localStorage.getItem("lang") || "en";
+      const lang = localStorage.getItem("lang") || "pt";
       return {
         logo: require("../assets/logo.png"),
         lang: lang,
@@ -393,6 +399,7 @@
         level: GET_USER_LEVEL_GETTER,
         name: GET_USER_NAME_GETTER,
         img: GET_USER_AVATAR_GETTER,
+        auth: localStorage.getItem("auth"),
       }),
     },
     methods: {
@@ -403,9 +410,12 @@
         this._logout();
         this.$router.replace("/");
       },
+      account() {
+        this.$router.replace("account");
+      },
       handleChange(event) {
-        localStorage.setItem("lang", event.target.value),
-          window.location.reload();
+        localStorage.setItem("lang", event.target.value);
+        window.location.reload();
       },
       translate(prop) {
         return this[this.lang][prop];

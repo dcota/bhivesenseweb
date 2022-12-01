@@ -15,12 +15,14 @@ Description: implementation of the view Ficha de Inscrição
         v-bind:class="'alert-' + message.type"
       >
         {{ message.msg }}
-        <button
+        <!--
+          <button
           type="button"
           class="btn-close"
           data-bs-dismiss="alert"
           aria-label="Close"
         ></button>
+        -->
       </section>
       <form class="form-signin" v-on:submit.prevent="send">
         <section class="row align-items-center" style="min-height: 15vh">
@@ -360,13 +362,14 @@ select option[disabled]:first-child {
                 this.showsection = true;
                 this.message.type = "danger";
                 this.message.msg = this.translate("mesProblem");
-                this.isShow = true;
+                //this.isShow = true;
               }
             })
             .catch(() => {
               this.error = "Valores inválidos!";
             });
         } else {
+          this.isShow = false;
           this.showsection = true;
           this.message.type = "danger";
           this.message.msg = this.translate("mesFields");

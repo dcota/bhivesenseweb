@@ -4,7 +4,7 @@ Auhtor: Duarte Cota
 Description: implementation of project mutations of the autentication state
 */
 
-import { SET_USER_TOKEN_DATA_MUTATION, SET_AUTO_LOGOUT_MUTATION } from "../../storeconstants";
+import { SET_USER_TOKEN_DATA_MUTATION, SET_AUTO_LOGOUT_MUTATION, SET_IMAGE_MUTATION } from "../../storeconstants";
 
 export default {
     [SET_USER_TOKEN_DATA_MUTATION](state, payload) {
@@ -19,5 +19,10 @@ export default {
 
     [SET_AUTO_LOGOUT_MUTATION](state) {
         state.autoLogout = true
+    },
+
+    [SET_IMAGE_MUTATION](state, payload) {
+        state.img = payload.img
     }
+
 }

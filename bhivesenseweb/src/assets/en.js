@@ -29,7 +29,10 @@ export default {
                 mesNewAccount: 'Account successfully created.',
                 mesUserExists: 'User already exists.',
                 mesProblem: 'Server problem, please try again...',
-                mesFields: 'Please fill all fields.'
+                mesFields: 'Please fill all fields.',
+                accFormTitle: "ACCOUNT DETAILS",
+                userMenuProfile: "Profile",
+                userMenuLogout: "Logout"
             }
         }
     }

@@ -13,7 +13,10 @@ import {
     SET_USER_TOKEN_DATA_MUTATION,
     AUTO_LOGIN_ACTION,
     AUTO_LOGOUT_ACTION,
-    SET_AUTO_LOGOUT_MUTATION
+    SET_AUTO_LOGOUT_MUTATION,
+    SET_IMAGE_MUTATION,
+    AUTO_IMAGE_ACTION,
+    IMAGE_ACTION
 } from '../../storeconstants'
 
 import axios from 'axios'
@@ -28,6 +31,7 @@ export default {
             lastname: null,
             level: null,
             token: null,
+            img: null,
             expiresIn: null
         })
         localStorage.removeItem('userData')
@@ -38,6 +42,7 @@ export default {
 
     [AUTO_LOGIN_ACTION](context) {
         let userDataString = localStorage.getItem('userData')
+        console.log(userDataString)
         if (userDataString) {
             let userData = JSON.parse(userDataString)
             let expirationTime = userData.expiresIn - new Date().getTime()
@@ -61,14 +66,12 @@ export default {
         let postData = {
             username: payload.username,
             password: payload.password,
-            device: ""
+            device: payload.device
         }
         let response = await axios.post(payload.url, postData)
-        console.log(response)
-
         if (response.data.http === 200) {
             let expirationTime = +response.data.body.expiresIn * 1000
-            //let expirationTime = 5000
+                //let expirationTime = 5000
             timer = setTimeout(() => {
                 context.dispatch(AUTO_LOGOUT_ACTION)
             }, expirationTime)
@@ -82,6 +85,7 @@ export default {
                 token: response.headers.authorization
             }
             localStorage.setItem('userData', JSON.stringify(tokenData))
+                //localStorage.setItem('_id', response.data.body._id)
             context.commit(SET_USER_TOKEN_DATA_MUTATION, tokenData)
             return true
         } else return false
@@ -93,4 +97,15 @@ export default {
             url: 'https://bhsapi.duartecota.com/auth'
         })
     },
+
+    async [AUTO_IMAGE_ACTION](context, payload) {
+        return context.dispatch(IMAGE_ACTION, {
+            ...payload
+        })
+    },
+
+    [IMAGE_ACTION](context, payload) {
+        console.log(payload.img)
+        context.commit(SET_IMAGE_MUTATION, payload)
+    }
 }

@@ -3,7 +3,6 @@
     <section class="sb">
       <Sidebar />
     </section>
-
     <section class="content">
       <router-view />
     </section>
