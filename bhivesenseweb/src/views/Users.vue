@@ -7,10 +7,10 @@ Description: implementation of the view Gestão de Alunos (Admin)
 <template id="example-modal">
   <section class="container">
     <section class="row mt-3 text-center">
-      <h1 class="text-center">GESTÃO DE ALUNOS</h1>
+      <h1 class="text-center">{{ translate("usersTitle") }}</h1>
     </section>
     <section
-      v-if="isShow"
+      v-if="showsection"
       class="alert mt-3"
       role="alert"
       v-bind:class="'alert-' + message.type"
@@ -18,22 +18,22 @@ Description: implementation of the view Gestão de Alunos (Admin)
       {{ message.msg }}
     </section>
     <section class="row mt-3">
-      <h4>Alunos inscritos:</h4>
+      <h4>{{ translate("usersLbl") }}</h4>
     </section>
-    <!--<section class="card mt-2">
+    <section class="card mt-2">
       <section class="card-body">
         <table class="table mt-2">
           <tbody>
             <tr>
-              <th>Nome</th>
-              <th>Turma</th>
-              <th>Curso</th>
-              <th class="text-center">Ações</th>
+              <th>{{ translate("thdName") }}</th>
+              <th>{{ translate("thdStatus") }}</th>
+              <th>{{ translate("thdLastAccess") }}</th>
+              <th class="text-center">{{ translate("thdActions") }}</th>
             </tr>
-            <tr v-for="user of this.usersAccepted" :key="user._id">
-              <td>{{ user.firstname + " " + user.lastname }}</td>
-              <td>{{ user.course }}</td>
-              <td>{{ user.class }}</td>
+            <tr v-for="user of this.users" :key="user._id">
+              <td>{{ user.name }}</td>
+              <td>{{ user.status }}</td>
+              <td>{{ user.lastlogin }}</td>
               <td class="text-center">
                 <button
                   @click="detail(user._id)"
@@ -43,7 +43,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
                   data-bs-target="#exampleModal"
                 >
                   <i class="fas fa-search me-1" aria-hidden="true"></i>
-                  Detalhes
+                  {{ translate("btnDetails") }}
                 </button>
                 <button
                   @click="deleteStd(user._id)"
@@ -59,111 +59,15 @@ Description: implementation of the view Gestão de Alunos (Admin)
         </table>
       </section>
     </section>
-    <section class="row mt-3">
-      <h4>Pedidos pendentes:</h4>
-    </section>
-    <section class="card mt-2">
-      <section class="card-body">
-        <table class="table mt-2">
-          <tbody>
-            <tr>
-              <th>Nome</th>
-              <th>Turma</th>
-              <th>Curso</th>
-              <th class="text-center">Ações</th>
-            </tr>
-            <tr v-for="user of this.usersToAccept" :key="user._id">
-              <td>{{ user.firstname + " " + user.lastname }}</td>
-              <td>{{ user.course }}</td>
-              <td>{{ user.class }}</td>
-              <td>
-                <button
-                  @click="acceptStd(user._id)"
-                  type="button"
-                  class="btn btn-success btn-sm me-2 ac-btn"
-                >
-                  <i class="fas fa-check me-1 act-btn" aria-hidden="true"></i
-                  >Aceitar
-                </button>
-                <button
-                  @click="deleteStd(user._id)"
-                  type="button"
-                  class="btn btn-danger btn-sm me-2 ac-btn"
-                >
-                  <i class="far fa-trash-alt me-1" aria-hidden="true"></i
-                  >Rejeitar
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    </section>-->
-    <!-- Modal -->
-    <!--<section
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      v-if="state == true"
-      aria-hidden="true"
-    >
-      <section class="modal-lg modal-dialog">
-        <section class="modal-content">
-          <section class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Detalhes do aluno:
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </section>
-          <section class="modal-body">
-            <section class="row">
-              <section class="col-md-3">Nome:</section>
-              <section class="col-md-4">{{ form.name }}</section>
-            </section>
-            <section class="row mt-3">
-              <section class="col-md-3">Curso:</section>
-              <section class="col-md-4">{{ form.course }}</section>
-            </section>
-            <section class="row mt-3">
-              <section class="col-md-3">Turma:</section>
-              <section class="col-md-4">{{ form.class }}</section>
-            </section>
-            <section class="row mt-3">
-              <section class="col-md-3">Email:</section>
-              <section class="col-md-4">{{ form.email }}</section>
-            </section>
-            <section class="row mt-3">
-              <section class="col-md-3">Contacto móvel:</section>
-              <section class="col-md-4">{{ form.mobile }}</section>
-            </section>
-            <section class="row mt-3">
-              <section class="col-md-3">Data de nascimento:</section>
-              <section class="col-md-4">{{ form.bdate }}</section>
-            </section>
-            <section class="row mt-3">
-              <section class="col-md-4">Subscrição de notificações:</section>
-              <section class="col-md-4">{{ form.notifications }}</section>
-            </section>
-          </section>
-          <section class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-            >
-              Fechar
-            </button>
-          </section>
+    <section class="text-center">
+      <section v-if="isShow" class="text-center">
+        <section class="spinner-border mt-4" role="status">
+          <span class="visually-hidden">Loading...</span>
         </section>
+        <section class="mb-2">{{ translate("spinnerTxt") }}</section>
       </section>
     </section>
-    <section class="spacer"></section>-->
+    <section class="spacer"></section>
   </section>
 </template>
 
@@ -179,6 +83,8 @@ Description: implementation of the view Gestão de Alunos (Admin)
 </style>
 
 <script>
+  import en from "../assets/en.js";
+  import pt from "../assets/pt.js";
   import axios from "axios";
   import { mapGetters, mapMutations } from "vuex";
   import {
@@ -188,18 +94,19 @@ Description: implementation of the view Gestão de Alunos (Admin)
     GET_USER_ID_GETTER,
   } from "../store/storeconstants";
   export default {
+    mixins: [en, pt],
     data() {
+      const lang = localStorage.getItem("lang") || "pt";
       return {
         data: localStorage.token,
-        usersAccepted: [],
-        usersToAccept: [],
+        users: [],
         showModal: true,
         form: {
           firstname: "",
           lastname: "",
           name: "",
-          course: "",
-          class: "",
+          mobile: "",
+          type: "",
           email: "",
           mobile: "",
           bdate: "",
@@ -210,7 +117,9 @@ Description: implementation of the view Gestão de Alunos (Admin)
           msg: "",
         },
         state: true,
+        showsection: false,
         isShow: false,
+        lang: lang,
       };
     },
     computed: {
@@ -220,47 +129,41 @@ Description: implementation of the view Gestão de Alunos (Admin)
         _id: GET_USER_ID_GETTER,
       }),
     },
-    /*mounted() {
+    mounted() {
       this.getUsers();
-    },*/
+    },
     methods: {
       ...mapMutations({
         showLoader: LOADING_SPINNER_SHOW_MUTATION,
       }),
-
+      translate(prop) {
+        return this[this.lang][prop];
+      },
       async getUsers() {
-        this.usersAccepted = [];
-        this.usersToAccept = [];
-        this.showLoader(true);
+        this.users = [];
+        this.isShow = true;
         await axios
-          .get("https://cprob-api.herokuapp.com/user", {
-            //.get("http://localhost:3000/user", {
+          .get("https://bhsapi.duartecota.com/user", {
             headers: {
               Authorization: this.token,
             },
           })
           .then((response) => {
-            this.showLoader(false);
+            this.isShow = false;
             let users = response.data.body;
             for (let i = 0; i < users.length; i++) {
-              if (users[i].accepted == true && users[i].level == "student") {
-                this.usersAccepted.push({
+              if (users[i].level == "beekeeper") {
+                this.users.push({
                   _id: users[i]._id,
-                  firstname: users[i].firstname,
-                  lastname: users[i].lastname,
-                  course: users[i].course,
-                  class: users[i].class,
-                });
-              } else if (
-                users[i].accepted == false &&
-                users[i].level == "student"
-              ) {
-                this.usersToAccept.push({
-                  _id: users[i]._id,
-                  firstname: users[i].firstname,
-                  lastname: users[i].lastname,
-                  course: users[i].course,
-                  class: users[i].class,
+                  name: users[i].name,
+                  status:
+                    users[i].active == true
+                      ? this.translate("usersActive")
+                      : this.translate("usersInactive"),
+                  lastlogin:
+                    users[i].lastlogin == null
+                      ? this.translate("lastLoginNever")
+                      : users[i].lastlogin,
                 });
               }
             }

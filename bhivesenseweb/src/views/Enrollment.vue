@@ -15,14 +15,6 @@ Description: implementation of the view Ficha de Inscrição
         v-bind:class="'alert-' + message.type"
       >
         {{ message.msg }}
-        <!--
-          <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-        ></button>
-        -->
       </section>
       <form class="form-signin" v-on:submit.prevent="send">
         <section class="row align-items-center" style="min-height: 15vh">
@@ -56,7 +48,7 @@ Description: implementation of the view Ficha de Inscrição
               />
               <img
                 v-else
-                src="../assets/avatar.png"
+                :src="avatar"
                 width="100"
                 height="100"
                 class="rounded-circle me-2"
@@ -318,6 +310,7 @@ select option[disabled]:first-child {
           image: null,
           imageUrl: null,
         },
+        avatar: require("../assets/avatar.png"),
       };
     },
     methods: {
@@ -330,15 +323,16 @@ select option[disabled]:first-child {
         postData.append("firstname", this.form.firstname);
         postData.append("lastname", this.form.lastname);
         postData.append("name", this.form.name);
-        postData.append("nif", this.form.nif);
         postData.append("email", this.form.email);
-        postData.append("type", this.form.type);
-        postData.append("level", "beekeeper");
+        postData.append("nif", this.form.nif);
         postData.append("mobile", parseInt(this.form.mobile));
+        postData.append("level", "beekeeper");
+        postData.append("type", this.form.type);
         postData.append("bdate", this.form.bdate);
-        postData.append("img", this.item.image);
         postData.append("username", this.form.auth.username);
         postData.append("password", this.form.auth.password);
+        postData.append("notifications", this.form.notifications);
+        postData.append("img", this.item.image);
         postData.append("lang", this.lang);
         if (this.checkForm() == true) {
           this.isShow = true;
@@ -347,6 +341,7 @@ select option[disabled]:first-child {
               headers: { "Content-Type": "multipart/form-data" },
             })
             .then((response) => {
+              console.log(response.data.http);
               if (response.data.http == 201) {
                 this.isShow = false;
                 this.showsection = true;
@@ -362,11 +357,14 @@ select option[disabled]:first-child {
                 this.showsection = true;
                 this.message.type = "danger";
                 this.message.msg = this.translate("mesProblem");
-                //this.isShow = true;
               }
             })
-            .catch(() => {
-              this.error = "Valores inválidos!";
+            .catch((error) => {
+              console.log(error);
+              this.isShow = false;
+              this.showsection = true;
+              this.message.type = "danger";
+              this.message.msg = this.translate("mesProblem");
             });
         } else {
           this.isShow = false;
@@ -376,6 +374,8 @@ select option[disabled]:first-child {
         }
       },
       cleanForm() {
+        this.message.type = "";
+        this.message.msg = "";
         (this.form.firstname = ""),
           (this.form.lastname = ""),
           (this.form.name = ""),
@@ -392,6 +392,7 @@ select option[disabled]:first-child {
         this.item.imageUrl = null;
         this.item.image = null;
         this.isShow = false;
+        this.showsection = false;
       },
       back() {
         this.$router.replace("/");

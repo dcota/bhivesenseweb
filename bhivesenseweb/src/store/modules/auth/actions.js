@@ -75,12 +75,14 @@ export default {
             timer = setTimeout(() => {
                 context.dispatch(AUTO_LOGOUT_ACTION)
             }, expirationTime)
+            let img
+            response.data.body.img == '' ? img = 'https://bhsapi.duartecota.com/img/avatar.png' : img = response.data.body.img
             let tokenData = {
                 _id: response.data.body._id,
                 firstname: response.data.body.firstname,
                 lastname: response.data.body.lastname,
                 level: response.data.body.level,
-                img: response.data.body.img,
+                img: img,
                 expiresIn: expirationTime,
                 token: response.headers.authorization
             }

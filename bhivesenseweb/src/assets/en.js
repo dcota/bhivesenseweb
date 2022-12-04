@@ -6,6 +6,11 @@ export default {
                 sbarAccLabel: 'Account',
                 sbarAccLogin: 'Login',
                 sbarAccNew: "Create account",
+                sbarUsers: "Users",
+                sbarUsersManage: "Manage Users",
+                sbarDevices: "Devices",
+                sbarDevicesManage: "Manage devices",
+                sbarDevicesNew: "Register device",
                 newAccFormTitle: "CREATE ACCOUNT",
                 newAccFnamePh: "First name",
                 newAccLnamePh: "Last name",
@@ -41,7 +46,18 @@ export default {
                 btnModalBack: "Back",
                 cancelAccMessage: "Account successfuly canceled!",
                 userMessageNotFound: "User not found!",
-                userMessagePassword: "Wrong password!"
+                userMessagePassword: "Wrong password!",
+                usersTitle: "MANAGE USERS",
+                usersLbl: "Users:",
+                usersActive: "Active",
+                usersInactive: "Inactive",
+                thdName: "Name",
+                thdStatus: "Status",
+                thdLastAccess: "Last access",
+                thdActions: "Actions",
+                btnDetails: "Details",
+                btnRemove: "Remove",
+                lastLoginNever: "Never",
             }
         }
     }

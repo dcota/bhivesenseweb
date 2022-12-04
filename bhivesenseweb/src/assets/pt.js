@@ -6,6 +6,11 @@ export default {
                 sbarAccLabel: 'Conta',
                 sbarAccLogin: 'Login',
                 sbarAccNew: "Criar conta",
+                sbarUsers: "Utilizadores",
+                sbarUsersManage: "Gerir utilizadores",
+                sbarDevices: "Dispositivos",
+                sbarDevicesManage: "Gerir dispositivos",
+                sbarDevicesNew: "Registar dispositivo",
                 newAccFormTitle: "CRIAR CONTA",
                 newAccFnamePh: "Primeiro nome",
                 newAccLnamePh: "Último name",
@@ -41,7 +46,18 @@ export default {
                 btnModalBack: "Voltar",
                 cancelAccMessage: "Conta cancelada com sucesso!",
                 userMessageNotFound: "Utilizador não encontrado!",
-                userMessagePassword: "Password errada!"
+                userMessagePassword: "Password errada!",
+                usersTitle: "GESTÃO DE ULITIZADORES",
+                usersLbl: "Utilizadores:",
+                usersActive: "Ativo",
+                usersInactive: "Inativo",
+                thdName: "Nome",
+                thdStatus: "Estado",
+                thdLastAccess: "Último acesso",
+                thdActions: "Ações",
+                btnDetails: "Detalhes",
+                btnRemove: "Remover",
+                lastLoginNever: "Nunca",
             }
         }
     }

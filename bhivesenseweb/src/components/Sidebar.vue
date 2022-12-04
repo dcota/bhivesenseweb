@@ -28,7 +28,7 @@
       </section>
       <hr v-if="isAuthenticated" />
       <ul class="nav nav-pills flex-column mb-auto">
-        <li class="mb-1" v-if="isAuthenticated">
+        <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
             class="
               btn btn-toggle
@@ -86,7 +86,7 @@
             </ul>
           </section>
         </li>
-        <li class="mb-1" v-if="isAuthenticated">
+        <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
             class="
               btn btn-toggle
@@ -121,7 +121,7 @@
             </ul>
           </section>
         </li>
-        <li class="mb-1" v-if="isAuthenticated">
+        <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
             class="
               btn btn-toggle
@@ -158,6 +158,74 @@
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
                   >Monthly</a
+                >
+              </li>
+            </ul>
+          </section>
+        </li>
+
+        <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
+          <button
+            class="
+              btn btn-toggle
+              d-inline-flex
+              align-items-center
+              rounded
+              border-0
+              collapsed
+            "
+            data-bs-toggle="collapse"
+            data-bs-target="#users-collapse"
+            aria-expanded="false"
+          >
+            {{ translate("sbarUsers") }}
+          </button>
+          <section class="collapse" id="users-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li>
+                <router-link
+                  to="/users"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none"
+                  >{{ translate("sbarUsersManage") }}</router-link
+                >
+              </li>
+            </ul>
+          </section>
+        </li>
+
+        <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
+          <button
+            class="
+              btn btn-toggle
+              d-inline-flex
+              align-items-center
+              rounded
+              border-0
+              collapsed
+            "
+            data-bs-toggle="collapse"
+            data-bs-target="#devices-collapse"
+            aria-expanded="false"
+          >
+            {{ translate("sbarDevices") }}
+          </button>
+          <section class="collapse" id="devices-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li>
+                <router-link
+                  to=""
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none"
+                  >{{ translate("sbarDevicesManage") }}</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to=""
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none"
+                  >{{ translate("sbarDevicesNew") }}</router-link
                 >
               </li>
             </ul>

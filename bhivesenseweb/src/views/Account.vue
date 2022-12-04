@@ -211,6 +211,14 @@ Description: implementation of the view Alterar Conta
           </button>
         </section>
       </form>
+      <section class="text-center">
+        <section v-if="isShow" class="text-center">
+          <section class="spinner-border mt-4" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </section>
+          <section class="mb-2">{{ translate("spinnerTxt") }}</section>
+        </section>
+      </section>
       <section class="spacer"></section>
     </section>
   </section>

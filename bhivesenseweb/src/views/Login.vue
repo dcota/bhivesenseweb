@@ -49,6 +49,7 @@ Description: implementation of the view Login
 .bn {
   background-color: #ebc002;
   border-color: #ebc002;
+  width: 150px;
 }
 
 .bn:hover {
