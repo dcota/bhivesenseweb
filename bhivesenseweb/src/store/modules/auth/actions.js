@@ -85,7 +85,6 @@ export default {
                 token: response.headers.authorization
             }
             localStorage.setItem('userData', JSON.stringify(tokenData))
-                //localStorage.setItem('_id', response.data.body._id)
             context.commit(SET_USER_TOKEN_DATA_MUTATION, tokenData)
             return true
         } else return false

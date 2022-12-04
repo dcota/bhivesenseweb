@@ -6,20 +6,11 @@
     <Loader v-if="showLoader"></Loader>
     <section id="content"><router-view></router-view></section>
   </section>
-  <!--
-<Loader v-if="showLoader"></Loader>
-  <div id="app">
-    <router-view></router-view>
-  </div>
-  -->
 </template>
 
 <script>
-  //import Nav from "./components/Nav.vue";
-  //import Sidebar from "./components/Sidebar.vue"
-  //import Header from "./components/Header.vue";
-  //import Footer from "./components/Footer.vue";
-  //import Loader from "./components/Loader.vue";
+  // import Modal from "@/components/Modal.vue";
+
   import { mapState } from "vuex";
   import { AUTO_LOGIN_ACTION } from "./store/storeconstants";
   export default {
@@ -38,11 +29,7 @@
       },
     },
     components: {
-      //Header,
-      //Sidebar,
-      //Nav,
-      //Loader,
-      //Footer,
+      //Modal,
     },
     created() {
       this.$store.dispatch(`auth/${AUTO_LOGIN_ACTION}`);

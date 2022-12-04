@@ -7,6 +7,7 @@ Description: implementation of the view Alterar Conta
 <template>
   <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
+      <!---->
       <h1 class="text-center mt-5">{{ translate("accFormTitle") }}</h1>
       <section
         v-if="showsection"
@@ -15,12 +16,6 @@ Description: implementation of the view Alterar Conta
         v-bind:class="'alert-' + message.type"
       >
         {{ message.msg }}
-        <!-- <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-        ></button>-->
       </section>
       <form class="form-signin" v-on:submit.prevent="send">
         <section class="row align-items-center" style="min-height: 15vh">
@@ -179,32 +174,6 @@ Description: implementation of the view Alterar Conta
             />
           </section>
         </section>
-        <!--<section class="row">
-          <section class="col-md-6 g-4">
-            <label for="username" class="form-label">{{
-              translate("newAccUserPh")
-            }}</label>
-            <input
-              type="text"
-              v-model="form.auth.username"
-              class="form-control"
-              id="username"
-              style="font-size: small"
-            />
-          </section>
-          <section class="col-md-6 g-4">
-            <label for="password" class="form-label">{{
-              translate("newAccPassPh")
-            }}</label>
-            <input
-              type="password"
-              v-model="form.auth.password"
-              class="form-control"
-              id="password"
-              style="font-size: small"
-            />
-          </section>
-        </section>-->
         <section class="row mt-4">
           <section>
             <section class="form-check">
@@ -231,19 +200,17 @@ Description: implementation of the view Alterar Conta
           >
             {{ translate("btnSubmit") }}
           </button>
+          <button @click="showModal()" class="btn mt-4 me-4 my-button">
+            {{ translate("btnCancel") }}
+          </button>
+
+          <Modal v-show="isModalVisible" @close="closeModal" @cancel="cancel" />
+
           <button @click="back()" type="button" class="btn mt-4 my-button">
             {{ translate("btnBack") }}
           </button>
         </section>
       </form>
-      <section class="text-center">
-        <section v-if="isShow" class="text-center">
-          <section class="spinner-border mt-4" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </section>
-          <section class="mb-2">{{ translate("spinnerTxt") }}</section>
-        </section>
-      </section>
       <section class="spacer"></section>
     </section>
   </section>
@@ -279,6 +246,7 @@ select option[disabled]:first-child {
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import axios from "axios";
+  import Modal from "../components/ModalCancelAccount.vue";
   import { mapGetters, mapMutations, mapActions } from "vuex";
   import {
     LOADING_SPINNER_SHOW_MUTATION,
@@ -286,9 +254,13 @@ select option[disabled]:first-child {
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
     AUTO_IMAGE_ACTION,
+    LOGOUT_ACTION,
   } from "../store/storeconstants";
   export default {
     name: "submit",
+    components: {
+      Modal,
+    },
     mixins: [en, pt],
     data() {
       const lang = localStorage.getItem("lang") || "en";
@@ -309,6 +281,7 @@ select option[disabled]:first-child {
           msg: "",
         },
         isShow: true,
+        isModalVisible: false,
         showsection: false,
         lang: lang,
         item: {
@@ -330,7 +303,12 @@ select option[disabled]:first-child {
     methods: {
       ...mapActions("auth", {
         _imgChng: AUTO_IMAGE_ACTION,
+        _logout: LOGOUT_ACTION,
       }),
+      logout() {
+        this._logout();
+        this.$router.replace("/");
+      },
       async getAccountInfo() {
         (this.message.type = ""),
           (this.message.msg = ""),
@@ -442,6 +420,40 @@ select option[disabled]:first-child {
       },
       back() {
         this.$router.replace("/");
+      },
+      async cancel() {
+        this.isModalVisible = false;
+        await axios
+          .put("https://bhsapi.duartecota.com/user/" + this._id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            if (response.data.http == 200) {
+              this.isShow = false;
+              this.showsection = true;
+              this.message.type = "success";
+              this.message.msg = this.translate("cancelAccMessage");
+              setTimeout(() => this.logout(), 3000);
+            } else {
+              this.isShow = false;
+              this.showsection = true;
+              this.message.type = "danger";
+              this.message.msg = this.translate("mesProblem");
+            }
+          })
+          .catch(() => {
+            this.isShow = false;
+            this.showsection = true;
+            this.error = this.translate("mesProblem");
+          });
+      },
+      showModal() {
+        this.isModalVisible = true;
+      },
+      closeModal() {
+        this.isModalVisible = false;
       },
     },
   };

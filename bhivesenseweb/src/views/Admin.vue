@@ -9,7 +9,8 @@ Description: implementation of the view Gestão de Alunos (Admin)
     <section class="row mt-3 text-center">
       <h1 class="text-center">GESTÃO DE ALUNOS</h1>
     </section>
-    <section v-if=isShow
+    <section
+      v-if="isShow"
       class="alert mt-3"
       role="alert"
       v-bind:class="'alert-' + message.type"
@@ -178,168 +179,168 @@ Description: implementation of the view Gestão de Alunos (Admin)
 </style>
 
 <script>
-import axios from "axios";
-import { mapGetters, mapMutations } from "vuex";
-import {
-  LOADING_SPINNER_SHOW_MUTATION,
-  GET_USER_TOKEN_GETTER,
-  GET_USER_LEVEL_GETTER,
-  GET_USER_ID_GETTER,
-} from "../store/storeconstants";
-export default {
-  data() {
-    return {
-      data: localStorage.token,
-      usersAccepted: [],
-      usersToAccept: [],
-      showModal: true,
-      form: {
-        firstname: "",
-        lastname: "",
-        name: "",
-        course: "",
-        class: "",
-        email: "",
-        mobile: "",
-        bdate: "",
-        notifications: false,
-      },
-      message: {
-        type: "",
-        msg: "",
-      },
-      state: true,
-      isShow: false
-    };
-  },
-  computed: {
-    ...mapGetters("auth", {
-      token: GET_USER_TOKEN_GETTER,
-      level: GET_USER_LEVEL_GETTER,
-      _id: GET_USER_ID_GETTER,
-    }),
-  },
-  /*mounted() {
-    this.getUsers();
-  },*/
-  methods: {
-    ...mapMutations({
-      showLoader: LOADING_SPINNER_SHOW_MUTATION,
-    }),
+  import axios from "axios";
+  import { mapGetters, mapMutations } from "vuex";
+  import {
+    LOADING_SPINNER_SHOW_MUTATION,
+    GET_USER_TOKEN_GETTER,
+    GET_USER_LEVEL_GETTER,
+    GET_USER_ID_GETTER,
+  } from "../store/storeconstants";
+  export default {
+    data() {
+      return {
+        data: localStorage.token,
+        usersAccepted: [],
+        usersToAccept: [],
+        showModal: true,
+        form: {
+          firstname: "",
+          lastname: "",
+          name: "",
+          course: "",
+          class: "",
+          email: "",
+          mobile: "",
+          bdate: "",
+          notifications: false,
+        },
+        message: {
+          type: "",
+          msg: "",
+        },
+        state: true,
+        isShow: false,
+      };
+    },
+    computed: {
+      ...mapGetters("auth", {
+        token: GET_USER_TOKEN_GETTER,
+        level: GET_USER_LEVEL_GETTER,
+        _id: GET_USER_ID_GETTER,
+      }),
+    },
+    /*mounted() {
+      this.getUsers();
+    },*/
+    methods: {
+      ...mapMutations({
+        showLoader: LOADING_SPINNER_SHOW_MUTATION,
+      }),
 
-    async getUsers() {
-      this.usersAccepted = [];
-      this.usersToAccept = [];
-      this.showLoader(true);
-      await axios
-        .get("https://cprob-api.herokuapp.com/user", {
-        //.get("http://localhost:3000/user", {
-          headers: {
-            Authorization: this.token,
-          },
-        })
-        .then((response) => {
-          this.showLoader(false);
-          let users = response.data.body;
-          for (let i = 0; i < users.length; i++) {
-            if (users[i].accepted == true && users[i].level == "student") {
-              this.usersAccepted.push({
-                _id: users[i]._id,
-                firstname: users[i].firstname,
-                lastname: users[i].lastname,
-                course: users[i].course,
-                class: users[i].class,
-              });
-            } else if (
-              users[i].accepted == false &&
-              users[i].level == "student"
-            ) {
-              this.usersToAccept.push({
-                _id: users[i]._id,
-                firstname: users[i].firstname,
-                lastname: users[i].lastname,
-                course: users[i].course,
-                class: users[i].class,
-              });
+      async getUsers() {
+        this.usersAccepted = [];
+        this.usersToAccept = [];
+        this.showLoader(true);
+        await axios
+          .get("https://cprob-api.herokuapp.com/user", {
+            //.get("http://localhost:3000/user", {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            this.showLoader(false);
+            let users = response.data.body;
+            for (let i = 0; i < users.length; i++) {
+              if (users[i].accepted == true && users[i].level == "student") {
+                this.usersAccepted.push({
+                  _id: users[i]._id,
+                  firstname: users[i].firstname,
+                  lastname: users[i].lastname,
+                  course: users[i].course,
+                  class: users[i].class,
+                });
+              } else if (
+                users[i].accepted == false &&
+                users[i].level == "student"
+              ) {
+                this.usersToAccept.push({
+                  _id: users[i]._id,
+                  firstname: users[i].firstname,
+                  lastname: users[i].lastname,
+                  course: users[i].course,
+                  class: users[i].class,
+                });
+              }
             }
-          }
-        })
-        .catch((error) => {
-          this.showLoader(false);
-          alert(error);
-        });
+          })
+          .catch((error) => {
+            this.showLoader(false);
+            alert(error);
+          });
+      },
+      async acceptStd(_id) {
+        this.showLoader(true);
+        await axios
+          .put("https://cprob-api.herokuapp.com/user/" + _id, {
+            //.put("http://localhost:3000/user/" + _id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then(() => {
+            this.message.msg = "Utilizador aceite!";
+            this.message.type = "success";
+            this.isShow = true;
+            this.showLoader(false);
+            this.getUsers();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+      async deleteStd(_id) {
+        this.showLoader(true);
+        await axios
+          .delete("https://cprob-api.herokuapp.com/user/" + _id, {
+            //.delete("http://localhost:3000/user/" + _id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then(() => {
+            this.message.msg = "Utilizador eliminado!";
+            this.message.type = "success";
+            this.isShow = true;
+            this.showLoader(false);
+            this.getUsers();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+      async detail(_id) {
+        (this.message.type = ""), (this.message.msg = ""), this.showLoader(true);
+        await axios
+          .get("https://cprob-api.herokuapp.com/user/" + _id, {
+            //.get("http://localhost:3000/user/" + _id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            (this.form.firstname = response.data.body.firstname),
+              (this.form.lastname = response.data.body.lastname),
+              (this.form.name = response.data.body.name),
+              (this.form.course = response.data.body.course),
+              (this.form.class = response.data.body.class),
+              (this.form.bdate = response.data.body.bdate),
+              (this.form.email = response.data.body.email),
+              (this.form.mobile = response.data.body.mobile);
+            if (response.data.body.notifications == true)
+              this.form.notifications = "SIM";
+            else this.form.notifications = "NÃO";
+            this.state = true;
+            this.showLoader(false);
+          })
+          .catch(() => {
+            this.message.msg = "Ocorreu um problema";
+            this.message.type = "warning";
+            this.isShow = true;
+            this.showLoader(false);
+          });
+      },
     },
-    async acceptStd(_id) {
-      this.showLoader(true);
-      await axios
-        .put("https://cprob-api.herokuapp.com/user/" + _id, {
-        //.put("http://localhost:3000/user/" + _id, {
-          headers: {
-            Authorization: this.token,
-          },
-        })
-        .then(() => {
-          this.message.msg = "Utilizador aceite!";
-          this.message.type = "success";
-          this.isShow=true
-          this.showLoader(false);
-          this.getUsers();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    async deleteStd(_id) {
-      this.showLoader(true);
-      await axios
-        .delete("https://cprob-api.herokuapp.com/user/" + _id, {
-        //.delete("http://localhost:3000/user/" + _id, {
-          headers: {
-            Authorization: this.token,
-          },
-        })
-        .then(() => {
-          this.message.msg = "Utilizador eliminado!";
-          this.message.type = "success";
-          this.isShow=true
-          this.showLoader(false);
-          this.getUsers();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    async detail(_id) {
-      (this.message.type = ""), (this.message.msg = ""), this.showLoader(true);
-      await axios
-        .get("https://cprob-api.herokuapp.com/user/" + _id, {
-        //.get("http://localhost:3000/user/" + _id, {
-          headers: {
-            Authorization: this.token,
-          },
-        })
-        .then((response) => {
-          (this.form.firstname = response.data.body.firstname),
-            (this.form.lastname = response.data.body.lastname),
-            (this.form.name = response.data.body.name),
-            (this.form.course = response.data.body.course),
-            (this.form.class = response.data.body.class),
-            (this.form.bdate = response.data.body.bdate),
-            (this.form.email = response.data.body.email),
-            (this.form.mobile = response.data.body.mobile);
-          if (response.data.body.notifications == true)
-            this.form.notifications = "SIM";
-          else this.form.notifications = "NÃO";
-          this.state = true;
-          this.showLoader(false);
-        })
-        .catch(() => {
-          this.message.msg = "Ocorreu um problema";
-          this.message.type = "warning";
-          this.isShow=true
-          this.showLoader(false);
-        });
-    },
-  },
-};
+  };
 </script>

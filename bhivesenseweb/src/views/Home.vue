@@ -7,7 +7,7 @@ Description: implementation of the view Home
 <template>
   <section class="jumbotron d-flex align-items-center min-vh-100">
     <section class="text-center">
-      <img class="my-img" src="../assets/IMG1224.png" alt="image" />
+      <img class="my-img" :src="logo" alt="image" />
     </section>
   </section>
 </template>
@@ -31,3 +31,15 @@ h3 {
   letter-spacing: 10px;
 }
 </style>     
+
+<script>
+  export default {
+    data: function () {
+      const lang = localStorage.getItem("lang") || "pt";
+      return {
+        logo: require("../assets/IMG1224.png"),
+        lang: lang,
+      };
+    },
+  };
+</script>

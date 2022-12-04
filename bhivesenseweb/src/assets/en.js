@@ -22,6 +22,7 @@ export default {
                 typeOp3: "Association",
                 newAccSubs: "Subscribe notifications?",
                 btnSubmit: "SUBMIT",
+                btnCancel: "CANCEL",
                 btnClean: "RESET",
                 btnBack: "BACK",
                 profilePhoto: "Profile photo",
@@ -31,8 +32,16 @@ export default {
                 mesProblem: 'Server problem, please try again...',
                 mesFields: 'Please fill all fields.',
                 accFormTitle: "ACCOUNT DETAILS",
-                userMenuProfile: "Profile",
-                userMenuLogout: "Logout"
+                userMenuProfile: "Manage account",
+                userMenuLogout: "Logout",
+                userMenuCancel: "Cancel account",
+                cancelTitleModal: "CONFIRMATION",
+                cancelAccModal: "Do you wish to cancel your account?",
+                btnModalConfirm: "Cancel",
+                btnModalBack: "Back",
+                cancelAccMessage: "Account successfuly canceled!",
+                userMessageNotFound: "User not found!",
+                userMessagePassword: "Wrong password!"
             }
         }
     }

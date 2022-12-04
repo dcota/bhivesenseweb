@@ -22,6 +22,7 @@ export default {
                 typeOp3: "Cooperativa",
                 newAccSubs: "Subscrever notificações?",
                 btnSubmit: "SUBMETER",
+                btnCancel: "CANCELAR",
                 btnClean: "LIMPAR",
                 btnBack: "VOLTAR",
                 profilePhoto: "Foto de perfil",
@@ -31,8 +32,16 @@ export default {
                 mesProblem: 'Erro de servidor. Tente de novo...',
                 mesFields: 'Preencha todos os campos.',
                 accFormTitle: "DETALHES DA CONTA",
-                userMenuProfile: "Perfil",
-                userMenuLogout: "Logout"
+                userMenuProfile: "Gerir conta",
+                userMenuLogout: "Logout",
+                userMenuCancel: "Cancelar conta",
+                cancelTitleModal: "CONFIRMAÇÃO",
+                cancelAccModal: "Deseja cancelar a sua conta?",
+                btnModalConfirm: "Cancelar",
+                btnModalBack: "Voltar",
+                cancelAccMessage: "Conta cancelada com sucesso!",
+                userMessageNotFound: "Utilizador não encontrado!",
+                userMessagePassword: "Password errada!"
             }
         }
     }

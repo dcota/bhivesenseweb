@@ -16,7 +16,7 @@ Description: implementation of the view Login
           <section class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
           </section>
-          <section class="mb-2">Please wait...</section>
+          <section class="mb-2">{{ translate("spinnerTxt") }}</section>
         </section>
         <section class="alert alert-danger" v-if="error">{{ error }}</section>
         <h2 class="form-signin-heading">Login</h2>
@@ -38,7 +38,7 @@ Description: implementation of the view Login
           required=""
         />
         <button class="btn btn-lg btn-primary btn-block mt-4 bn" type="submit">
-          Submit
+          {{ translate("btnSubmit") }}
         </button>
       </form>
     </section>
@@ -67,6 +67,8 @@ Description: implementation of the view Login
 </style>
 
 <script>
+  import en from "../assets/en.js";
+  import pt from "../assets/pt.js";
   import { mapActions, mapGetters, mapMutations } from "vuex";
   import {
     LOADING_SPINNER_SHOW_MUTATION,
@@ -75,7 +77,9 @@ Description: implementation of the view Login
   } from "../store/storeconstants";
   export default {
     name: "login",
+    mixins: [en, pt],
     data() {
+      const lang = localStorage.getItem("lang") || "en";
       return {
         form: {
           username: "",
@@ -83,6 +87,7 @@ Description: implementation of the view Login
         },
         error: "",
         isShow: false,
+        lang: lang,
       };
     },
     computed: {
@@ -97,6 +102,9 @@ Description: implementation of the view Login
       ...mapMutations({
         showLoader: LOADING_SPINNER_SHOW_MUTATION,
       }),
+      translate(prop) {
+        return this[this.lang][prop];
+      },
       async login() {
         this.error = "";
         this.isShow = true;
@@ -104,17 +112,20 @@ Description: implementation of the view Login
           username: this.form.username,
           password: this.form.password,
           device: "",
-        }).catch(() => {
-          this.error = "Username ou password incorreta!";
-          this.isShow = false;
+        }).catch((error) => {
+          console.log(error.response.status);
+          if (error.response.status === 404) {
+            this.error = this.translate("userMessageNotFound");
+            this.isShow = false;
+          } else if (error.response.status === 403) {
+            this.error = this.translate("userMessagePassword");
+            this.isShow = false;
+          }
         });
         if (response) {
           this.isShow = false;
           if (this.level == "admin") this.$router.replace("/");
           else if (this.level == "beekeeper") this.$router.replace("/");
-        } else {
-          this.error = "Username ou password incorreta!";
-          this.isShow = false;
         }
       },
     },
