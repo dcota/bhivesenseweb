@@ -36,17 +36,15 @@ Description: implementation of the view Gestão de Alunos (Admin)
               <td>{{ user.lastlogin }}</td>
               <td class="text-center">
                 <button
-                  @click="detail(user._id)"
+                  @click="detailsModal(user._id)"
                   type="button"
                   class="btn btn-success btn-sm me-2 ac-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
                 >
                   <i class="fas fa-search me-1" aria-hidden="true"></i>
                   {{ translate("btnDetails") }}
                 </button>
                 <button
-                  @click="deleteStd(user._id)"
+                  @click="cancel(user._id)"
                   type="button"
                   class="btn btn-danger btn-sm me-2 ac-btn"
                 >
@@ -59,6 +57,18 @@ Description: implementation of the view Gestão de Alunos (Admin)
         </table>
       </section>
     </section>
+    <Modal
+      v-show="isModalVisible"
+      @close="closeModal"
+      :name="name"
+      :type="type"
+      :email="email"
+      :mobile="mobile"
+      :bdate="bdate"
+      :nif="nif"
+      :notifications="notifications"
+      :img="img"
+    />
     <section class="text-center">
       <section v-if="isShow" class="text-center">
         <section class="spinner-border mt-4" role="status">
@@ -86,40 +96,32 @@ Description: implementation of the view Gestão de Alunos (Admin)
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import axios from "axios";
-  import { mapGetters, mapMutations } from "vuex";
+  import Modal from "../components/ModalUserDetails.vue";
+  import { mapGetters } from "vuex";
   import {
-    LOADING_SPINNER_SHOW_MUTATION,
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
   } from "../store/storeconstants";
+  //import { LOADING_SPINNER_SHOW_MUTATION } from "../store/storeconstants";
   export default {
     mixins: [en, pt],
+    components: {
+      Modal,
+    },
     data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
         data: localStorage.token,
         users: [],
-        showModal: true,
-        form: {
-          firstname: "",
-          lastname: "",
-          name: "",
-          mobile: "",
-          type: "",
-          email: "",
-          mobile: "",
-          bdate: "",
-          notifications: false,
-        },
         message: {
           type: "",
           msg: "",
         },
-        state: true,
         showsection: false,
         isShow: false,
         lang: lang,
+        isModalVisible: false,
       };
     },
     computed: {
@@ -133,9 +135,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
       this.getUsers();
     },
     methods: {
-      ...mapMutations({
-        showLoader: LOADING_SPINNER_SHOW_MUTATION,
-      }),
       translate(prop) {
         return this[this.lang][prop];
       },
@@ -173,76 +172,99 @@ Description: implementation of the view Gestão de Alunos (Admin)
             alert(error);
           });
       },
-      async acceptStd(_id) {
-        this.showLoader(true);
+      async cancel(id) {
         await axios
-          .put("https://cprob-api.herokuapp.com/user/" + _id, {
-            //.put("http://localhost:3000/user/" + _id, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
-          .then(() => {
-            this.message.msg = "Utilizador aceite!";
-            this.message.type = "success";
-            this.isShow = true;
-            this.showLoader(false);
-            this.getUsers();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
-      async deleteStd(_id) {
-        this.showLoader(true);
-        await axios
-          .delete("https://cprob-api.herokuapp.com/user/" + _id, {
-            //.delete("http://localhost:3000/user/" + _id, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
-          .then(() => {
-            this.message.msg = "Utilizador eliminado!";
-            this.message.type = "success";
-            this.isShow = true;
-            this.showLoader(false);
-            this.getUsers();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
-      async detail(_id) {
-        (this.message.type = ""), (this.message.msg = ""), this.showLoader(true);
-        await axios
-          .get("https://cprob-api.herokuapp.com/user/" + _id, {
-            //.get("http://localhost:3000/user/" + _id, {
+          .put("https://bhsapi.duartecota.com/user/" + id, {
             headers: {
               Authorization: this.token,
             },
           })
           .then((response) => {
-            (this.form.firstname = response.data.body.firstname),
-              (this.form.lastname = response.data.body.lastname),
-              (this.form.name = response.data.body.name),
-              (this.form.course = response.data.body.course),
-              (this.form.class = response.data.body.class),
-              (this.form.bdate = response.data.body.bdate),
-              (this.form.email = response.data.body.email),
-              (this.form.mobile = response.data.body.mobile);
-            if (response.data.body.notifications == true)
-              this.form.notifications = "SIM";
-            else this.form.notifications = "NÃO";
-            this.state = true;
-            this.showLoader(false);
+            if (response.data.http == 200) {
+              this.isShow = false;
+              this.showsection = true;
+              this.message.type = "success";
+              this.message.msg = this.translate("cancelAccMessage");
+              setTimeout(() => (this.showsection = false), 3000);
+              this.getUsers();
+            } else {
+              this.isShow = false;
+              this.showsection = true;
+              this.message.type = "danger";
+              this.message.msg = this.translate("mesProblem");
+            }
+          })
+          .catch(() => {
+            this.isShow = false;
+            this.showsection = true;
+            this.error = this.translate("mesProblem");
+          });
+      },
+      async detail(id) {
+        this.isShow = true;
+        this.message.type = "";
+        this.message.msg = "";
+        //(this.isShow = true((this.message.type = ""))), (this.message.msg = "");
+        await axios
+          .get("https://bhsapi.duartecota.com/user/" + id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            this.name = response.data.body.name;
+            let type = response.data.body.type;
+            switch (type) {
+              case "Individual":
+                this.type = this.translate("typeOp1");
+                break;
+              case "Company":
+                this.type = this.translate("typeOp2");
+                break;
+              case "Companhia":
+                this.type = this.translate("typeOp2");
+                break;
+              case "Association":
+                this.type = this.translate("typeOp3");
+                break;
+              case "Associação":
+                this.type = this.translate("typeOp3");
+                break;
+            }
+            this.email = response.data.body.email;
+            this.bdate = response.data.body.bdate;
+            this.mobile = response.data.body.mobile;
+            this.nif = response.data.body.nif;
+            let notifications = response.data.body.notifications;
+            switch (notifications) {
+              case true:
+                this.notifications = this.translate("modalNotifTrue");
+                break;
+              case false:
+                this.notifications = this.translate("modalNotifFalse");
+                break;
+            }
+            let img = response.data.body.img;
+            /*if (img == "") {
+                this.img = "../assets/avatar.png";
+              } else this.img = img;*/
+            this.img = response.data.body.img;
+            this.isShow = false;
+            return true;
           })
           .catch(() => {
             this.message.msg = "Ocorreu um problema";
             this.message.type = "warning";
-            this.isShow = true;
-            this.showLoader(false);
+            this.isShow = false;
+            return false;
           });
+      },
+      async detailsModal(id) {
+        await this.detail(id);
+        this.isModalVisible = true;
+      },
+      closeModal() {
+        this.isModalVisible = false;
       },
     },
   };

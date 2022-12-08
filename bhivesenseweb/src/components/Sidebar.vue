@@ -42,45 +42,53 @@
             data-bs-target="#apiaries-collapse"
             aria-expanded="false"
           >
-            Apiaries
+            {{ translate("sbarApiaries") }}
           </button>
           <section class="collapse" id="apiaries-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-              <!--<li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">All apiaries</a></li>-->
               <li>
                 <router-link
-                  to="/login"
+                  to="/apiaries"
                   class="link-dark d-inline-flex text-decoration-none rounded"
                   style="text-decoration: none"
-                  >Inscrições</router-link
+                  >{{ translate("sbarApiariesAll") }}</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/newapiary"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none"
+                  >{{ translate("sbarApiariesNew") }}</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to=""
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none"
+                  >{{ translate("sbarApiariesDelete") }}</router-link
                 >
               </li>
               <li>
                 <a
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >Create apiary</a
+                  >{{ translate("sbarApiariesAddHive") }}</a
                 >
               </li>
               <li>
                 <a
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >Register hive in apiary</a
+                  >{{ translate("sbarApiariesRemoveHive") }}</a
                 >
               </li>
               <li>
                 <a
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >Remove hive from apiary</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="link-dark d-inline-flex text-decoration-none rounded"
-                  >Report problem</a
+                  >{{ translate("sbarApiariesProblem") }}</a
                 >
               </li>
             </ul>
@@ -100,7 +108,7 @@
             data-bs-target="#hives-collapse"
             aria-expanded="false"
           >
-            Hives
+            {{ translate("sbarHives") }}
           </button>
           <section class="collapse" id="hives-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -108,14 +116,14 @@
                 <a
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >Register new hive</a
+                  >{{ translate("sbarHivesAll") }}</a
                 >
               </li>
               <li>
                 <a
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >All hives</a
+                  >{{ translate("sbarHivesNew") }}</a
                 >
               </li>
             </ul>
@@ -135,7 +143,7 @@
             data-bs-target="#dashboard-collapse"
             aria-expanded="false"
           >
-            Dashboard
+            {{ translate("sbarAnalytics") }}
           </button>
           <section class="collapse" id="dashboard-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -143,21 +151,21 @@
                 <a
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >Overview</a
+                  >{{ translate("sbarAnalyticsLast") }}</a
                 >
               </li>
               <li>
                 <a
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >Weekly</a
+                  >{{ translate("sbarAnalyticsWeek") }}</a
                 >
               </li>
               <li>
                 <a
                   href="#"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >Monthly</a
+                  >{{ translate("sbarAnalyticsMonth") }}</a
                 >
               </li>
             </ul>

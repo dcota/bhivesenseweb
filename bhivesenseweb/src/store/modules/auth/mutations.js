@@ -23,6 +23,7 @@ export default {
 
     [SET_IMAGE_MUTATION](state, payload) {
         state.img = payload.img
-    }
+    },
+
 
 }

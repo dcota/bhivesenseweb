@@ -16,7 +16,7 @@ import {
     SET_AUTO_LOGOUT_MUTATION,
     SET_IMAGE_MUTATION,
     AUTO_IMAGE_ACTION,
-    IMAGE_ACTION
+    IMAGE_ACTION,
 } from '../../storeconstants'
 
 import axios from 'axios'
@@ -42,7 +42,6 @@ export default {
 
     [AUTO_LOGIN_ACTION](context) {
         let userDataString = localStorage.getItem('userData')
-        console.log(userDataString)
         if (userDataString) {
             let userData = JSON.parse(userDataString)
             let expirationTime = userData.expiresIn - new Date().getTime()
@@ -96,6 +95,7 @@ export default {
         return context.dispatch(AUTH_ACTION, {
             ...payload,
             url: 'https://bhsapi.duartecota.com/auth'
+
         })
     },
 
@@ -106,7 +106,6 @@ export default {
     },
 
     [IMAGE_ACTION](context, payload) {
-        console.log(payload.img)
         context.commit(SET_IMAGE_MUTATION, payload)
-    }
+    },
 }

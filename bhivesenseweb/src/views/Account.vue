@@ -7,7 +7,6 @@ Description: implementation of the view Alterar Conta
 <template>
   <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
-      <!---->
       <h1 class="text-center mt-5">{{ translate("accFormTitle") }}</h1>
       <section
         v-if="showsection"
@@ -49,7 +48,7 @@ Description: implementation of the view Alterar Conta
               />
               <img
                 v-else
-                src="../assets/avatar.png"
+                src="@/assets/avatar.png"
                 width="100"
                 height="100"
                 class="rounded-circle me-2"
@@ -257,7 +256,6 @@ select option[disabled]:first-child {
   import Modal from "../components/ModalCancelAccount.vue";
   import { mapGetters, mapMutations, mapActions } from "vuex";
   import {
-    LOADING_SPINNER_SHOW_MUTATION,
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,

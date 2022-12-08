@@ -54,6 +54,22 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'apiaries',
+            component: () =>
+                import ('../views/Apiaries.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'newapiary',
+            component: () =>
+                import ('../views/Newapiary.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

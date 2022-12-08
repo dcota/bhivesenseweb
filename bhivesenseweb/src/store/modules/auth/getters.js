@@ -32,5 +32,5 @@ export default {
     },
     [GET_USER_AVATAR_GETTER]: state => {
         return state.img
-    }
+    },
 }

@@ -1,9 +1,7 @@
 <template>
   <section>
-    <Header />
-    <Nav />
-    <Sidebar />
-    <Loader v-if="showLoader"></Loader>
+    <!--<Sidebar />-->
+    <!--<Loader v-if="showLoader"></Loader>-->
     <section id="content"><router-view></router-view></section>
   </section>
 </template>
