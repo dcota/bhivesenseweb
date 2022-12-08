@@ -90,8 +90,11 @@ export default {
                 modalApiary: "APIARY DETAILS",
                 modalApiaryAddress: "Address: ",
                 modalApiaryObservations: "Observations: ",
-
-
+                formNewApiaryTitle: "NEW APIARY",
+                formNewApiaryLocation: "Location",
+                formNewApiaryAddress: "Address",
+                formNewApiaryObservations: "Observations",
+                mesNewApiarySuccess: "New apiary successfuly created!"
             }
         }
     }

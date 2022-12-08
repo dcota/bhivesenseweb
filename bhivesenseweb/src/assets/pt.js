@@ -90,6 +90,11 @@ export default {
                 modalApiary: "DETALHES DO APIÁRIO",
                 modalApiaryAddress: "Endereço: ",
                 modalApiaryObservations: "Observações: ",
+                formNewApiaryTitle: "CRIAR APIÁRIO",
+                formNewApiaryLocation: "Local",
+                formNewApiaryAddress: "Endereço",
+                formNewApiaryObservations: "Observações",
+                mesNewApiarySuccess: "Novo apiário criado com sucesso!"
             }
         }
     }

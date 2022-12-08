@@ -245,9 +245,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
                 break;
             }
             let img = response.data.body.img;
-            /*if (img == "") {
-                this.img = "../assets/avatar.png";
-              } else this.img = img;*/
             this.img = response.data.body.img;
             this.isShow = false;
             return true;

@@ -71,7 +71,7 @@
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  width: 30%;
+  width: 50%;
   height: auto;
   position: absolute;
   left: 50%;
