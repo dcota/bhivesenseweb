@@ -118,7 +118,6 @@ select option[disabled]:first-child {
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
   } from "../store/storeconstants";
-  import { cloneWithoutLoc } from "@babel/types";
   export default {
     name: "new Apiary",
     mixins: [en, pt],
@@ -214,3 +213,4 @@ select option[disabled]:first-child {
     },
   };
 </script>
+
