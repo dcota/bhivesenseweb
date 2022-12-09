@@ -22,7 +22,7 @@
 <style scoped>
 .dashboard {
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 250px auto;
 }
 
 .content {

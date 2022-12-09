@@ -11,7 +11,9 @@
           text-decoration-none
         "
       >
-        <router-link to="/"><img :src="logo" alt="" /></router-link>
+        <router-link to="/"
+          ><img :src="logo" style="width: 90%" alt=""
+        /></router-link>
       </a>
       <section class="d-flex justify-content-center">
         <select
@@ -222,10 +224,10 @@
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
                 <router-link
-                  to=""
+                  to="/newdevice"
                   class="link-dark d-inline-flex text-decoration-none rounded"
                   style="text-decoration: none"
-                  >{{ translate("sbarDevicesManage") }}</router-link
+                  >{{ translate("sbarDevicesNew") }}</router-link
                 >
               </li>
               <li>
@@ -233,7 +235,7 @@
                   to=""
                   class="link-dark d-inline-flex text-decoration-none rounded"
                   style="text-decoration: none"
-                  >{{ translate("sbarDevicesNew") }}</router-link
+                  >{{ translate("sbarDevicesManage") }}</router-link
                 >
               </li>
             </ul>
@@ -329,7 +331,7 @@
       </section>
     </section>
 
-    <section class="b-example-vr" style="width: 0px !important"></section>
+    <!--<section class="b-example-vr" style="width: 0px !important"></section>-->
 
     <section
       class="container-fluid d-flex justify-content-center overflow-auto"

@@ -94,7 +94,18 @@ export default {
                 formNewApiaryLocation: "Location",
                 formNewApiaryAddress: "Address",
                 formNewApiaryObservations: "Observations",
-                mesNewApiarySuccess: "New apiary successfuly created!"
+                mesNewApiarySuccess: "New apiary successfuly created!",
+                formNewDeviceTitle: "REGISTER NEW DEVICE",
+                formNewDeviceID: "New device ID",
+                formNewDeviceBtnGenerate: "GET ID",
+                mesNewDeviceSuccess: "New device successfully generated!",
+                btnModalGenerate: "Generate",
+                newDeviceModal: "Do you wish to generate a new device ID?",
+                newDeviceCopyBtn: "Copy",
+                newDeviceCopyAlert: "ID copied!",
+                newDeviceNoID: "No new ID to copy!"
+
+
             }
         }
     }

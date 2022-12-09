@@ -94,7 +94,16 @@ export default {
                 formNewApiaryLocation: "Local",
                 formNewApiaryAddress: "Endereço",
                 formNewApiaryObservations: "Observações",
-                mesNewApiarySuccess: "Novo apiário criado com sucesso!"
+                mesNewApiarySuccess: "Novo apiário criado com sucesso!",
+                formNewDeviceTitle: "REGISTAR NOVO DISPOSITIVO",
+                formNewDeviceID: "ID do novo dispositivo",
+                formNewDeviceBtnGenerate: "OBTER ID",
+                mesNewDeviceSuccess: "Novo dispositivo gerado com sucesso!",
+                btnModalGenerate: "Gerar",
+                newDeviceModal: "Deseja obter um novo ID de dispositivo?",
+                newDeviceCopyBtn: "Copiar",
+                newDeviceCopyAlert: "ID copiado!",
+                newDeviceNoID: "Novo ID inexistente!"
             }
         }
     }

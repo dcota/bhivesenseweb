@@ -70,6 +70,14 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'newdevice',
+            component: () =>
+                import ('../views/Newdevice.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 
