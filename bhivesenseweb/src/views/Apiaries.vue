@@ -46,31 +46,27 @@
               <section class="row">
                 <section class="col-sm-6 mt-1">
                   <button
-                    href="#"
+                    data-bs-toggle="tooltip"
+                    v-bind:title="translate('lblCardApiaryBtn')"
+                    data-bs-placement="bottom"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="translate('lblCardApiaryBtn')"
                     class="btn text-center bn"
                     @click="detailsModal(apiary._id)"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    data-bs-custom-class="custom-tooltip"
-                    data-bs-title="This top tooltip is themed via CSS variables."
                   >
                     <i class="fas fa-search me-1" aria-hidden="true"></i>
-                    <span
-                      class="label label-default"
-                      v-tooltip:bottom="'Your tooltip text'"
-                    ></span>
-
-                    <!--<strong>{{ translate("lblCardApiaryBtn") }}</strong>-->
                   </button>
                 </section>
                 <section class="col-sm-6 mt-1">
                   <button
-                    href="#"
+                    data-bs-toggle="tooltip"
+                    v-bind:title="translate('lblCardInterventionsBtn')"
+                    data-bs-placement="bottom"
+                    data-bs-custom-class="custom-tooltip"
                     class="btn text-center bn"
                     @click="detailsModal(apiary._id)"
                   >
                     <i class="fas fa-wrench"></i>
-                    <!--<strong>{{ translate("lblCardInterventionsBtn") }}</strong>-->
                   </button>
                 </section>
               </section>
@@ -79,6 +75,7 @@
         </section>
       </section>
     </section>
+
     <section class="text-center">
       <section v-if="isShow" class="text-center">
         <section class="spinner-border mt-4" role="status">
@@ -98,6 +95,9 @@
 </template>
 
 <style scoped>
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bs-primary);
+}
 </style>
 
 <script>
@@ -105,7 +105,7 @@
   import pt from "../assets/pt.js";
   import axios from "axios";
   import Modal from "../components/ModalApiaryDetails.vue";
-  import { mapGetters, mapMutations, mapActions } from "vuex";
+  import { mapGetters } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,
@@ -137,15 +137,10 @@
         token: GET_USER_TOKEN_GETTER,
         level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
+        el: "#app",
       }),
     },
     mounted() {
-      const tooltipTriggerList = document.querySelectorAll(
-        '[data-bs-toggle="tooltip"]'
-      );
-      const tooltipList = [...tooltipTriggerList].map(
-        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-      );
       this.getApiaries();
     },
     methods: {
