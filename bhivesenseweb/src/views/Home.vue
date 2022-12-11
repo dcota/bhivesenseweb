@@ -19,7 +19,7 @@ Description: implementation of the view Home
 }
 
 .my-img {
-  max-width: 40%;
+  max-width: 30%;
   height: auto;
 }
 

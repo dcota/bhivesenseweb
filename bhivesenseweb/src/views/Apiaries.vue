@@ -1,5 +1,5 @@
 <template>
-  <section class="container justify-content-center">
+  <section class="container justify-content-center" style="width: 80%">
     <h1 class="text-center mt-5">{{ translate("apiaryAllTitle") }}</h1>
     <section
       v-if="showsection"
@@ -11,7 +11,7 @@
     </section>
     <section class="row mt-5">
       <section
-        class="col-12 col-md-6 col-lg-3"
+        class="col-12 col-md-6 col-lg-4"
         v-for="apiary of this.apiaries"
         :key="apiary._id"
       >
@@ -41,14 +41,39 @@
             <p class="card-text text-center">
               <strong>{{ apiary.location }}</strong>
             </p>
+            <hr />
             <section class="text-center">
-              <button
-                href="#"
-                class="btn text-center bn"
-                @click="detailsModal(apiary._id)"
-              >
-                <strong>{{ translate("lblCardApiaryBtn") }}</strong>
-              </button>
+              <section class="row">
+                <section class="col-sm-6 mt-1">
+                  <button
+                    href="#"
+                    class="btn text-center bn"
+                    @click="detailsModal(apiary._id)"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-custom-class="custom-tooltip"
+                    data-bs-title="This top tooltip is themed via CSS variables."
+                  >
+                    <i class="fas fa-search me-1" aria-hidden="true"></i>
+                    <span
+                      class="label label-default"
+                      v-tooltip:bottom="'Your tooltip text'"
+                    ></span>
+
+                    <!--<strong>{{ translate("lblCardApiaryBtn") }}</strong>-->
+                  </button>
+                </section>
+                <section class="col-sm-6 mt-1">
+                  <button
+                    href="#"
+                    class="btn text-center bn"
+                    @click="detailsModal(apiary._id)"
+                  >
+                    <i class="fas fa-wrench"></i>
+                    <!--<strong>{{ translate("lblCardInterventionsBtn") }}</strong>-->
+                  </button>
+                </section>
+              </section>
             </section>
           </section>
         </section>
@@ -85,8 +110,6 @@
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
-    AUTO_IMAGE_ACTION,
-    LOGOUT_ACTION,
   } from "../store/storeconstants";
   export default {
     name: "Apiaries",
@@ -117,6 +140,12 @@
       }),
     },
     mounted() {
+      const tooltipTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="tooltip"]'
+      );
+      const tooltipList = [...tooltipTriggerList].map(
+        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+      );
       this.getApiaries();
     },
     methods: {

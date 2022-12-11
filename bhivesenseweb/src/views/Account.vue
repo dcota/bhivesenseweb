@@ -373,21 +373,24 @@ select option[disabled]:first-child {
                 this.isShow = false;
                 this.showsection = true;
                 this.message.type = "success";
-                this.message.msg = "Alterações registadas com sucesso.";
+                this.message.msg = this.translate("mesChangeSuccess");
                 this.imgChng({
                   img: response.data.body.img,
                 });
+                setTimeout(() => (this.showsection = false), 3000);
               } else {
                 this.isShow = false;
                 this.showsection = true;
                 this.message.type = "danger";
                 this.message.msg = "Ocorreu um problema, tente de novo...";
+                setTimeout(() => (this.showsection = false), 3000);
               }
             })
             .catch(() => {
               this.isShow = false;
               this.showsection = true;
-              this.error = "Valores inválidos!";
+              this.error = this.translate("mesChangeInvalid");
+              setTimeout(() => (this.showsection = false), 3000);
             });
         } else {
           this.isShow = false;

@@ -15,7 +15,7 @@
           ><img :src="logo" style="width: 90%" alt=""
         /></router-link>
       </a>
-      <section class="d-flex justify-content-center">
+      <section class="d-flex justify-content-center" style="width: 90%">
         <select
           class="form-select mt-2"
           name="lang"
@@ -28,7 +28,7 @@
           <option value="pt">pt</option>
         </select>
       </section>
-      <hr v-if="isAuthenticated" />
+      <hr style="width: 90%" />
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
@@ -242,7 +242,8 @@
           </section>
         </li>
 
-        <li class="border-top my-3"></li>
+        <!--<li class="border-top my-3"></li>-->
+        <hr v-if="isAuthenticated" style="width: 90%" />
         <li class="mb-1" v-if="!isAuthenticated">
           <button
             class="
@@ -315,7 +316,7 @@
             </router-link>
           </li>
           <li>
-            <hr class="dropdown-sectionider" />
+            <hr class="dropdown-sectionider" style="width: 90%" />
           </li>
 
           <li>

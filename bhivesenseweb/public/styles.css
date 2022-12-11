@@ -4,7 +4,6 @@ Description: gloab style sheet
 */
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-
 * {
     font-family: 'Montserrat', sans-serif;
 }
@@ -127,6 +126,7 @@ main {
 
 .bn {
     background-color: #ebc002;
+    width: 100px !important;
 }
 
 .bn:hover {
