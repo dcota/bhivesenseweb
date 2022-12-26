@@ -44,26 +44,37 @@
             <hr />
             <section class="text-center">
               <section class="row">
-                <section class="col-sm-6 mt-1">
+                <section class="col-sm-4 mt-1">
                   <button
                     data-bs-toggle="tooltip"
                     v-bind:title="translate('lblCardApiaryBtn')"
                     data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
-                    data-bs-title="translate('lblCardApiaryBtn')"
-                    class="btn text-center bn"
+                    class="btn text-center bn_card"
                     @click="detailsModal(apiary._id)"
                   >
-                    <i class="fas fa-search me-1" aria-hidden="true"></i>
+                    <i class="fas fa-search" aria-hidden="true"></i>
                   </button>
                 </section>
-                <section class="col-sm-6 mt-1">
+                <section class="col-sm-4 mt-1">
+                  <button
+                    data-bs-toggle="tooltip"
+                    v-bind:title="translate('lblCardDeleteBtn')"
+                    data-bs-placement="bottom"
+                    data-bs-custom-class="custom-tooltip"
+                    class="btn text-center bn_card"
+                    @click="deleteModal(apiary._id)"
+                  >
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                  </button>
+                </section>
+                <section class="col-sm-4 mt-1">
                   <button
                     data-bs-toggle="tooltip"
                     v-bind:title="translate('lblCardInterventionsBtn')"
                     data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
-                    class="btn text-center bn"
+                    class="btn text-center bn_card"
                     @click="detailsModal(apiary._id)"
                   >
                     <i class="fas fa-wrench"></i>
@@ -84,19 +95,29 @@
         <section class="mb-2">{{ translate("spinnerTxt") }}</section>
       </section>
     </section>
-    <Modal
-      v-show="isModalVisible"
-      @close="closeModal"
+    <ModalDetails
+      v-show="isModalDetailsVisible"
+      @close="closeDetailsModal"
       :address="address"
       :observations="observations"
+    />
+    <ModalDelete
+      v-show="isModalDeleteVisible"
+      @_close="closeDeleteModal"
+      @deleteAction="_delete"
     />
     <section class="spacer"></section>
   </section>
 </template>
 
 <style scoped>
-.custom-tooltip {
-  --bs-tooltip-bg: var(--bs-primary);
+.bn_card {
+  background-color: #ebc002;
+  width: 60px;
+}
+
+.bn_card:hover {
+  background-color: #947902;
 }
 </style>
 
@@ -104,7 +125,8 @@
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import axios from "axios";
-  import Modal from "../components/ModalApiaryDetails.vue";
+  import ModalDetails from "../components/ModalApiaryDetails.vue";
+  import ModalDelete from "../components/ModalDeleteDevice.vue";
   import { mapGetters } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
@@ -115,7 +137,8 @@
     name: "Apiaries",
     mixins: [en, pt],
     components: {
-      Modal,
+      ModalDetails,
+      ModalDelete,
     },
     data: function () {
       const lang = localStorage.getItem("lang") || "pt";
@@ -128,8 +151,10 @@
           msg: "",
         },
         isShow: true,
-        isModalVisible: false,
+        isModalDetailsVisible: false,
+        isModalDeleteVisible: false,
         showsection: false,
+        toDeleteID: "",
       };
     },
     computed: {
@@ -183,8 +208,11 @@
       translate(prop) {
         return this[this.lang][prop];
       },
-      closeModal() {
-        this.isModalVisible = false;
+      closeDetailsModal() {
+        this.isModalDetailsVisible = false;
+      },
+      closeDeleteModal() {
+        this.isModalDeleteVisible = false;
       },
       async detail(id) {
         this.isShow = true;
@@ -211,9 +239,44 @@
             return false;
           });
       },
+      async _delete() {
+        this.isModalDeleteVisible = false;
+        this.isShow = true;
+        await axios
+          .delete("https://bhsapi.duartecota.com/apiary/" + this.toDeleteID, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            if (response.data.http == 200) {
+              this.isShow = false;
+              this.showsection = true;
+              this.message.type = "success";
+              this.message.msg = this.translate("deleteApiarySuccess");
+              setTimeout(() => (this.showsection = false), 3000);
+            } else if (response.data.http == 202) {
+              this.isShow = false;
+              this.showsection = true;
+              this.message.type = "danger";
+              this.message.msg = this.translate("deleteApiaryFail");
+              setTimeout(() => (this.showsection = false), 3000);
+            }
+          })
+          .catch(() => {
+            this.isShow = false;
+            this.showsection = true;
+            this.message.type = "danger";
+            this.message.msg = this.translate("mesProblem");
+          });
+      },
       async detailsModal(id) {
         await this.detail(id);
-        this.isModalVisible = true;
+        this.isModalDetailsVisible = true;
+      },
+      async deleteModal(id) {
+        this.toDeleteID = id;
+        this.isModalDeleteVisible = true;
       },
     },
   };

@@ -90,6 +90,7 @@ export default {
                 lblCardApiary: "Apiário ",
                 lblCardApiaryBtn: "Detalhes do apiário",
                 lblCardInterventionsBtn: "Gerir intervenções",
+                lblCardDeleteBtn: "Eliminar apiário",
                 modalApiary: "DETALHES DO APIÁRIO",
                 modalApiaryAddress: "Endereço: ",
                 modalApiaryObservations: "Observações: ",
@@ -106,7 +107,11 @@ export default {
                 newDeviceModal: "Deseja obter um novo ID de dispositivo?",
                 newDeviceCopyBtn: "Copiar",
                 newDeviceCopyAlert: "ID copiado!",
-                newDeviceNoID: "Novo ID inexistente!"
+                newDeviceNoID: "Novo ID inexistente!",
+                deleteTitleModal: "ELIMINAR APIÁRIO",
+                deleteApiaryText: "Deseja eliminar este apiário?",
+                deleteApiaryFail: "Não pode eliminar um apiário com colmeias associadas!",
+                btnModalDeleteApiary: "Eliminar"
             }
         }
     }

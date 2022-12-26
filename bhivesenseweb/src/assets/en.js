@@ -90,6 +90,7 @@ export default {
                 lblCardApiary: "Apiary ",
                 lblCardApiaryBtn: "Apiary details",
                 lblCardInterventionsBtn: "Manage interventions",
+                lblCardDeleteBtn: "Delete apiary",
                 modalApiary: "APIARY DETAILS",
                 modalApiaryAddress: "Address: ",
                 modalApiaryObservations: "Observations: ",
@@ -106,8 +107,12 @@ export default {
                 newDeviceModal: "Do you wish to generate a new device ID?",
                 newDeviceCopyBtn: "Copy",
                 newDeviceCopyAlert: "ID copied!",
-                newDeviceNoID: "No new ID to copy!"
-
+                newDeviceNoID: "No new ID to copy!",
+                deleteTitleModal: "DELETE APIARY",
+                deleteApiaryText: "Do you wish to delete this apiary?",
+                deleteApiarySuccess: "Apiary successfuly deleted!",
+                deleteApiaryFail: "You cannot delete an apiary with hives!",
+                btnModalDeleteApiary: "Delete",
 
             }
         }
