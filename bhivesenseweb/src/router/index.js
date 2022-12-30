@@ -27,7 +27,7 @@ const routes = [{
         {
             path: 'newaccount',
             component: () =>
-                import ('../views/Enrollment.vue'),
+                import ('../views/Newaccount.vue'),
             meta: { auth: false }
         },
         {

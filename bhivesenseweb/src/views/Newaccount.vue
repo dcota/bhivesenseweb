@@ -131,6 +131,7 @@ Description: implementation of the view Ficha de Inscrição
               class="form-control"
               id="course"
               style="font-size: small"
+              @keypress="validateNumber"
             />
           </section>
           <section class="col-md-4 g-4">
@@ -138,7 +139,7 @@ Description: implementation of the view Ficha de Inscrição
               translate("newAccEmailPh")
             }}</label>
             <input
-              type="text"
+              type="email"
               v-model="form.email"
               class="form-control"
               id="email"
@@ -157,6 +158,7 @@ Description: implementation of the view Ficha de Inscrição
               class="form-control"
               id="mobile"
               style="font-size: small"
+              @keypress="validateMobile"
             />
           </section>
           <section class="col-md-6 g-4">
@@ -218,7 +220,7 @@ Description: implementation of the view Ficha de Inscrição
           </section>
         </section>
         <section class="text-center">
-          <button @click="send()" type="submit" class="btn mt-4 me-4 my-button">
+          <button type="submit" class="btn mt-4 me-4 my-button">
             {{ translate("btnSubmit") }}
           </button>
           <button
@@ -261,7 +263,7 @@ select option[disabled]:first-child {
   display: none;
 }
 .my-body {
-  margin-top: 0px;
+  margin-top: 100px;
 }
 .spacer {
   height: 200px;
@@ -276,6 +278,7 @@ select option[disabled]:first-child {
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import axios from "axios";
+  import { notify } from "@kyvg/vue3-notification";
   import { mapMutations } from "vuex";
   import { LOADING_SPINNER_SHOW_MUTATION } from "../store/storeconstants";
   export default {
@@ -317,6 +320,18 @@ select option[disabled]:first-child {
       ...mapMutations({
         showLoader: LOADING_SPINNER_SHOW_MUTATION,
       }),
+      validateNumber: (event) => {
+        let keyCode = event.keyCode;
+        if (keyCode < 48 || keyCode > 57) {
+          event.preventDefault();
+        }
+      },
+      validateMobile: (event) => {
+        let keyCode = event.keyCode;
+        if (keyCode < 48 || keyCode > 57) {
+          if (keyCode != 43) event.preventDefault();
+        }
+      },
       async send() {
         (this.message.type = ""), (this.message.msg = "");
         let postData = new FormData();
@@ -341,36 +356,56 @@ select option[disabled]:first-child {
               headers: { "Content-Type": "multipart/form-data" },
             })
             .then((response) => {
-              console.log(response.data.http);
               if (response.data.http == 201) {
                 this.isShow = false;
-                this.showsection = true;
-                this.message.type = "success";
-                this.message.msg = this.translate("mesNewAccount");
+                notify({
+                  title: this.translate("notifSuccessTitle"),
+                  text: this.translate("mesNewAccount"),
+                  type: "success",
+                  duration: 3000,
+                  speed: 500,
+                });
               } else if (response.data.http == 200) {
                 this.isShow = false;
-                this.showsection = true;
-                this.message.type = "warning";
-                this.message.msg = this.translate("mesUserExists");
+                notify({
+                  title: this.translate("notifWarningTitle"),
+                  text: this.translate("mesUserExists"),
+                  type: "warn",
+                  duration: 3000,
+                  speed: 500,
+                });
+                return;
               } else {
                 this.isShow = false;
-                this.showsection = true;
-                this.message.type = "danger";
-                this.message.msg = this.translate("mesProblem");
+                notify({
+                  title: this.translate("notifErrorTitle"),
+                  text: this.translate("mesProblem"),
+                  type: "error",
+                  duration: 3000,
+                  speed: 500,
+                });
               }
             })
             .catch((error) => {
-              console.log(error);
               this.isShow = false;
-              this.showsection = true;
-              this.message.type = "danger";
-              this.message.msg = this.translate("mesProblem");
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesProblem"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
             });
         } else {
           this.isShow = false;
-          this.showsection = true;
-          this.message.type = "danger";
-          this.message.msg = this.translate("mesFields");
+          notify({
+            title: this.translate("notifErrorTitle"),
+            text: this.translate("mesFields"),
+            type: "error",
+            duration: 3000,
+            speed: 500,
+          });
+          return;
         }
       },
       cleanForm() {

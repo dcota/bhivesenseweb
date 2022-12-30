@@ -48,7 +48,7 @@ Description: implementation of the view Alterar Conta
               />
               <img
                 v-else
-                src="@/assets/avatar.png"
+                :src="img"
                 width="100"
                 height="100"
                 class="rounded-circle me-2"
@@ -238,7 +238,7 @@ select option[disabled]:first-child {
   display: none;
 }
 .my-body {
-  margin-top: 0px;
+  margin-top: 100px;
 }
 .spacer {
   height: 200px;
@@ -262,6 +262,7 @@ select option[disabled]:first-child {
     GET_USER_ID_GETTER,
     AUTO_IMAGE_ACTION,
     LOGOUT_ACTION,
+    GET_USER_AVATAR_GETTER,
   } from "../store/storeconstants";
   export default {
     name: "submit",
@@ -302,6 +303,7 @@ select option[disabled]:first-child {
         token: GET_USER_TOKEN_GETTER,
         level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
+        img: GET_USER_AVATAR_GETTER,
       }),
     },
     mounted() {

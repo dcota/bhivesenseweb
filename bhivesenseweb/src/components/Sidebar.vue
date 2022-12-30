@@ -64,14 +64,6 @@
                   >{{ translate("sbarApiariesNew") }}</router-link
                 >
               </li>
-              <!--<li>
-                <router-link
-                  to=""
-                  class="link-dark d-inline-flex text-decoration-none rounded"
-                  style="text-decoration: none"
-                  >{{ translate("sbarApiariesDelete") }}</router-link
-                >
-              </li>-->
               <li>
                 <a
                   href="#"
@@ -242,8 +234,32 @@
           </section>
         </li>
 
-        <!--<li class="border-top my-3"></li>-->
         <hr v-if="isAuthenticated" style="width: 90%" />
+
+        <section
+          class="mt-3"
+          style="margin-left: 50px"
+          v-if="isAuthenticated && level == 'beekeeper'"
+        >
+          <button type="button" class="btn bn_card position-relative">
+            <strong> <i class="fas fa-bell" aria-hidden="true"></i> </strong>
+            <span
+              class="
+                position-absolute
+                top-0
+                start-100
+                translate-middle
+                badge
+                rounded-pill
+                bg-danger
+              "
+            >
+              10+
+              <span class="visually-hidden">unread messages</span>
+            </span>
+          </button>
+        </section>
+
         <li class="mb-1" v-if="!isAuthenticated">
           <button
             class="
@@ -332,8 +348,6 @@
       </section>
     </section>
 
-    <!--<section class="b-example-vr" style="width: 0px !important"></section>-->
-
     <section
       class="container-fluid d-flex justify-content-center overflow-auto"
       style="background-color: #ebc002; height: 100vh"
@@ -342,6 +356,17 @@
 </template>
 
 <style scoped>
+.bn_card {
+  background-color: #ebc002;
+  border-radius: 20px;
+  width: 100px;
+  font-size: 20px;
+}
+
+.bn_card:hover {
+  background-color: #947902;
+}
+
 .dropdown-toggle {
   outline: 0;
 }

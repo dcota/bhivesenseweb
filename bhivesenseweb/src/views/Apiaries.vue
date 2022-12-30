@@ -1,6 +1,6 @@
 <template>
-  <section class="container justify-content-center" style="width: 80%">
-    <h1 class="text-center mt-5">{{ translate("apiaryAllTitle") }}</h1>
+  <section class="container">
+    <h1 class="text-center my-body">{{ translate("apiaryAllTitle") }}</h1>
     <section class="row mt-5">
       <section
         class="col-12 col-md-6 col-lg-4"
@@ -11,8 +11,8 @@
           class="card mb-5 mh-100"
           style="
             border-radius: 35px;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
-              rgba(0, 0, 0, 0.22) 0px 10px 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
+              0 6px 20px 0 rgba(0, 0, 0, 0.1);
           "
         >
           <img
@@ -100,11 +100,14 @@
       @_close="closeDeleteModal"
       @deleteAction="_delete"
     />
-    <section class="spacer"></section>
+    <!--<section class="spacer"></section>-->
   </section>
 </template>
 
 <style scoped>
+.my-body {
+  margin-top: 100px;
+}
 .bn_card {
   background-color: #ebc002;
   border-radius: 20px;
@@ -114,6 +117,9 @@
 .bn_card:hover {
   background-color: #947902;
 }
+.spacer {
+  height: 200px;
+}
 </style>
 
 <script>
@@ -121,7 +127,7 @@
   import pt from "../assets/pt.js";
   import axios from "axios";
   import ModalDetails from "../components/ModalApiaryDetails.vue";
-  import ModalDelete from "../components/ModalDeleteDevice.vue";
+  import ModalDelete from "../components/ModalDeleteApiary.vue";
   import { notify } from "@kyvg/vue3-notification";
   import { mapGetters, mapActions } from "vuex";
   import {
@@ -260,23 +266,34 @@
           .then((response) => {
             if (response.data.http == 200) {
               this.isShow = false;
-              this.showsection = true;
-              this.message.type = "success";
-              this.message.msg = this.translate("deleteApiarySuccess");
-              setTimeout(() => (this.showsection = false), 3000);
+              notify({
+                title: this.translate("notifSuccessTitle"),
+                text: this.translate("deleteApiarySuccess"),
+                type: "success",
+                duration: 3000,
+                speed: 500,
+              });
+              this.getApiaries();
             } else if (response.data.http == 202) {
               this.isShow = false;
-              this.showsection = true;
-              this.message.type = "danger";
-              this.message.msg = this.translate("deleteApiaryFail");
-              setTimeout(() => (this.showsection = false), 3000);
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("deleteApiaryFail"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
             }
           })
           .catch(() => {
             this.isShow = false;
-            this.showsection = true;
-            this.message.type = "danger";
-            this.message.msg = this.translate("mesProblem");
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblems"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
           });
       },
       async detailsModal(id) {

@@ -45,6 +45,7 @@ export default {
                 btnClean: "LIMPAR",
                 btnBack: "VOLTAR",
                 btnNew: "NOVA",
+                btnNotifications: "Notificações",
                 profilePhoto: "Foto de perfil",
                 photoButton: "Ficheiro",
                 mesNewAccount: 'Conta criada com sucesso.',
