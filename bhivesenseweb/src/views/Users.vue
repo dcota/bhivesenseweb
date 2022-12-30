@@ -21,35 +21,52 @@ Description: implementation of the view Gestão de Alunos (Admin)
       <h4>{{ translate("usersLbl") }}</h4>
     </section>
     <section class="card mt-2">
-      <section class="card-body">
+      <section
+        class="card-body"
+        style="
+          border-radius: 3px;
+          box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+            rgba(0, 0, 0, 0.22) 0px 10px 10px;
+        "
+      >
         <table class="table mt-2">
           <tbody>
             <tr>
-              <th>{{ translate("thdName") }}</th>
-              <th>{{ translate("thdStatus") }}</th>
-              <th>{{ translate("thdLastAccess") }}</th>
-              <th class="text-center">{{ translate("thdActions") }}</th>
+              <th>{{ translate("thdUsersName") }}</th>
+              <th class="text-center">{{ translate("thdUsersStatus") }}</th>
+              <th class="text-center">{{ translate("thdUsersLastAccess") }}</th>
+              <th class="text-center">{{ translate("thdUsersActions") }}</th>
             </tr>
             <tr v-for="user of this.users" :key="user._id">
               <td>{{ user.name }}</td>
-              <td>{{ user.status }}</td>
-              <td>{{ user.lastlogin }}</td>
+              <td class="text-center">{{ user.status }}</td>
+              <td class="text-center">{{ user.lastlogin }}</td>
               <td class="text-center">
                 <button
+                  data-bs-toggle="tooltip"
+                  v-bind:title="translate('lblDetailsUser')"
+                  data-bs-placement="bottom"
+                  data-bs-custom-class="custom-tooltip"
                   @click="detailsModal(user._id)"
                   type="button"
                   class="btn btn-success btn-sm me-2 ac-btn"
+                  :disabled="!user.active"
+                  style="width: 50px"
                 >
-                  <i class="fas fa-search me-1" aria-hidden="true"></i>
-                  {{ translate("btnDetails") }}
+                  <i class="fas fa-search" aria-hidden="true"></i>
                 </button>
                 <button
-                  @click="cancel(user._id)"
+                  data-bs-toggle="tooltip"
+                  v-bind:title="translate('lblCancelUser')"
+                  data-bs-placement="bottom"
+                  data-bs-custom-class="custom-tooltip"
+                  @click="deleteModal(user._id)"
                   type="button"
                   class="btn btn-danger btn-sm me-2 ac-btn"
+                  :disabled="!user.active"
+                  style="width: 50px"
                 >
-                  <i class="far fa-trash-alt me-1" aria-hidden="true"></i
-                  >Remover
+                  <i class="far fa-trash-alt" aria-hidden="true"></i>
                 </button>
               </td>
             </tr>
@@ -57,9 +74,9 @@ Description: implementation of the view Gestão de Alunos (Admin)
         </table>
       </section>
     </section>
-    <Modal
-      v-show="isModalVisible"
-      @close="closeModal"
+    <ModalDetails
+      v-show="isModalDetailsVisible"
+      @close="closeModalDetails"
       :name="name"
       :type="type"
       :email="email"
@@ -68,6 +85,11 @@ Description: implementation of the view Gestão de Alunos (Admin)
       :nif="nif"
       :notifications="notifications"
       :img="img"
+    />
+    <ModalDelete
+      v-show="isModalDeleteVisible"
+      @close="closeModalDelete"
+      @cancel="cancelUser"
     />
     <section class="text-center">
       <section v-if="isShow" class="text-center">
@@ -96,7 +118,9 @@ Description: implementation of the view Gestão de Alunos (Admin)
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import axios from "axios";
-  import Modal from "../components/ModalUserDetails.vue";
+  import { notify } from "@kyvg/vue3-notification";
+  import ModalDetails from "../components/ModalUserDetails.vue";
+  import ModalDelete from "../components/ModalCancelAccount.vue";
   import { mapGetters } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
@@ -107,7 +131,8 @@ Description: implementation of the view Gestão de Alunos (Admin)
   export default {
     mixins: [en, pt],
     components: {
-      Modal,
+      ModalDetails,
+      ModalDelete,
     },
     data() {
       const lang = localStorage.getItem("lang") || "pt";
@@ -121,7 +146,9 @@ Description: implementation of the view Gestão de Alunos (Admin)
         showsection: false,
         isShow: false,
         lang: lang,
-        isModalVisible: false,
+        isModalDetailsVisible: false,
+        isModalDeleteVisible: false,
+        usertodelete: "",
       };
     },
     computed: {
@@ -155,6 +182,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
                 this.users.push({
                   _id: users[i]._id,
                   name: users[i].name,
+                  active: users[i].active,
                   status:
                     users[i].active == true
                       ? this.translate("usersActive")
@@ -182,22 +210,34 @@ Description: implementation of the view Gestão de Alunos (Admin)
           .then((response) => {
             if (response.data.http == 200) {
               this.isShow = false;
-              this.showsection = true;
-              this.message.type = "success";
-              this.message.msg = this.translate("cancelAccMessage");
-              setTimeout(() => (this.showsection = false), 3000);
+              notify({
+                title: this.translate("notifSuccessTitle"),
+                text: this.translate("cancelAccMessage"),
+                type: "success",
+                duration: 3000,
+                speed: 500,
+              });
               this.getUsers();
             } else {
               this.isShow = false;
-              this.showsection = true;
-              this.message.type = "danger";
-              this.message.msg = this.translate("mesProblem");
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesProblem"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
             }
           })
           .catch(() => {
             this.isShow = false;
-            this.showsection = true;
-            this.error = this.translate("mesProblem");
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
           });
       },
       async detail(id) {
@@ -258,10 +298,21 @@ Description: implementation of the view Gestão de Alunos (Admin)
       },
       async detailsModal(id) {
         await this.detail(id);
-        this.isModalVisible = true;
+        this.isModalDetailsVisible = true;
       },
-      closeModal() {
-        this.isModalVisible = false;
+      async deleteModal(id) {
+        this.usertodelete = id;
+        this.isModalDeleteVisible = true;
+      },
+      closeModalDetails() {
+        this.isModalDetailsVisible = false;
+      },
+      closeModalDelete() {
+        this.isModalDeleteVisible = false;
+      },
+      async cancelUser(id) {
+        await this.cancel(this.usertodelete);
+        this.isModalDeleteVisible = false;
       },
     },
   };

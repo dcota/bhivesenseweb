@@ -64,14 +64,14 @@
                   >{{ translate("sbarApiariesNew") }}</router-link
                 >
               </li>
-              <li>
+              <!--<li>
                 <router-link
                   to=""
                   class="link-dark d-inline-flex text-decoration-none rounded"
                   style="text-decoration: none"
                   >{{ translate("sbarApiariesDelete") }}</router-link
                 >
-              </li>
+              </li>-->
               <li>
                 <a
                   href="#"

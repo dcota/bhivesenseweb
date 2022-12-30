@@ -14,7 +14,8 @@ export default {
             img: '',
             detailid: '',
             expiresIn: 'sss',
-            autoLogout: false
+            autoLogout: false,
+            apidtoedit: ''
         }
     },
     mutations,

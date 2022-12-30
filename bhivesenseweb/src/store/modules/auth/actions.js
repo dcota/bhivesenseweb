@@ -17,6 +17,9 @@ import {
     SET_IMAGE_MUTATION,
     AUTO_IMAGE_ACTION,
     IMAGE_ACTION,
+    APIDTOEDIT_ACTION,
+    SET_APIDTOEDIT_MUTATION,
+    AUTO_APIDTOEDIT_ACTION
 } from '../../storeconstants'
 
 import axios from 'axios'
@@ -69,8 +72,8 @@ export default {
         }
         let response = await axios.post(payload.url, postData)
         if (response.data.http === 200) {
-            let expirationTime = +response.data.body.expiresIn * 1000
-                //let expirationTime = 5000
+            //let expirationTime = + response.data.body.expiresIn * 1000
+            let expirationTime = 600000
             timer = setTimeout(() => {
                 context.dispatch(AUTO_LOGOUT_ACTION)
             }, expirationTime)
@@ -108,4 +111,5 @@ export default {
     [IMAGE_ACTION](context, payload) {
         context.commit(SET_IMAGE_MUTATION, payload)
     },
+
 }

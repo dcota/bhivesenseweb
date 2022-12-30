@@ -2,6 +2,11 @@
   <section>
     <!--<Sidebar />-->
     <!--<Loader v-if="showLoader"></Loader>-->
+    <notifications
+      position="bottom right"
+      closeOnClick="true"
+      classes="my-notification"
+    />
     <section id="content"><router-view></router-view></section>
   </section>
 </template>

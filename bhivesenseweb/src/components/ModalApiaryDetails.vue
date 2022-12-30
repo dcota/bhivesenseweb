@@ -25,11 +25,23 @@
           <slot name="body">
             <p>{{ translate("modalApiaryAddress") }} {{ address }}</p>
             <p>{{ translate("modalApiaryObservations") }} {{ observations }}</p>
+            <p>{{ translate("modalApiaryRegDate") }} {{ regdate }}</p>
           </slot>
         </section>
 
         <footer class="modal-footer">
           <div class="row">
+            <div class="col-md-6">
+              <button
+                type="button"
+                class="btn btn-primary"
+                @click="edit"
+                aria-label="Edit"
+              >
+                <i class="fas fa-edit me-1 act-btn" aria-hidden="true"></i>
+                {{ translate("btnModalEdit") }}
+              </button>
+            </div>
             <div class="col-md-6">
               <button
                 type="button"
@@ -51,7 +63,7 @@
   </transition>
 </template>
     
-    <style>
+<style scoped>
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -83,6 +95,23 @@
 .modal-footer {
   padding: 15px;
   display: flex;
+}
+
+.modal-header {
+  position: relative;
+  border-bottom: 1px solid #eeeeee;
+  color: #4aae9b;
+  justify-content: space-between;
+}
+
+.modal-footer {
+  border-top: 1px solid #eeeeee;
+  flex-direction: column;
+}
+
+.modal-body {
+  position: relative;
+  padding: 20px 10px;
 }
 
 .modal-header {
@@ -145,7 +174,7 @@
   export default {
     name: "Modal",
     mixins: [en, pt],
-    props: ["address", "observations"],
+    props: ["address", "observations", "regdate"],
     data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
@@ -162,6 +191,9 @@
     methods: {
       close() {
         this.$emit("close");
+      },
+      edit() {
+        this.$emit("edit");
       },
       translate(prop) {
         return this[this.lang][prop];

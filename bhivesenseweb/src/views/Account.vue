@@ -254,6 +254,7 @@ select option[disabled]:first-child {
   import pt from "../assets/pt.js";
   import axios from "axios";
   import Modal from "../components/ModalCancelAccount.vue";
+  import { notify } from "@kyvg/vue3-notification";
   import { mapGetters, mapMutations, mapActions } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
@@ -371,32 +372,47 @@ select option[disabled]:first-child {
             .then((response) => {
               if (response.data.http == 200) {
                 this.isShow = false;
-                this.showsection = true;
-                this.message.type = "success";
-                this.message.msg = this.translate("mesChangeSuccess");
+                notify({
+                  title: this.translate("notifSuccessTitle"),
+                  text: this.translate("mesChangeSuccess"),
+                  type: "success",
+                  duration: 3000,
+                  speed: 500,
+                });
                 this.imgChng({
                   img: response.data.body.img,
                 });
                 setTimeout(() => (this.showsection = false), 3000);
               } else {
                 this.isShow = false;
-                this.showsection = true;
-                this.message.type = "danger";
-                this.message.msg = "Ocorreu um problema, tente de novo...";
-                setTimeout(() => (this.showsection = false), 3000);
+                notify({
+                  title: this.translate("notifErrorTitle"),
+                  text: this.translate("mesProblem"),
+                  type: "error",
+                  duration: 3000,
+                  speed: 500,
+                });
               }
             })
             .catch(() => {
               this.isShow = false;
-              this.showsection = true;
-              this.error = this.translate("mesChangeInvalid");
-              setTimeout(() => (this.showsection = false), 3000);
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesFields"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
             });
         } else {
           this.isShow = false;
-          this.showsection = true;
-          this.message.type = "danger";
-          this.message.msg = this.translate("mesFields");
+          notify({
+            title: this.translate("notifErrorTitle"),
+            text: this.translate("mesFields"),
+            type: "error",
+            duration: 3000,
+            speed: 500,
+          });
         }
       },
       async imgChng(image) {

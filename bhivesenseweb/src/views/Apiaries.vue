@@ -1,14 +1,6 @@
 <template>
   <section class="container justify-content-center" style="width: 80%">
     <h1 class="text-center mt-5">{{ translate("apiaryAllTitle") }}</h1>
-    <section
-      v-if="showsection"
-      class="alert mt-3 alert-dismissible fade show"
-      role="alert"
-      v-bind:class="'alert-' + message.type"
-    >
-      {{ message.msg }}
-    </section>
     <section class="row mt-5">
       <section
         class="col-12 col-md-6 col-lg-4"
@@ -75,7 +67,7 @@
                     data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
                     class="btn text-center bn_card"
-                    @click="detailsModal(apiary._id)"
+                    @click="interventions(apiary._id)"
                   >
                     <i class="fas fa-wrench"></i>
                   </button>
@@ -98,8 +90,10 @@
     <ModalDetails
       v-show="isModalDetailsVisible"
       @close="closeDetailsModal"
+      @edit="edit"
       :address="address"
       :observations="observations"
+      :regdate="regdate"
     />
     <ModalDelete
       v-show="isModalDeleteVisible"
@@ -113,6 +107,7 @@
 <style scoped>
 .bn_card {
   background-color: #ebc002;
+  border-radius: 20px;
   width: 60px;
 }
 
@@ -127,7 +122,8 @@
   import axios from "axios";
   import ModalDetails from "../components/ModalApiaryDetails.vue";
   import ModalDelete from "../components/ModalDeleteDevice.vue";
-  import { mapGetters } from "vuex";
+  import { notify } from "@kyvg/vue3-notification";
+  import { mapGetters, mapActions } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,
@@ -155,6 +151,8 @@
         isModalDeleteVisible: false,
         showsection: false,
         toDeleteID: "",
+        toEditID: "",
+        toInterventionsID: "",
       };
     },
     computed: {
@@ -166,6 +164,7 @@
       }),
     },
     mounted() {
+      localStorage.setItem("idtoedit", "");
       this.getApiaries();
     },
     methods: {
@@ -182,9 +181,14 @@
           })
           .then((response) => {
             if (response.data.body.length == 0) {
-              this.showsection = true;
-              this.message.type = "danger";
-              this.message.msg = this.translate("mesNoApiaries");
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("mesNoApiaries"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
             } else {
               let apiaries = response.data.body;
               for (let i = 0; i < apiaries.length; i++) {
@@ -214,6 +218,11 @@
       closeDeleteModal() {
         this.isModalDeleteVisible = false;
       },
+      edit() {
+        this.isModalDetailsVisible = false;
+        localStorage.setItem("idtoedit", this.toEditID);
+        this.$router.push("editapiary");
+      },
       async detail(id) {
         this.isShow = true;
         this.message.type = "";
@@ -226,9 +235,9 @@
             },
           })
           .then((response) => {
-            console.log(response);
             this.address = response.data.body.address;
             this.observations = response.data.body.observations;
+            this.regdate = response.data.body.registration_date;
             this.isShow = false;
             return true;
           })
@@ -271,12 +280,17 @@
           });
       },
       async detailsModal(id) {
+        this.toEditID = id;
         await this.detail(id);
         this.isModalDetailsVisible = true;
       },
       async deleteModal(id) {
         this.toDeleteID = id;
         this.isModalDeleteVisible = true;
+      },
+      interventions(id) {
+        localStorage.setItem("idtointerventions", id);
+        this.$router.push("interventions");
       },
     },
   };

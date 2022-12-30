@@ -20,6 +20,7 @@ export const GET_USER_NAME_GETTER = '[getters] user name'
 export const GET_USER_AVATAR_GETTER = '[getters] user avatar'
 export const GET_DETAILID_GETTER = '[getters] detailid'
 
+
 export const SET_IMAGE_MUTATION = '[mutations] set user image'
 export const AUTO_IMAGE_ACTION = '[actions]  image change'
 export const IMAGE_ACTION = '[actions] set new image'

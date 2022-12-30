@@ -116,6 +116,7 @@ select option[disabled]:first-child {
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import axios from "axios";
+  import { notify } from "@kyvg/vue3-notification";
   import { mapGetters } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
@@ -173,7 +174,14 @@ select option[disabled]:first-child {
                 this.showsection = true;
                 this.message.type = "success";
                 this.message.msg = this.translate("mesNewApiarySuccess");
-                setTimeout(() => (this.showsection = false), 3000);
+                notify({
+                  title: this.translate("notifSuccessTitle"),
+                  text: this.translate("mesNewApiarySuccess"),
+                  type: "success",
+                  duration: 3000,
+                  speed: 500,
+                });
+                this.$router.replace("apiaries");
               } else {
                 this.isShow = false;
                 this.showsection = true;
@@ -182,18 +190,24 @@ select option[disabled]:first-child {
               }
             })
             .catch((error) => {
-              console.log(error);
               this.isShow = false;
-              this.showsection = true;
-              this.message.type = "danger";
-              this.message.msg = this.translate("mesProblem");
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesProblem"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
             });
         } else {
           this.isShow = false;
-          this.showsection = true;
-          this.message.type = "danger";
-          this.message.msg = this.translate("mesFields");
-          setTimeout(() => (this.showsection = false), 3000);
+          notify({
+            title: this.translate("notifErrorTitle"),
+            text: this.translate("mesFields"),
+            type: "error",
+            duration: 3000,
+            speed: 500,
+          });
         }
       },
       cleanForm() {
