@@ -9,17 +9,17 @@
       >
         <header class="modal-header" id="modalTitle">
           <slot name="header"> {{ translate("deleteTitleModal") }} </slot>
-          <button
+          <!--<button
             type="button"
-            class="btn-close"
+            class="btn-close me-2"
             @click="_close"
             aria-label="Close modal"
           >
             x
-          </button>
+          </button>-->
         </header>
 
-        <section class="modal-body" id="modalDescription">
+        <section class="modal-body ms-4" id="modalDescription">
           <i class="fas fa-warning me-1 act-btn" aria-hidden="true"></i>
           <slot name="body"> {{ translate("deleteApiaryText") }} </slot>
         </section>

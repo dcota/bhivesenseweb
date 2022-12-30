@@ -45,6 +45,7 @@ export default {
                 btnClean: "RESET",
                 btnBack: "BACK",
                 btnNew: "NEW",
+                btnNotifications: "Notifications",
                 profilePhoto: "Profile photo",
                 photoButton: "File",
                 mesNewAccount: 'Account successfully created.',

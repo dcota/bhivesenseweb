@@ -7,15 +7,9 @@ Description: implementation of the view Alterar Conta
 <template>
   <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
-      <h1 class="text-center mt-5">{{ translate("accFormTitle") }}</h1>
-      <section
-        v-if="showsection"
-        class="alert mt-3 alert-dismissible fade show"
-        role="alert"
-        v-bind:class="'alert-' + message.type"
-      >
-        {{ message.msg }}
-      </section>
+      <hr />
+      <h1 class="text-center">{{ translate("accFormTitle") }}</h1>
+      <hr />
       <form class="form-signin" v-on:submit.prevent="send">
         <section class="row align-items-center" style="min-height: 15vh">
           <section class="col-md-8 g-4">
@@ -218,7 +212,6 @@ Description: implementation of the view Alterar Conta
           <section class="mb-2">{{ translate("spinnerTxt") }}</section>
         </section>
       </section>
-      <section class="spacer"></section>
     </section>
   </section>
 </template>
@@ -228,6 +221,7 @@ Description: implementation of the view Alterar Conta
   width: 120px;
   background-color: black;
   color: white;
+  max-width: 100%;
 }
 
 .my-button:hover {

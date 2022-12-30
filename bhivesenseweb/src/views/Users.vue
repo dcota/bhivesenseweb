@@ -5,10 +5,12 @@ Description: implementation of the view Gestão de Alunos (Admin)
 */
 
 <template id="example-modal">
-  <section class="container">
-    <section class="row mt-3 text-center">
+  <section class="container my-body">
+    <hr />
+    <section class="row text-center">
       <h1 class="text-center">{{ translate("usersTitle") }}</h1>
     </section>
+    <hr />
     <section
       v-if="showsection"
       class="alert mt-3"
@@ -104,6 +106,9 @@ Description: implementation of the view Gestão de Alunos (Admin)
 </template>
 
 <style scoped>
+.my-body {
+  margin-top: 100px;
+}
 .ac-btn {
   width: 120px;
   color: white;

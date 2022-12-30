@@ -9,14 +9,14 @@
       >
         <header class="modal-header" id="modalTitle">
           <slot name="header"> {{ translate("cancelTitleModal") }} </slot>
-          <button
+          <!--<button
             type="button"
             class="btn-close"
             @click="close"
             aria-label="Close modal"
           >
             x
-          </button>
+          </button>-->
         </header>
 
         <section class="modal-body" id="modalDescription">

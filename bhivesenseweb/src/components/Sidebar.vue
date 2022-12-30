@@ -360,7 +360,7 @@
   background-color: #ebc002;
   border-radius: 20px;
   width: 100px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .bn_card:hover {

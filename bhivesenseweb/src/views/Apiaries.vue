@@ -1,6 +1,8 @@
 <template>
-  <section class="container">
-    <h1 class="text-center my-body">{{ translate("apiaryAllTitle") }}</h1>
+  <section class="container my-body">
+    <hr />
+    <h1 class="text-center">{{ translate("apiaryAllTitle") }}</h1>
+    <hr />
     <section class="row mt-5">
       <section
         class="col-12 col-md-6 col-lg-4"

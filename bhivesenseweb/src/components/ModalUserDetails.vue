@@ -11,14 +11,14 @@
           <slot name="header">
             {{ translate("modalDetailsTitle") }}
           </slot>
-          <button
+          <!--<button
             type="button"
             class="btn-close"
             @click="close"
             aria-label="Close modal"
           >
             x
-          </button>
+          </button>-->
         </header>
 
         <section class="modal-body" id="modalDescription">
@@ -29,7 +29,7 @@
                 :src="img"
                 width="100"
                 height="100"
-                class="rounded-circle me-2"
+                class="rounded-circle ms-4"
                 style="
                   background-color: white;
                   border-radius: 2px;
@@ -42,7 +42,7 @@
                 :src="altImg"
                 width="100"
                 height="100"
-                class="rounded-circle me-2"
+                class="rounded-circle ms-4"
                 style="
                   background-color: white;
                   border-radius: 2px;
@@ -52,15 +52,17 @@
               />
             </section>
             <hr />
-            <p>{{ translate("modalDetailsName") }} {{ name }}</p>
-            <p>{{ translate("modalDetailsNif") }} {{ nif }}</p>
-            <p>{{ translate("modalDetailsType") }} {{ type }}</p>
-            <p>{{ translate("modalDetailsEmail") }} {{ email }}</p>
-            <p>{{ translate("modalDetailsMobile") }} {{ mobile }}</p>
-            <p>{{ translate("modalDetailsBdate") }} {{ bdate }}</p>
-            <p>
-              {{ translate("modalDetailsNotifications") }} {{ notifications }}
-            </p>
+            <section class="ms-4">
+              <p>{{ translate("modalDetailsName") }} {{ name }}</p>
+              <p>{{ translate("modalDetailsNif") }} {{ nif }}</p>
+              <p>{{ translate("modalDetailsType") }} {{ type }}</p>
+              <p>{{ translate("modalDetailsEmail") }} {{ email }}</p>
+              <p>{{ translate("modalDetailsMobile") }} {{ mobile }}</p>
+              <p>{{ translate("modalDetailsBdate") }} {{ bdate }}</p>
+              <p>
+                {{ translate("modalDetailsNotifications") }} {{ notifications }}
+              </p>
+            </section>
           </slot>
         </section>
 

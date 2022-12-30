@@ -11,17 +11,17 @@
           <slot name="header">
             {{ translate("modalApiary") }}
           </slot>
-          <button
+          <!--<button
             type="button"
-            class="btn-close"
+            class="btn-close me-2"
             @click="close"
             aria-label="Close modal"
           >
             x
-          </button>
+          </button>-->
         </header>
 
-        <section class="modal-body" id="modalDescription">
+        <section class="modal-body ms-4" id="modalDescription">
           <slot name="body">
             <p>{{ translate("modalApiaryAddress") }} {{ address }}</p>
             <p>{{ translate("modalApiaryObservations") }} {{ observations }}</p>
