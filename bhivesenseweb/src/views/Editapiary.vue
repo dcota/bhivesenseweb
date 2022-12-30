@@ -202,6 +202,7 @@ select option[disabled]:first-child {
               if (response.data.http == 200) {
                 this.isShow = false;
                 notify({
+                  position: "top right",
                   title: this.translate("notifSuccessTitle"),
                   text: this.translate("updateApiarySuccess"),
                   type: "success",

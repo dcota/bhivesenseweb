@@ -3,9 +3,10 @@
     <!--<Sidebar />-->
     <!--<Loader v-if="showLoader"></Loader>-->
     <notifications
-      position="bottom right"
+      position="top right"
       closeOnClick="true"
-      classes="my-notification"
+      classes="my-notification mt-2"
+      width="500px"
     />
     <section id="content"><router-view></router-view></section>
   </section>

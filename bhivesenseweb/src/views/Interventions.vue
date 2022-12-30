@@ -5,9 +5,9 @@ Description: implementation of the view Gestão de Alunos (Admin)
 */
 
 <template>
-  <section class="container">
-    <section class="row mt-3 text-center">
-      <h1 class="text-center">{{ translate("interventionsTitle") }}</h1>
+  <section class="container my-body">
+    <section class="row mt-5 text-center">
+      <h1 class="text-center mt-5">{{ translate("interventionsTitle") }}</h1>
     </section>
     <section>
       <button @click="create" type="submit" class="btn mt-4 me-4 my-button">
@@ -127,6 +127,10 @@ select option[disabled]:first-child {
   width: 120px;
   color: white;
   font-weight: bold;
+}
+
+.my-body {
+  margin-top: 0px;
 }
 .spacer {
   height: 200px;
