@@ -20,7 +20,7 @@
             class="card-img-top"
             alt="..."
             style="
-              width: 50%;
+              width: 30%;
               display: block;
               margin-right: auto;
               margin-left: auto;
