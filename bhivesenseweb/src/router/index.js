@@ -94,6 +94,14 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'newintervention',
+            component: () =>
+                import ('../views/Newintervention.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

@@ -11,7 +11,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
     <hr />
 
     <section>
-      <button @click="create" type="submit" class="btn mt-4 me-4 my-button">
+      <button @click="formNew" type="submit" class="btn mt-4 me-4 my-button">
         {{ translate("btnNew") }}
       </button>
     </section>
@@ -76,28 +76,17 @@ Description: implementation of the view Gestão de Alunos (Admin)
       </section>
     </section>
     <section class="text-center">
-      <button @click="back()" type="button" class="btn mt-4 my-button">
+      <button @click="back" type="button" class="btn mt-4 my-button">
         {{ translate("btnBack") }}
       </button>
     </section>
 
-    <ModalDetails
-      v-show="isModalDetailsVisible"
-      @close="closeModalDetails"
-      :name="name"
-      :type="type"
-      :email="email"
-      :mobile="mobile"
-      :bdate="bdate"
-      :nif="nif"
-      :notifications="notifications"
-      :img="img"
-    />
-    <ModalDelete
+    <ModalDeleteIntervention
       v-show="isModalDeleteVisible"
       @close="closeModalDelete"
-      @cancel="cancelUser"
+      @deleteAction="deleteIntervention"
     />
+
     <section class="text-center">
       <section v-if="isShow" class="text-center">
         <section class="spinner-border mt-4" role="status">
@@ -143,8 +132,7 @@ select option[disabled]:first-child {
   import pt from "../assets/pt.js";
   import axios from "axios";
   import { notify } from "@kyvg/vue3-notification";
-  import ModalDetails from "../components/ModalUserDetails.vue";
-  import ModalDelete from "../components/ModalCancelAccount.vue";
+  import ModalDeleteIntervention from "../components/ModalDeleteIntervention.vue";
   import { mapGetters } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
@@ -155,23 +143,17 @@ select option[disabled]:first-child {
   export default {
     mixins: [en, pt],
     components: {
-      ModalDetails,
-      ModalDelete,
+      ModalDeleteIntervention,
     },
     data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
         data: localStorage.token,
         interventions: [],
-        message: {
-          type: "",
-          msg: "",
-        },
-        showsection: false,
         isShow: false,
         lang: lang,
-        isModalDetailsVisible: false,
         isModalDeleteVisible: false,
+        interventiontodelete: "",
       };
     },
     computed: {
@@ -233,24 +215,28 @@ select option[disabled]:first-child {
             });
           });
       },
-      async cancel(id) {
+      async delete() {
         await axios
-          .put("https://bhsapi.duartecota.com/user/" + id, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
+          .delete(
+            "https://bhsapi.duartecota.com/intervention/" +
+              localStorage.getItem("interventiontodelete"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
           .then((response) => {
             if (response.data.http == 200) {
               this.isShow = false;
               notify({
                 title: this.translate("notifSuccessTitle"),
-                text: this.translate("cancelAccMessage"),
+                text: this.translate("deleteIntervetnionMessage"),
                 type: "success",
                 duration: 3000,
                 speed: 500,
               });
-              this.getUsers();
+              this.getInterventions();
             } else {
               this.isShow = false;
               notify({
@@ -329,26 +315,22 @@ select option[disabled]:first-child {
             return false;
           });
       },
-      async detailsModal(id) {
-        await this.detail(id);
-        this.isModalDetailsVisible = true;
-      },
-      async deleteModal(id) {
-        this.usertodelete = id;
+      deleteModal(id) {
+        localStorage.setItem("interventiontodelete", id);
         this.isModalDeleteVisible = true;
-      },
-      closeModalDetails() {
-        this.isModalDetailsVisible = false;
       },
       closeModalDelete() {
         this.isModalDeleteVisible = false;
       },
-      async cancelUser(id) {
-        await this.cancel(this.usertodelete);
+      async deleteIntervention() {
+        await this.delete();
         this.isModalDeleteVisible = false;
       },
       back() {
         this.$router.replace("apiaries");
+      },
+      formNew() {
+        this.$router.replace("newintervention");
       },
     },
   };

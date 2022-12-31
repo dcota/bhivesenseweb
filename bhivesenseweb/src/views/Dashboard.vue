@@ -24,7 +24,13 @@
   display: grid;
   grid-template-columns: 250px auto;
 }
+.sb {
+  position: sticky;
+  top: 0;
+}
 .content {
   background-color: #ebc002;
+  overflow: auto;
+  display: block;
 }
 </style>

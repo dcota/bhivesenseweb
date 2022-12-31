@@ -7,15 +7,9 @@ Description: implementation of the view Ficha de Inscrição
 <template>
   <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
-      <h1 class="text-center mt-5">{{ translate("formNewApiaryTitle") }}</h1>
-      <section
-        v-if="showsection"
-        class="alert mt-3 alert-dismissible fade show"
-        role="alert"
-        v-bind:class="'alert-' + message.type"
-      >
-        {{ message.msg }}
-      </section>
+      <hr />
+      <h1 class="text-center mt">{{ translate("formNewApiaryTitle") }}</h1>
+      <hr />
       <form class="form-signin" @submit.prevent="submit">
         <section class="row">
           <section class="col-md-6 g-4">
@@ -134,10 +128,7 @@ select option[disabled]:first-child {
           address: "",
           observations: "",
         },
-        message: {
-          type: "",
-          msg: "",
-        },
+
         isShow: false,
         showsection: false,
         lang: lang,
@@ -152,7 +143,6 @@ select option[disabled]:first-child {
     },
     methods: {
       async send() {
-        (this.message.type = ""), (this.message.msg = "");
         let postData = {
           user: this._id,
           address: this.form.address,
@@ -171,9 +161,7 @@ select option[disabled]:first-child {
             .then((response) => {
               if (response.data.http == 201) {
                 this.isShow = false;
-                this.showsection = true;
-                this.message.type = "success";
-                this.message.msg = this.translate("mesNewApiarySuccess");
+
                 notify({
                   title: this.translate("notifSuccessTitle"),
                   text: this.translate("mesNewApiarySuccess"),
@@ -184,9 +172,13 @@ select option[disabled]:first-child {
                 this.$router.replace("apiaries");
               } else {
                 this.isShow = false;
-                this.showsection = true;
-                this.message.type = "danger";
-                this.message.msg = this.translate("mesProblem");
+                notify({
+                  title: this.translate("notifErrorTitle"),
+                  text: this.translate("mesProblem"),
+                  type: "error",
+                  duration: 3000,
+                  speed: 500,
+                });
               }
             })
             .catch((error) => {
@@ -203,7 +195,7 @@ select option[disabled]:first-child {
           this.isShow = false;
           notify({
             title: this.translate("notifErrorTitle"),
-            text: this.translate("mesFields"),
+            text: this.translate("mesFieldsApiary"),
             type: "error",
             duration: 3000,
             speed: 500,
@@ -211,8 +203,6 @@ select option[disabled]:first-child {
         }
       },
       cleanForm() {
-        this.message.type = "";
-        this.message.msg = "";
         (this.form.location = ""),
           (this.form.address = ""),
           (this.form.observations = "");
@@ -223,12 +213,7 @@ select option[disabled]:first-child {
         this.$router.replace("/");
       },
       checkForm() {
-        if (
-          this.form.location == "" ||
-          this.form.address == "" ||
-          this.form.observations == ""
-        )
-          return false;
+        if (this.form.location == "" || this.form.address == "") return false;
         else return true;
       },
       translate(prop) {

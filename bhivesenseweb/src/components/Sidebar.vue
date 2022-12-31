@@ -28,7 +28,9 @@
           <option value="pt">pt</option>
         </select>
       </section>
+
       <hr style="width: 90%" />
+
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
@@ -349,7 +351,7 @@
     </section>
 
     <section
-      class="container-fluid d-flex justify-content-center overflow-auto"
+      class="container-fluid d-flex justify-content-center"
       style="background-color: #ebc002; height: 100vh"
     ></section>
   </main>
