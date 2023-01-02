@@ -12,14 +12,6 @@ Description: implementation of the view Ficha de Inscrição
         {{ translate("formNewInterventionTitle") }}
       </h1>
       <hr />
-      <section
-        v-if="showsection"
-        class="alert mt-3 alert-dismissible fade show"
-        role="alert"
-        v-bind:class="'alert-' + message.type"
-      >
-        {{ message.msg }}
-      </section>
       <form class="form-signin" @submit.prevent="submit">
         <section class="row">
           <section class="col-md-6 g-4">
@@ -196,7 +188,6 @@ select option[disabled]:first-child {
             .then((response) => {
               if (response.data.http == 201) {
                 this.isShow = false;
-                this.showsection = true;
                 this.message.type = "success";
                 this.message.msg = this.translate("mesNewApiarySuccess");
                 notify({
@@ -242,7 +233,8 @@ select option[disabled]:first-child {
       cleanForm() {
         (this.form.description = ""),
           (this.form.date = ""),
-          (this.form.observations = "")((this.form.notifications = true));
+          (this.form.observations = ""),
+          (this.form.notifications = true);
         this.isShow = false;
       },
       back() {

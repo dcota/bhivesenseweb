@@ -38,7 +38,7 @@
             <hr />
             <section class="text-center">
               <section class="row">
-                <section class="col-sm-4 mt-1">
+                <section class="col-sm-3 mt-1">
                   <button
                     data-bs-toggle="tooltip"
                     v-bind:title="translate('lblCardApiaryBtn')"
@@ -50,7 +50,7 @@
                     <i class="fas fa-search" aria-hidden="true"></i>
                   </button>
                 </section>
-                <section class="col-sm-4 mt-1">
+                <section class="col-sm-3 mt-1">
                   <button
                     data-bs-toggle="tooltip"
                     v-bind:title="translate('lblCardDeleteBtn')"
@@ -62,7 +62,19 @@
                     <i class="fas fa-trash" aria-hidden="true"></i>
                   </button>
                 </section>
-                <section class="col-sm-4 mt-1">
+                <section class="col-sm-3 mt-1">
+                  <button
+                    data-bs-toggle="tooltip"
+                    v-bind:title="translate('lblCardDeviceBtn')"
+                    data-bs-placement="bottom"
+                    data-bs-custom-class="custom-tooltip"
+                    class="btn text-center bn_card"
+                    @click="getApiaryDevices(apiary._id)"
+                  >
+                    <i class="fas fa-wifi" aria-hidden="true"></i>
+                  </button>
+                </section>
+                <section class="col-sm-3 mt-1">
                   <button
                     data-bs-toggle="tooltip"
                     v-bind:title="translate('lblCardInterventionsBtn')"
@@ -112,8 +124,8 @@
 }
 .bn_card {
   background-color: #ebc002;
-  border-radius: 20px;
-  width: 60px;
+  border-radius: 25px;
+  width: 50px;
 }
 
 .bn_card:hover {
@@ -154,6 +166,9 @@
           type: "",
           msg: "",
         },
+        address: "",
+        observations: "",
+        regdate: "",
         isShow: true,
         isModalDetailsVisible: false,
         isModalDeleteVisible: false,
@@ -310,6 +325,9 @@
       interventions(id) {
         localStorage.setItem("idtointerventions", id);
         this.$router.push("interventions");
+      },
+      getApiaryDevices(id) {
+        alert(id);
       },
     },
   };

@@ -103,6 +103,7 @@ export default {
                 lblCardInterventionsBtn: "Gerir intervenções",
                 lblCardDeleteBtn: "Eliminar apiário",
                 lblCardEditBtn: "Editar apiário",
+                lblCardDeviceBtn: "Colmeias",
                 lblDetailsUser: "Detalhes",
                 lblCancelUser: "Cancelar",
                 lblDelete: "Eliminar",

@@ -103,6 +103,7 @@ export default {
                 lblCardInterventionsBtn: "Manage interventions",
                 lblCardDeleteBtn: "Delete apiary",
                 lblCardEditBtn: "Edit apiary",
+                lblCardDeviceBtn: "Hives",
                 lblDetailsUser: "Details",
                 lblCancelUser: "Cancel",
                 lblDelete: "Delete",

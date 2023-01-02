@@ -50,7 +50,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
                   v-bind:title="translate('lblDetailsUser')"
                   data-bs-placement="bottom"
                   data-bs-custom-class="custom-tooltip"
-                  @click="detailsModal(intervention._id)"
+                  @click="editIntervention(intervention._id)"
                   type="button"
                   class="btn btn-success btn-sm me-2 ac-btn"
                   style="width: 50px"
@@ -331,6 +331,9 @@ select option[disabled]:first-child {
       },
       formNew() {
         this.$router.replace("newintervention");
+      },
+      editIntervention(id) {
+        alert(id);
       },
     },
   };

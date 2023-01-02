@@ -11,14 +11,6 @@
           <slot name="header">
             {{ translate("modalApiary") }}
           </slot>
-          <!--<button
-            type="button"
-            class="btn-close me-2"
-            @click="close"
-            aria-label="Close modal"
-          >
-            x
-          </button>-->
         </header>
 
         <section class="modal-body ms-4" id="modalDescription">
@@ -47,7 +39,7 @@
                 type="button"
                 class="btn btn-success"
                 @click="close"
-                aria-label="Close modal"
+                aria-label="Interventions"
               >
                 <i
                   class="fas fa-arrow-left me-1 act-btn"
