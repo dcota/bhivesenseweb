@@ -2,7 +2,7 @@
   <section>
     <!--<Sidebar />-->
     <!--<Loader v-if="showLoader"></Loader>-->
-    <notifications
+    <Notifications
       position="top right"
       closeOnClick="true"
       classes="my-notification mt-2"

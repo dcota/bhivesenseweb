@@ -102,6 +102,22 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'devices',
+            component: () =>
+                import ('../views/Devices.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'map',
+            component: () =>
+                import ('../views/Map.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

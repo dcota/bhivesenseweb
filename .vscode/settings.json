@@ -1,3 +1,8 @@
 {
-    "javascript.validate.enable": false
+    "javascript.validate.enable": false,
+    "vetur.completion.scaffoldSnippetSources": {
+        "workspace": "💼",
+        "user": "🗒️",
+        "vetur": "✌",
+    }
 }

@@ -327,7 +327,7 @@
         this.$router.push("interventions");
       },
       getApiaryDevices(id) {
-        alert(id);
+        this.$router.push("devices");
       },
     },
   };
