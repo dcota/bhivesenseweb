@@ -380,7 +380,7 @@
         this.$router.push("map");
       },
       back(){
-        this.$router.push()
+        this.$router.push('apiaries')
       }
     },
   };
