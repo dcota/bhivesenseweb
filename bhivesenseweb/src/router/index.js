@@ -89,7 +89,7 @@ const routes = [{
         {
             path: 'interventions',
             component: () =>
-                import ('../views/Interventions.vue'),
+                import ('../views/Interventionsalt.vue'),
             meta: {
                 requiresAuth: true,
             }
