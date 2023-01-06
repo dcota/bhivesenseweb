@@ -38,6 +38,7 @@
           isComplete: true,
           dates: { days: 6 }, // Every Friday
           color: "red",
+          order: 0,
         },
         {
           description:
@@ -45,48 +46,24 @@
           isComplete: false,
           dates: new Date(year, month, 12),
           color: "green",
+          order: 0,
+        },
+        {
+          description:
+            "Take Laura to basketball practice dadas asdasd asdas dasd asd asda sdas dsad .",
+          isComplete: false,
+          dates: {
+            start: new Date(year, month, 6),
+            end: new Date(year, month, 8),
+          },
+          color: "green",
+          order: 2,
         },
       ];
       return {
         lang: lang,
         incId: todos.length,
         todos,
-        attrs: [
-          {
-            key: 1,
-            highlight: {
-              color: "red",
-              fillMode: "solid",
-              contentClass: "italic",
-            },
-            dates: new Date(year, month, 12),
-            customData: {
-              description: "teste 1",
-            },
-          },
-          {
-            key: 2,
-            highlight: {
-              color: "green",
-              fillMode: "solid",
-            },
-            dates: new Date(year, month, 13),
-            customData: {
-              description: "teste 2",
-            },
-          },
-          {
-            key: 3,
-            highlight: {
-              color: "yellow",
-              fillMode: "solid",
-            },
-            dates: new Date(year, month, 14),
-            customData: {
-              description: "teste 3",
-            },
-          },
-        ],
       };
     },
     computed: {
@@ -94,9 +71,13 @@
         return [
           ...this.todos.map((todo) => ({
             dates: todo.dates,
+
             highlight: {
               color: todo.color,
-              fillMode: "solid",
+              start: { fillMode: "solid", color: todo.color },
+              base: { fillMode: "light", color: todo.color },
+              end: { fillMode: "solid", color: todo.color },
+              order: todo.order,
               class: todo.isComplete ? "opacity-50" : "",
             },
             popover: {
