@@ -4,6 +4,7 @@ Description: gloab style sheet
 */
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
 * {
     font-family: 'Montserrat', sans-serif;
 }
@@ -11,6 +12,31 @@ Description: gloab style sheet
 body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
+}
+
+.my-body {
+    margin-top: 25px;
+}
+
+.line-1 {
+    height: 5px;
+    width: 20%;
+    background: rgb(80, 77, 77);
+}
+
+.my-button {
+    width: 120px;
+    background-color: rgb(80, 77, 77);
+    color: white;
+}
+
+.my-button:hover {
+    background-color: white;
+    color: rgb(80, 77, 77);
+}
+
+.my-text-color {
+    color: rgb(80, 77, 77);
 }
 
 html {
