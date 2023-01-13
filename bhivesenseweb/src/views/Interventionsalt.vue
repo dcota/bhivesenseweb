@@ -50,42 +50,38 @@
 	export default {
 		mixins: [en, pt],
 		data() {
-			const date = new Date();
-			const year = date.getFullYear();
-			const month = date.getMonth();
 			const lang = localStorage.getItem("lang") || "pt";
-			const todos = [
-				{
-					description: "Take Noah to basketball practice.",
-					isComplete: true,
-					dates: { days: 6 }, // Every Friday
-					color: "red",
-					order: 0,
-				},
-				{
-					description:
-						"Take Laura to basketball practice dadas asdasd asdas dasd asd asda sdas dsad .",
-					isComplete: false,
-					dates: new Date(year, month, 12),
-					color: "green",
-					order: 0,
-				},
-				{
-					description:
-						"Take Laura to basketball practice dadas asdasd asdas dasd asd asda sdas dsad .",
-					isComplete: false,
-					dates: {
-						start: new Date(year, month, 6),
-						end: new Date(year, month, 8),
-					},
-					color: "green",
-					order: 2,
-				},
-			];
+			/*const todos = [
+																																																																																																																						{
+																																																																																																																							description: "Take Noah to basketball practice.",
+																																																																																																																							isComplete: true,
+																																																																																																																							dates: { days: 6 }, // Every Friday
+																																																																																																																							color: "red",
+																																																																																																																							order: 0,
+																																																																																																																						},
+																																																																																																																						{
+																																																																																																																							description:
+																																																																																																																								"Take Laura to basketball practice dadas asdasd asdas dasd asd asda sdas dsad .",
+																																																																																																																							isComplete: false,
+																																																																																																																							dates: new Date(year, month, 12),
+																																																																																																																							color: "green",
+																																																																																																																							order: 0,
+																																																																																																																						},
+																																																																																																																						{
+																																																																																																																							description:
+																																																																																																																								"Take Laura to basketball practice dadas asdasd asdas dasd asd asda sdas dsad .",
+																																																																																																																							isComplete: false,
+																																																																																																																							dates: {
+																																																																																																																								start: new Date(year, month, 6),
+																																																																																																																								end: new Date(year, month, 8),
+																																																																																																																							},
+																																																																																																																							color: "green",
+																																																																																																																							order: 2,
+																																																																																																																						},
+																																																																																																																					];*/
 			return {
+				interventions: [],
 				lang: lang,
-				incId: todos.length,
-				todos,
 				isShow: false,
 				hasInterventions: false,
 			};
@@ -93,22 +89,21 @@
 		computed: {
 			attributes() {
 				return [
-					...this.todos.map((todo) => ({
+					...this.interventions.map((todo) => ({
+						_id: todo._id,
 						dates: todo.dates,
-
 						highlight: {
 							color: todo.color,
 							start: { fillMode: "solid", color: todo.color },
 							base: { fillMode: "light", color: todo.color },
 							end: { fillMode: "solid", color: todo.color },
-							order: todo.order,
-							class: todo.isComplete ? "opacity-50" : "",
+							//order: todo.order,
+							//class: todo.isComplete ? "opacity-50" : "",
 						},
 						popover: {
 							label: todo.description,
 							visibility: "hover",
 						},
-						customData: todo,
 					})),
 				];
 			},
@@ -143,15 +138,32 @@
 							});
 						} else {
 							this.hasInterventions = true;
-							let interventions = response.data.body;
-							console.log(interventions);
-							/*for (let i = 0; i < interventions.length; i++) {
-																																									this.interventions.push({
-																																										_id: interventions[i]._id,
-																																										description: interventions[i].description,
-																																										date: interventions[i].date,
-																																									});
-																																								}*/
+							this.interventions = [];
+							let resArray = response.data.body;
+							for (let i = 0; i < resArray.length; i++) {
+								let sd = new Date(resArray[i].startDate);
+								let ed = new Date(resArray[i].endDate);
+								console.log(sd + ";" + ed);
+								let dates = "";
+								dates = {
+									start: sd,
+									end: ed,
+								};
+								let color;
+								if (resArray[i].type == 1) color = "green";
+								else if (resArray[i].type == 2) color = "orange";
+								else color = "red";
+								this.interventions.push({
+									_id: resArray[i]._id,
+									color: color,
+									dates: dates,
+									description: resArray[i].description,
+									startTime: resArray[i].startTime,
+									endTime: resArray[i].endTime,
+									observations: resArray[i].observations,
+								});
+							}
+							console.log(this.interventions);
 						}
 					})
 					.catch((error) => {
@@ -168,8 +180,29 @@
 			translate(prop) {
 				return this[this.lang][prop];
 			},
+			padTo2Digits(num) {
+				return String(num).padStart(2, "0");
+			},
 			dayClicked(day) {
-				alert(day.id);
+				let date = new Date(day.id);
+				console.log(day.id);
+				console.log("date: " + date.getTime()); //get timestamp of date
+				for (let i = 0; i < this.interventions.length; i++) {
+					let sd = new Date(this.interventions[i].dates.start);
+					let sdConv = this.padTo2Digits(
+						sd.toLocaleDateString("sv-SE", {
+							year: "numeric",
+							month: "2-digit",
+							day: "2-digit",
+						})
+					);
+					console.log(sdConv);
+					let sdFinal = new Date(sdConv);
+					let ed = new Date(this.interventions[i].dates.end);
+					if (sdFinal.getTime() == date.getTime()) {
+						console.log(this.interventions[i].observations);
+					}
+				}
 			},
 			back() {
 				this.$router.push("apiaries");

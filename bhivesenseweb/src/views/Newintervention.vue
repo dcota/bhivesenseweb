@@ -12,6 +12,28 @@ Description: implementation of the view Ficha de Inscrição
 		</h2>
 		<section class="line-1"></section>
 		<form class="form-signin" v-on:submit.prevent="send">
+			<section>
+				<button type="submit" class="btn mt-4 me-3 my-button">
+					<section v-if="!isShow">
+						{{ translate("btnSubmit") }}
+					</section>
+					<section
+						v-else
+						class="spinner-border spinner-border-sm"
+						role="status"
+					></section>
+				</button>
+				<button
+					@click="cleanForm"
+					type="button"
+					class="btn mt-4 me-3 my-button"
+				>
+					{{ translate("btnClean") }}
+				</button>
+				<button @click="back" type="button" class="btn mt-4 my-button">
+					{{ translate("btnBack") }}
+				</button>
+			</section>
 			<section class="row mt-4">
 				<section class="col-md-6">
 					<label for="bdate" class="form-label">{{
@@ -115,29 +137,6 @@ Description: implementation of the view Ficha de Inscrição
 					</section>
 				</section>
 			</section>
-
-			<section class="text-center">
-				<button type="submit" class="btn mt-4 me-4 my-button">
-					<section v-if="!isShow">
-						{{ translate("btnSubmit") }}
-					</section>
-					<section
-						v-else
-						class="spinner-border spinner-border-sm"
-						role="status"
-					></section>
-				</button>
-				<button
-					@click="cleanForm"
-					type="button"
-					class="btn mt-4 me-4 my-button"
-				>
-					{{ translate("btnClean") }}
-				</button>
-				<button @click="back" type="button" class="btn mt-4 my-button">
-					{{ translate("btnBack") }}
-				</button>
-			</section>
 		</form>
 
 		<section class="spacer"></section>
@@ -183,8 +182,8 @@ select option[disabled]:first-child {
 			const lang = localStorage.getItem("lang") || "en";
 			return {
 				range: {
-					start: new Date(),
-					end: new Date(),
+					start: "",
+					end: "",
 				},
 				form: {
 					description: "",
@@ -204,33 +203,59 @@ select option[disabled]:first-child {
 			}),
 		},
 		methods: {
+			padTo2Digits(num) {
+				return String(num).padStart(2, "0");
+			},
+			send1() {
+				console.log(this.range.start.getUTCDate());
+			},
 			async send() {
 				this.isShow = true;
 				if (this.checkForm() == true) {
-					let startDate =
-						this.range.start.getFullYear() +
-						"-" +
-						(parseInt(this.range.start.getMonth()) + 1) +
-						"-" +
-						this.range.start.getDate();
-					console.log(startDate);
-					let endDate =
-						this.range.end.getFullYear() +
-						"-" +
-						(parseInt(this.range.end.getMonth()) + 1) +
-						"-" +
-						this.range.end.getDate();
-					console.log(endDate);
+					//format start date
+					/*let sd = new Date(
+							this.range.start.getFullYear() +
+								"-" +
+								(parseInt(this.range.start.getMonth()) + 1) +
+								"-" +
+								this.range.start.getDate()
+						);
+						let startDate = sd.toLocaleDateString("sv-SE", {
+							year: "numeric",
+							month: "2-digit",
+							day: "2-digit",
+						});
+						console.log(startDate);
+						//format end date
+						let ed = new Date(
+							this.range.end.getFullYear() +
+								"-" +
+								(parseInt(this.range.end.getMonth()) + 1) +
+								"-" +
+								this.range.end.getDate()
+						);
+						let endDate = ed.toLocaleDateString("sv-SE", {
+							year: "numeric",
+							month: "2-digit",
+							day: "2-digit",
+						});
+						console.log(endDate);*/
+					//format start time
 					let startTime =
-						this.range.start.getHours() + ":" + this.range.start.getMinutes();
+						this.padTo2Digits(this.range.start.getHours()) +
+						":" +
+						this.padTo2Digits(this.range.start.getMinutes());
 					console.log(startTime);
+					//format end time
 					let endTime =
-						this.range.end.getHours() + ":" + this.range.end.getMinutes();
+						this.padTo2Digits(this.range.end.getHours()) +
+						":" +
+						this.padTo2Digits(this.range.end.getMinutes());
 					console.log(endTime);
 					let postData = {
 						apiary: localStorage.getItem("idtointerventions"),
-						startDate: startDate,
-						endDate: endDate,
+						startDate: this.range.start,
+						endDate: this.range.end,
 						startTime: startTime,
 						endTime: endTime,
 						type: this.form.type,
@@ -300,15 +325,8 @@ select option[disabled]:first-child {
 				this.$router.replace("interventions");
 			},
 			checkForm() {
+				this.isShow = false;
 				if (this.form.description == "" || this.form.type == "") {
-					//this.isShow = false;
-					notify({
-						title: this.translate("notifErrorTitle"),
-						text: this.translate("mesFieldsIntervention"),
-						type: "error",
-						duration: 3000,
-						speed: 500,
-					});
 					return false;
 				} else {
 					return true;
