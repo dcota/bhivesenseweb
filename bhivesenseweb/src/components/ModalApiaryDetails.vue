@@ -106,23 +106,6 @@
   padding: 20px 10px;
 }
 
-.modal-header {
-  position: relative;
-  border-bottom: 1px solid #eeeeee;
-  color: #4aae9b;
-  justify-content: space-between;
-}
-
-.modal-footer {
-  border-top: 1px solid #eeeeee;
-  flex-direction: column;
-}
-
-.modal-body {
-  position: relative;
-  padding: 20px 10px;
-}
-
 .btn {
   width: 130px;
 }
@@ -158,7 +141,7 @@
 }
 </style>
     
-    <script>
+<script>
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import { mapGetters } from "vuex";

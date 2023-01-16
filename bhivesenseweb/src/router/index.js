@@ -13,111 +13,119 @@ const routes = [{
     path: '',
     component: Dashboard,
     children: [{
-        path: '',
-        component: () =>
-            import('../views/Home.vue'),
-        meta: { auth: false }
-    },
-    {
-        path: 'login',
-        component: () =>
-            import('../views/Login.vue'),
-        meta: { auth: false }
-    },
-    {
-        path: 'newaccount',
-        component: () =>
-            import('../views/Newaccount.vue'),
-        meta: { auth: false }
-    },
-    {
-        path: 'account',
-        component: () =>
-            import('../views/Account.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'users',
-        component: () =>
-            import('../views/Users.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'newdevice',
-        component: () =>
-            import('../views/Newdevice.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'apiaries',
-        component: () =>
-            import('../views/Apiaries.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'newapiary',
-        component: () =>
-            import('../views/Newapiary.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'editapiary',
-        component: () =>
-            import('../views/Editapiary.vue'),
-        meta: {
-            requiresAuth: true,
+            path: '',
+            component: () =>
+                import ('../views/Home.vue'),
+            meta: { auth: false }
         },
-    },
-    {
-        path: 'newdevice',
-        component: () =>
-            import('../views/Newdevice.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'interventions',
-        component: () =>
-            import('../views/Interventionsalt.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'newintervention',
-        component: () =>
-            import('../views/Newintervention.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'devices',
-        component: () =>
-            import('../views/Devices.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
-    {
-        path: 'map',
-        component: () =>
-            import('../views/Map.vue'),
-        meta: {
-            requiresAuth: true,
-        }
-    },
+        {
+            path: 'login',
+            component: () =>
+                import ('../views/Login.vue'),
+            meta: { auth: false }
+        },
+        {
+            path: 'newaccount',
+            component: () =>
+                import ('../views/Newaccount.vue'),
+            meta: { auth: false }
+        },
+        {
+            path: 'account',
+            component: () =>
+                import ('../views/Account.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'users',
+            component: () =>
+                import ('../views/Users.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'newdevice',
+            component: () =>
+                import ('../views/Newdevice.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'apiaries',
+            component: () =>
+                import ('../views/Apiaries.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'newapiary',
+            component: () =>
+                import ('../views/Newapiary.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'editapiary',
+            component: () =>
+                import ('../views/Editapiary.vue'),
+            meta: {
+                requiresAuth: true,
+            },
+        },
+        {
+            path: 'newdevice',
+            component: () =>
+                import ('../views/Newdevice.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'interventions',
+            component: () =>
+                import ('../views/Interventions.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'newintervention',
+            component: () =>
+                import ('../views/Newintervention.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'devices',
+            component: () =>
+                import ('../views/Devices.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'map',
+            component: () =>
+                import ('../views/Map.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'editintervention',
+            component: () =>
+                import ('../views/Editintervention.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

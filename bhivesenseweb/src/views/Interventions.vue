@@ -1,130 +1,56 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Gestão de Alunos (Admin)
-*/
-
 <template>
   <section class="container my-body">
-    <hr />
-    <h1 class="text-center">{{ translate("interventionsTitle") }}</h1>
-    <hr />
-
-    <section>
-      <button @click="formNew" type="submit" class="btn mt-4 me-4 my-button">
-        {{ translate("btnNew") }}
-      </button>
-    </section>
-    <section class="row mt-3">
-      <h4>{{ translate("interventionsLbl") }}</h4>
-    </section>
-    <section class="card mt-2">
-      <section
-        class="card-body"
-        style="
-          border-radius: 3px;
-          box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
-            rgba(0, 0, 0, 0.22) 0px 10px 10px;
-        "
-      >
-        <table class="table mt-2">
-          <tbody>
-            <tr>
-              <th>{{ translate("thdInterventionsDesc") }}</th>
-              <th class="text-center">
-                {{ translate("thdInterventionsDate") }}
-              </th>
-              <th class="text-center">
-                {{ translate("thdInterventionsAction") }}
-              </th>
-            </tr>
-            <tr
-              v-for="intervention of this.interventions"
-              :key="intervention._id"
-            >
-              <td>{{ intervention.description }}</td>
-              <td class="text-center">{{ intervention.date }}</td>
-              <td class="text-center">
-                <button
-                  data-bs-toggle="tooltip"
-                  v-bind:title="translate('lblDetailsUser')"
-                  data-bs-placement="bottom"
-                  data-bs-custom-class="custom-tooltip"
-                  @click="editIntervention(intervention._id)"
-                  type="button"
-                  class="btn btn-success btn-sm me-2 ac-btn"
-                  style="width: 50px"
-                >
-                  <i class="fas fa-search" aria-hidden="true"></i>
-                </button>
-                <button
-                  data-bs-toggle="tooltip"
-                  v-bind:title="translate('lblDelete')"
-                  data-bs-placement="bottom"
-                  data-bs-custom-class="custom-tooltip"
-                  @click="deleteModal(intervention._id)"
-                  type="button"
-                  class="btn btn-danger btn-sm me-2 ac-btn"
-                  style="width: 50px"
-                >
-                  <i class="far fa-trash-alt" aria-hidden="true"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    </section>
-    <section class="text-center">
-      <button @click="back" type="button" class="btn mt-4 my-button">
-        {{ translate("btnBack") }}
-      </button>
-    </section>
-
-    <ModalDeleteIntervention
-      v-show="isModalDeleteVisible"
-      @close="closeModalDelete"
-      @deleteAction="deleteIntervention"
-    />
-
-    <section class="text-center">
-      <section v-if="isShow" class="text-center">
-        <section class="spinner-border mt-4" role="status">
-          <span class="visually-hidden">Loading...</span>
+    <h2 class="my-text-color">{{ translate("interventionsTitle") }}</h2>
+    <section class="line-1"></section>
+    <section class="mt-4">
+      <button @click="formNew" class="btn my-button me-3">
+        <section v-if="!isShow">
+          {{ translate("btnNew") }}
         </section>
-        <section class="mb-2">{{ translate("spinnerTxt") }}</section>
-      </section>
+        <section
+          v-else
+          class="spinner-border spinner-border-sm"
+          role="status"
+        ></section>
+      </button>
+      <button @click="back" class="btn my-button">
+        <section v-if="!isShow">
+          {{ translate("btnBack") }}
+        </section>
+        <section
+          v-else
+          class="spinner-border spinner-border-sm"
+          role="status"
+        ></section>
+      </button>
     </section>
-    <section class="spacer"></section>
+
+    <section class="mt-4" v-if="hasInterventions != false">
+      <v-calendar
+        :locale="lang"
+        is-expanded
+        :attributes="attributes"
+        :rows="1"
+        :columns="3"
+        @dayclick="dayClicked"
+      >
+      </v-calendar>
+    </section>
+
+    <ModalDetails
+      v-show="isModalDetailsVisible"
+      @close="closeDetailsModal"
+      @edit="edit"
+      @done="done"
+      @delete="_delete"
+      :description="description"
+      :observations="observations"
+    >
+    </ModalDetails>
   </section>
 </template>
 
 <style scoped>
-.my-button {
-  width: 120px;
-  background-color: black;
-  color: white;
-}
-
-.my-button:hover {
-  background-color: white;
-  color: black;
-}
-select option[disabled]:first-child {
-  display: none;
-}
-.ac-btn {
-  width: 120px;
-  color: white;
-  font-weight: bold;
-}
-
-.my-body {
-  margin-top: 100px;
-}
-.spacer {
-  height: 200px;
-}
 </style>
 
 <script>
@@ -132,44 +58,52 @@ select option[disabled]:first-child {
   import pt from "../assets/pt.js";
   import axios from "axios";
   import { notify } from "@kyvg/vue3-notification";
-  import ModalDeleteIntervention from "../components/ModalDeleteIntervention.vue";
-  import { mapGetters } from "vuex";
-  import {
-    GET_USER_TOKEN_GETTER,
-    GET_USER_LEVEL_GETTER,
-    GET_USER_ID_GETTER,
-  } from "../store/storeconstants";
-  //import { LOADING_SPINNER_SHOW_MUTATION } from "../store/storeconstants";
+  import ModalDetails from "../components/ModalInterventionDetails.vue";
   export default {
-    mixins: [en, pt],
     components: {
-      ModalDeleteIntervention,
+      ModalDetails,
     },
+    mixins: [en, pt],
     data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
-        data: localStorage.token,
         interventions: [],
-        isShow: false,
         lang: lang,
+        isShow: false,
+        hasInterventions: false,
+        isModalDetailsVisible: false,
         isModalDeleteVisible: false,
-        interventiontodelete: "",
+        description: "",
+        observations: "",
+        interventiontoedit: "",
       };
     },
     computed: {
-      ...mapGetters("auth", {
-        token: GET_USER_TOKEN_GETTER,
-        level: GET_USER_LEVEL_GETTER,
-        _id: GET_USER_ID_GETTER,
-      }),
+      attributes() {
+        return [
+          ...this.interventions.map((todo) => ({
+            _id: todo._id,
+            dates: todo.dates,
+            highlight: {
+              color: todo.color,
+              start: { fillMode: "solid", color: todo.color },
+              base: { fillMode: "light", color: todo.color },
+              end: { fillMode: "solid", color: todo.color },
+              //order: todo.order,
+              //class: todo.isComplete ? "opacity-50" : "",
+            },
+            popover: {
+              label: todo.description,
+              visibility: "hover",
+            },
+          })),
+        ];
+      },
     },
     mounted() {
       this.getInterventions();
     },
     methods: {
-      translate(prop) {
-        return this[this.lang][prop];
-      },
       async getInterventions() {
         this.interventions = [];
         this.isShow = true;
@@ -186,6 +120,7 @@ select option[disabled]:first-child {
           .then((response) => {
             this.isShow = false;
             if (response.data.body.length == 0) {
+              this.hasInterventions = false;
               notify({
                 title: this.translate("notifWarningTitle"),
                 text: this.translate("mesNoInterventions"),
@@ -194,60 +129,45 @@ select option[disabled]:first-child {
                 speed: 500,
               });
             } else {
-              let interventions = response.data.body;
-              for (let i = 0; i < interventions.length; i++) {
-                this.interventions.push({
-                  _id: interventions[i]._id,
-                  description: interventions[i].description,
-                  date: interventions[i].date,
+              this.hasInterventions = true;
+              this.interventions = [];
+              let resArray = response.data.body;
+              for (let i = 0; i < resArray.length; i++) {
+                if (resArray[i].concluded == false) {
+                  let sd = new Date(resArray[i].startDate);
+                  let ed = new Date(resArray[i].endDate);
+                  let dates = "";
+                  dates = {
+                    start: sd,
+                    end: ed,
+                  };
+                  let color;
+                  if (resArray[i].type == 1) color = "green";
+                  else if (resArray[i].type == 2) color = "orange";
+                  else color = "red";
+                  this.interventions.push({
+                    _id: resArray[i]._id,
+                    color: color,
+                    dates: dates,
+                    description: resArray[i].description,
+                    startTime: resArray[i].startTime,
+                    endTime: resArray[i].endTime,
+                    observations: resArray[i].observations,
+                  });
+                }
+              }
+              if (this.interventions.length == 0) {
+                this.hasInterventions = false;
+                notify({
+                  title: this.translate("notifWarningTitle"),
+                  text: this.translate("mesNoInterventions"),
+                  type: "warn",
+                  duration: 3000,
+                  speed: 500,
                 });
               }
             }
           })
-          .catch((error) => {
-            this.isShow = false;
-            notify({
-              title: this.translate("notifErrorTitle"),
-              text: this.translate("mesProblem"),
-              type: "error",
-              duration: 3000,
-              speed: 500,
-            });
-          });
-      },
-      async delete() {
-        await axios
-          .delete(
-            "https://bhsapi.duartecota.com/intervention/" +
-              localStorage.getItem("interventiontodelete"),
-            {
-              headers: {
-                Authorization: this.token,
-              },
-            }
-          )
-          .then((response) => {
-            if (response.data.http == 200) {
-              this.isShow = false;
-              notify({
-                title: this.translate("notifSuccessTitle"),
-                text: this.translate("deleteIntervetnionMessage"),
-                type: "success",
-                duration: 3000,
-                speed: 500,
-              });
-              this.getInterventions();
-            } else {
-              this.isShow = false;
-              notify({
-                title: this.translate("notifErrorTitle"),
-                text: this.translate("mesProblem"),
-                type: "error",
-                duration: 3000,
-                speed: 500,
-              });
-            }
-          })
           .catch(() => {
             this.isShow = false;
             notify({
@@ -259,81 +179,73 @@ select option[disabled]:first-child {
             });
           });
       },
-      async detail(id) {
-        this.isShow = true;
-        this.message.type = "";
-        this.message.msg = "";
-        //(this.isShow = true((this.message.type = ""))), (this.message.msg = "");
-        await axios
-          .get("https://bhsapi.duartecota.com/user/" + id, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
-          .then((response) => {
-            this.name = response.data.body.name;
-            let type = response.data.body.type;
-            switch (type) {
-              case "Individual":
-                this.type = this.translate("typeOp1");
-                break;
-              case "Company":
-                this.type = this.translate("typeOp2");
-                break;
-              case "Companhia":
-                this.type = this.translate("typeOp2");
-                break;
-              case "Association":
-                this.type = this.translate("typeOp3");
-                break;
-              case "Associação":
-                this.type = this.translate("typeOp3");
-                break;
-            }
-            this.email = response.data.body.email;
-            this.bdate = response.data.body.bdate;
-            this.mobile = response.data.body.mobile;
-            this.nif = response.data.body.nif;
-            let notifications = response.data.body.notifications;
-            switch (notifications) {
-              case true:
-                this.notifications = this.translate("modalNotifTrue");
-                break;
-              case false:
-                this.notifications = this.translate("modalNotifFalse");
-                break;
-            }
-            let img = response.data.body.img;
-            this.img = response.data.body.img;
-            this.isShow = false;
-            return true;
-          })
-          .catch(() => {
-            this.message.msg = "Ocorreu um problema";
-            this.message.type = "warning";
-            this.isShow = false;
-            return false;
-          });
+      translate(prop) {
+        return this[this.lang][prop];
       },
-      deleteModal(id) {
-        localStorage.setItem("interventiontodelete", id);
-        this.isModalDeleteVisible = true;
+      padTo2Digits(num) {
+        return String(num).padStart(2, "0");
       },
-      closeModalDelete() {
-        this.isModalDeleteVisible = false;
-      },
-      async deleteIntervention() {
-        await this.delete();
-        this.isModalDeleteVisible = false;
+      dayClicked(day) {
+        this.interventiontoedit = "";
+        let date = new Date(day.id);
+        for (let i = 0; i < this.interventions.length; i++) {
+          let sd = new Date(this.interventions[i].dates.start);
+          let sdConv = this.padTo2Digits(
+            sd.toLocaleDateString("sv-SE", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+          );
+          let sdFinal = new Date(sdConv);
+          let ed = new Date(this.interventions[i].dates.end);
+          let edConv = this.padTo2Digits(
+            ed.toLocaleDateString("sv-SE", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+          );
+          let edFinal = new Date(edConv);
+          if (
+            date.getTime() >= sdFinal.getTime() &&
+            date.getTime() <= edFinal.getTime()
+          ) {
+            this.interventiontoedit = this.interventions[i]._id;
+            this.description = this.interventions[i].description;
+            this.observations = this.interventions[i].observations;
+            this.isModalDetailsVisible = true;
+            break;
+          }
+        }
       },
       back() {
-        this.$router.replace("apiaries");
+        this.$router.push("apiaries");
       },
       formNew() {
-        this.$router.replace("newintervention");
+        this.$router.push("newintervention");
       },
-      editIntervention(id) {
-        alert(id);
+      closeDetailsModal() {
+        this.isModalDetailsVisible = false;
+      },
+      closeDeleteModal() {
+        this.isModalDeleteVisible = false;
+      },
+      async detailsModal(id) {
+        this.toEditID = id;
+        await this.detail(id);
+        this.isModalDetailsVisible = true;
+      },
+      edit() {
+        this.isModalDetailsVisible = false;
+        localStorage.setItem("interventiontoedit", this.interventiontoedit);
+        this.$router.push("editintervention");
+      },
+      done() {
+        alert("done");
+      },
+      _delete() {
+        alert("delete");
       },
     },
   };

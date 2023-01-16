@@ -7,16 +7,45 @@ Description: implementation of the view Ficha de Inscrição
 <template>
   <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
-      <h1 class="text-center mt-5">{{ translate("formEditApiaryTitle") }}</h1>
-      <section
-        v-if="showsection"
-        class="alert mt-3 alert-dismissible fade show"
-        role="alert"
-        v-bind:class="'alert-' + message.type"
-      >
-        {{ message.msg }}
-      </section>
-      <form class="form-signin" @submit.prevent="submit">
+      <h2 class="my-text-color">{{ translate("formEditApiaryTitle") }}</h2>
+      <section class="line-1"></section>
+      <form class="form-signin" @submit.prevent="update">
+        <section>
+          <button type="submit" class="btn mt-4 me-4 my-button">
+            <section v-if="!isShow">
+              {{ translate("btnSubmit") }}
+            </section>
+            <section
+              v-else
+              class="spinner-border spinner-border-sm"
+              role="status"
+            ></section>
+          </button>
+          <button
+            @click="cleanForm()"
+            type="button"
+            class="btn mt-4 me-4 my-button"
+          >
+            <section v-if="!isShow">
+              {{ translate("btnClean") }}
+            </section>
+            <section
+              v-else
+              class="spinner-border spinner-border-sm"
+              role="status"
+            ></section>
+          </button>
+          <button @click="back()" type="button" class="btn mt-4 my-button">
+            <section v-if="!isShow">
+              {{ translate("btnBack") }}
+            </section>
+            <section
+              v-else
+              class="spinner-border spinner-border-sm"
+              role="status"
+            ></section>
+          </button>
+        </section>
         <section class="row">
           <section class="col-md-6 g-4">
             <label for="location" class="form-label">{{
@@ -57,51 +86,15 @@ Description: implementation of the view Ficha de Inscrição
             />
           </section>
         </section>
-        <section class="text-center">
-          <button @click="update" type="submit" class="btn mt-4 me-4 my-button">
-            {{ translate("btnSubmit") }}
-          </button>
-          <button
-            @click="cleanForm()"
-            type="button"
-            class="btn mt-4 me-4 my-button"
-          >
-            {{ translate("btnClean") }}
-          </button>
-          <button @click="back()" type="button" class="btn mt-4 my-button">
-            {{ translate("btnBack") }}
-          </button>
-        </section>
       </form>
-      <section class="text-center">
-        <section v-if="isShow" class="text-center">
-          <section class="spinner-border mt-4" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </section>
-          <section class="mb-2">{{ translate("spinnerTxt") }}</section>
-        </section>
-      </section>
       <section class="spacer"></section>
     </section>
   </section>
 </template>
 
 <style scoped>
-.my-button {
-  width: 120px;
-  background-color: black;
-  color: white;
-}
-
-.my-button:hover {
-  background-color: white;
-  color: black;
-}
 select option[disabled]:first-child {
   display: none;
-}
-.my-body {
-  margin-top: 100px;
 }
 .spacer {
   height: 200px;
@@ -138,8 +131,7 @@ select option[disabled]:first-child {
           type: "",
           msg: "",
         },
-        isShow: false,
-        showsection: false,
+        isShow: true,
         lang: lang,
       };
     },
@@ -202,7 +194,6 @@ select option[disabled]:first-child {
               if (response.data.http == 200) {
                 this.isShow = false;
                 notify({
-                  position: "top right",
                   title: this.translate("notifSuccessTitle"),
                   text: this.translate("updateApiarySuccess"),
                   type: "success",
@@ -234,7 +225,7 @@ select option[disabled]:first-child {
           this.isShow = false;
           notify({
             title: this.translate("notifErrorTitle"),
-            text: this.translate("mesFields"),
+            text: this.translate("mesFieldsApiary"),
             type: "error",
             duration: 3000,
             speed: 500,
@@ -242,13 +233,10 @@ select option[disabled]:first-child {
         }
       },
       cleanForm() {
-        this.message.type = "";
-        this.message.msg = "";
         (this.form.location = ""),
           (this.form.address = ""),
           (this.form.observations = "");
         this.isShow = false;
-        this.showsection = false;
       },
       back() {
         this.$router.replace("apiaries");
