@@ -126,6 +126,14 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'adddevice',
+            component: () =>
+                import ('../views/Adddevice.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

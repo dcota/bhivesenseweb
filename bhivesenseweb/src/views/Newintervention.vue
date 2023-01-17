@@ -184,6 +184,7 @@ select option[disabled]:first-child {
           type: "",
         },
         isShow: false,
+        validDates: true,
         lang: lang,
       };
     },
@@ -198,12 +199,9 @@ select option[disabled]:first-child {
       padTo2Digits(num) {
         return String(num).padStart(2, "0");
       },
-      send1() {
-        console.log(this.range.start.getUTCDate());
-      },
       async send() {
         this.isShow = true;
-        if (this.checkForm() == true) {
+        if (this.checkForm() == true && this.validDates == true) {
           let startTime =
             this.padTo2Digits(this.range.start.getHours()) +
             ":" +
@@ -300,6 +298,13 @@ select option[disabled]:first-child {
         let date = new Date();
         let sd = new Date(this.range.start);
         let ed = new Date(this.range.end);
+        let dateConv = this.padTo2Digits(
+          date.toLocaleDateString("sv-SE", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+        );
         let sdConv = this.padTo2Digits(
           sd.toLocaleDateString("sv-SE", {
             year: "numeric",
@@ -307,8 +312,6 @@ select option[disabled]:first-child {
             day: "2-digit",
           })
         );
-        let sdFinal = new Date(sdConv);
-
         let edConv = this.padTo2Digits(
           ed.toLocaleDateString("sv-SE", {
             year: "numeric",
@@ -316,24 +319,27 @@ select option[disabled]:first-child {
             day: "2-digit",
           })
         );
+        let dateFinal = new Date(dateConv);
+        dateFinal.setHours(0, 0, 0, 0);
+        let sdFinal = new Date(sdConv);
+        sdFinal.setHours(0, 0, 0, 0);
         let edFinal = new Date(edConv);
-        if (!isNaN(sdFinal.getTime()) && !isNaN(edFinal.getTime())) {
-          console.log(date.getTime(), sdFinal.getTime(), edFinal.getTime());
-          if (
-            date.getTime() > sdFinal.getTime() &&
-            date.getTime() > edFinal.getTime()
-          ) {
-            notify({
-              title: this.translate("notifErrorTitle"),
-              text: this.translate("mesInvalidIntervention"),
-              type: "error",
-              duration: 3000,
-              speed: 500,
-            });
-            this.range.start = "";
-            this.range.end = "";
-          }
-        }
+        edFinal.setHours(0, 0, 0, 0);
+        if (
+          sdFinal.getTime() < dateFinal.getTime() ||
+          edFinal.getTime() < dateFinal.getTime()
+        ) {
+          notify({
+            title: this.translate("notifErrorTitle"),
+            text: this.translate("mesFieldsIntervention"),
+            type: "error",
+            duration: 3000,
+            speed: 500,
+          });
+          this.range.start = "";
+          this.range.end = "";
+          this.validDates = false;
+        } else this.validDates = true;
       },
     },
   };

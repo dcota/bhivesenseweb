@@ -116,10 +116,11 @@
                 >
               </li>
               <li>
-                <a
-                  href="#"
+                <router-link
+                  to="/adddevice"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >{{ translate("sbarHivesNew") }}</a
+                  style="text-decoration: none"
+                  >{{ translate("sbarHivesNew") }}</router-link
                 >
               </li>
             </ul>
@@ -278,7 +279,7 @@
           >
             {{ translate("sbarAccLabel") }}
           </button>
-          <section class="collapse" id="account-collapse">
+          <section id="account-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
                 <router-link
