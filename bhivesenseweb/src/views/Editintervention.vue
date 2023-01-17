@@ -11,7 +11,7 @@ Description: implementation of the view Ficha de Inscrição
       {{ translate("formNewInterventionTitle") }}
     </h2>
     <section class="line-1"></section>
-    <form class="form-signin" v-on:submit.prevent="send">
+    <form class="form-signin" v-on:submit.prevent="update">
       <section>
         <button type="submit" class="btn mt-4 me-3 my-button">
           <section v-if="!isShow">
@@ -283,19 +283,20 @@ select option[disabled]:first-child {
             return false;
           });
       },
-      async send() {
+      async update() {
         this.isShow = true;
         if (this.checkForm() == true) {
+          let sd = new Date(this.range.start);
           let startTime =
-            this.padTo2Digits(this.range.start.getHours()) +
+            this.padTo2Digits(sd.getHours()) +
             ":" +
-            this.padTo2Digits(this.range.start.getMinutes());
+            this.padTo2Digits(sd.getMinutes());
+          let ed = new Date(this.range.end);
           let endTime =
-            this.padTo2Digits(this.range.end.getHours()) +
+            this.padTo2Digits(ed.getHours()) +
             ":" +
-            this.padTo2Digits(this.range.end.getMinutes());
+            this.padTo2Digits(ed.getMinutes());
           let postData = {
-            //apiary: localStorage.getItem("idtointerventions"),
             startDate: this.range.start,
             endDate: this.range.end,
             startTime: startTime,
@@ -304,24 +305,30 @@ select option[disabled]:first-child {
             description: this.form.description,
             observations: this.form.observations,
           };
+          console.log(postData);
           //verificar API
+          let id = localStorage.getItem("interventiontoedit");
           await axios
-            .post("https://bhsapi.duartecota.com/intervention", postData, {
-              headers: {
-                Authorization: this.token,
-              },
-            })
+            .patch(
+              "https://bhsapi.duartecota.com/intervention/one/" + id,
+              postData,
+              {
+                headers: {
+                  Authorization: this.token,
+                },
+              }
+            )
             .then((response) => {
               if (response.data.http == 200) {
                 this.isShow = false;
                 notify({
                   title: this.translate("notifSuccessTitle"),
-                  text: this.translate("mesNewInterventionSuccess"),
+                  text: this.translate("interventionChangeSuccess"),
                   type: "success",
                   duration: 3000,
                   speed: 500,
                 });
-                this.$router.replace("apiaries");
+                this.$router.replace("interventions");
               } else {
                 this.isShow = false;
                 notify({
@@ -367,9 +374,6 @@ select option[disabled]:first-child {
       },
       translate(prop) {
         return this[this.lang][prop];
-      },
-      dayClicked(day) {
-        alert(this.range.start + ";" + this.range.end);
       },
     },
   };

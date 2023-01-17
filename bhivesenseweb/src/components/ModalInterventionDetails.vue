@@ -57,11 +57,8 @@
                 @click="cancel"
                 aria-label="Interventions"
               >
-                <i
-                  class="fas fa-arrow-left me-1 act-btn"
-                  aria-hidden="true"
-                ></i>
-                {{ translate("btnModalConfirm") }}
+                <i class="fas fa-trash me-1 act-btn" aria-hidden="true"></i>
+                {{ translate("btnModalDelete") }}
               </button>
             </div>
             <div class="col-md-3">

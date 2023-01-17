@@ -41,12 +41,23 @@
       v-show="isModalDetailsVisible"
       @close="closeDetailsModal"
       @edit="edit"
-      @done="done"
-      @delete="_delete"
+      @done="clickConclude"
+      @delete="clickcancel"
       :description="description"
       :observations="observations"
-    >
-    </ModalDetails>
+    />
+
+    <ModalDelete
+      v-show="isModalDeleteVisible"
+      @close="closeDeleteModal"
+      @deleteAction="_delete"
+    />
+
+    <ModalConclude
+      v-show="isModalConcludeVisible"
+      @close="closeConcludeModal"
+      @conclude="conclude"
+    />
   </section>
 </template>
 
@@ -59,9 +70,13 @@
   import axios from "axios";
   import { notify } from "@kyvg/vue3-notification";
   import ModalDetails from "../components/ModalInterventionDetails.vue";
+  import ModalDelete from "@/components/ModalDeleteIntervention.vue";
+  import ModalConclude from "@/components/ModalInterventionConcluded.vue";
   export default {
     components: {
       ModalDetails,
+      ModalDelete,
+      ModalConclude,
     },
     mixins: [en, pt],
     data() {
@@ -73,6 +88,7 @@
         hasInterventions: false,
         isModalDetailsVisible: false,
         isModalDeleteVisible: false,
+        isModalConcludeVisible: false,
         description: "",
         observations: "",
         interventiontoedit: "",
@@ -86,11 +102,18 @@
             dates: todo.dates,
             highlight: {
               color: todo.color,
-              start: { fillMode: "solid", color: todo.color },
-              base: { fillMode: "light", color: todo.color },
-              end: { fillMode: "solid", color: todo.color },
-              //order: todo.order,
-              //class: todo.isComplete ? "opacity-50" : "",
+              start: {
+                fillMode: "solid",
+                color: todo.isComplete ? "gray" : todo.color,
+              },
+              base: {
+                fillMode: "light",
+                color: todo.isComplete ? "gray" : todo.color,
+              },
+              end: {
+                fillMode: "solid",
+                color: todo.isComplete ? "gray" : todo.color,
+              },
             },
             popover: {
               label: todo.description,
@@ -133,39 +156,83 @@
               this.interventions = [];
               let resArray = response.data.body;
               for (let i = 0; i < resArray.length; i++) {
-                if (resArray[i].concluded == false) {
-                  let sd = new Date(resArray[i].startDate);
-                  let ed = new Date(resArray[i].endDate);
-                  let dates = "";
-                  dates = {
-                    start: sd,
-                    end: ed,
-                  };
-                  let color;
-                  if (resArray[i].type == 1) color = "green";
-                  else if (resArray[i].type == 2) color = "orange";
-                  else color = "red";
-                  this.interventions.push({
-                    _id: resArray[i]._id,
-                    color: color,
-                    dates: dates,
-                    description: resArray[i].description,
-                    startTime: resArray[i].startTime,
-                    endTime: resArray[i].endTime,
-                    observations: resArray[i].observations,
-                  });
-                }
-              }
-              if (this.interventions.length == 0) {
-                this.hasInterventions = false;
-                notify({
-                  title: this.translate("notifWarningTitle"),
-                  text: this.translate("mesNoInterventions"),
-                  type: "warn",
-                  duration: 3000,
-                  speed: 500,
+                //if (resArray[i].concluded == false) {
+                let sd = new Date(resArray[i].startDate);
+                let ed = new Date(resArray[i].endDate);
+                let dates = "";
+                dates = {
+                  start: sd,
+                  end: ed,
+                };
+                let color = "";
+                if (resArray[i].type == 1) color = "green";
+                else if (resArray[i].type == 2) color = "orange";
+                else color = "red";
+                this.interventions.push({
+                  _id: resArray[i]._id,
+                  color: color,
+                  dates: dates,
+                  description: resArray[i].description,
+                  startTime: resArray[i].startTime,
+                  endTime: resArray[i].endTime,
+                  observations: resArray[i].observations,
+                  isComplete: resArray[i].concluded,
                 });
+                //}
               }
+              /*if (this.interventions.length == 0) {
+                                                  this.hasInterventions = false;
+                                                  notify({
+                                                    title: this.translate("notifWarningTitle"),
+                                                    text: this.translate("mesNoInterventions"),
+                                                    type: "warn",
+                                                    duration: 3000,
+                                                    speed: 500,
+                                                  });
+                                                }*/
+            }
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
+      async _delete() {
+        this.isModalDeleteVisible = false;
+        this.isShow = true;
+        let id = localStorage.getItem("interventiontoedit");
+        await axios
+          .delete("https://bhsapi.duartecota.com/intervention/one/" + id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            if (response.data.http == 200) {
+              this.isShow = false;
+              notify({
+                title: this.translate("notifSuccessTitle"),
+                text: this.translate("deleteInterventionMessage"),
+                type: "success",
+                duration: 3000,
+                speed: 500,
+              });
+              this.getInterventions();
+            } else {
+              this.isShow = false;
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesProblem"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
             }
           })
           .catch(() => {
@@ -212,6 +279,7 @@
             date.getTime() <= edFinal.getTime()
           ) {
             this.interventiontoedit = this.interventions[i]._id;
+            localStorage.setItem("interventiontoedit", this.interventiontoedit);
             this.description = this.interventions[i].description;
             this.observations = this.interventions[i].observations;
             this.isModalDetailsVisible = true;
@@ -231,21 +299,64 @@
       closeDeleteModal() {
         this.isModalDeleteVisible = false;
       },
-      async detailsModal(id) {
-        this.toEditID = id;
-        await this.detail(id);
-        this.isModalDetailsVisible = true;
+      closeConcludeModal() {
+        this.isModalConcludeVisible = false;
       },
       edit() {
         this.isModalDetailsVisible = false;
-        localStorage.setItem("interventiontoedit", this.interventiontoedit);
+        //localStorage.setItem("interventiontoedit", this.interventiontoedit);
         this.$router.push("editintervention");
       },
-      done() {
-        alert("done");
+      async conclude() {
+        this.isModalConcludeVisible = false;
+        this.isShow = true;
+        let id = localStorage.getItem("interventiontoedit");
+        await axios
+          .put("https://bhsapi.duartecota.com/intervention/one/" + id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            if (response.data.http == 200) {
+              this.isShow = false;
+              notify({
+                title: this.translate("notifSuccessTitle"),
+                text: this.translate("concludeInterventionMessage"),
+                type: "success",
+                duration: 3000,
+                speed: 500,
+              });
+              this.getInterventions();
+            } else {
+              this.isShow = false;
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesProblem"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
+            }
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
       },
-      _delete() {
-        alert("delete");
+      clickcancel() {
+        this.isModalDetailsVisible = false;
+        this.isModalDeleteVisible = true;
+      },
+      clickConclude() {
+        this.isModalDetailsVisible = false;
+        this.isModalConcludeVisible = true;
       },
     },
   };

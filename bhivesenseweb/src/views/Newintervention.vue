@@ -40,12 +40,14 @@ Description: implementation of the view Ficha de Inscrição
             translate("formNewInterventionDate")
           }}</label>
           <v-date-picker
+            :attributes="attrs"
             :locale="lang"
             is-expanded
             v-model="range"
             is-range
             is24hr
             mode="datetime"
+            @dayclick="dayClicked"
           />
         </section>
         <section class="col-md-6">
@@ -160,12 +162,18 @@ select option[disabled]:first-child {
     name: "new intervention",
     mixins: [en, pt],
     data() {
-      const date = new Date();
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      const day = date.getDay();
       const lang = localStorage.getItem("lang") || "en";
       return {
+        attrs: [
+          {
+            key: "today",
+            dates: new Date(),
+            highlight: {
+              color: "indigo",
+              fillMode: "outline",
+            },
+          },
+        ],
         range: {
           start: "",
           end: "",
@@ -196,35 +204,6 @@ select option[disabled]:first-child {
       async send() {
         this.isShow = true;
         if (this.checkForm() == true) {
-          //format start date
-          /*let sd = new Date(
-        							this.range.start.getFullYear() +
-        								"-" +
-        								(parseInt(this.range.start.getMonth()) + 1) +
-        								"-" +
-        								this.range.start.getDate()
-        						);
-        						let startDate = sd.toLocaleDateString("sv-SE", {
-        							year: "numeric",
-        							month: "2-digit",
-        							day: "2-digit",
-        						});
-        						console.log(startDate);
-        						//format end date
-        						let ed = new Date(
-        							this.range.end.getFullYear() +
-        								"-" +
-        								(parseInt(this.range.end.getMonth()) + 1) +
-        								"-" +
-        								this.range.end.getDate()
-        						);
-        						let endDate = ed.toLocaleDateString("sv-SE", {
-        							year: "numeric",
-        							month: "2-digit",
-        							day: "2-digit",
-        						});
-        						console.log(endDate);*/
-          //format start time
           let startTime =
             this.padTo2Digits(this.range.start.getHours()) +
             ":" +
@@ -262,7 +241,7 @@ select option[disabled]:first-child {
                   duration: 3000,
                   speed: 500,
                 });
-                this.$router.replace("apiaries");
+                this.$router.replace("interventions");
               } else {
                 this.isShow = false;
                 notify({
@@ -317,8 +296,44 @@ select option[disabled]:first-child {
       translate(prop) {
         return this[this.lang][prop];
       },
-      dayClicked(day) {
-        alert(this.range.start + ";" + this.range.end);
+      dayClicked() {
+        let date = new Date();
+        let sd = new Date(this.range.start);
+        let ed = new Date(this.range.end);
+        let sdConv = this.padTo2Digits(
+          sd.toLocaleDateString("sv-SE", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+        );
+        let sdFinal = new Date(sdConv);
+
+        let edConv = this.padTo2Digits(
+          ed.toLocaleDateString("sv-SE", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+        );
+        let edFinal = new Date(edConv);
+        if (!isNaN(sdFinal.getTime()) && !isNaN(edFinal.getTime())) {
+          console.log(date.getTime(), sdFinal.getTime(), edFinal.getTime());
+          if (
+            date.getTime() > sdFinal.getTime() &&
+            date.getTime() > edFinal.getTime()
+          ) {
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesInvalidIntervention"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+            this.range.start = "";
+            this.range.end = "";
+          }
+        }
       },
     },
   };
