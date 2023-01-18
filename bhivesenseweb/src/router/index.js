@@ -134,6 +134,14 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'alldevices',
+            component: () =>
+                import ('../views/Alldevices.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

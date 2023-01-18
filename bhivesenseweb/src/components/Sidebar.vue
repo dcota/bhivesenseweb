@@ -227,7 +227,7 @@
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/alldevices"
                   class="link-dark d-inline-flex text-decoration-none rounded"
                   style="text-decoration: none"
                   >{{ translate("sbarDevicesManage") }}</router-link

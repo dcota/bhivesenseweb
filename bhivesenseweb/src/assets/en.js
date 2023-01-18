@@ -169,8 +169,13 @@ export default {
                 notifSuccessTitle: "SUCCESS",
                 notifErrorTitle: "ERROR",
                 notifWarningTitle: "WARNING",
-
                 updateApiarySuccess: "Apiary successfully updated",
+                manageDevicesTitle: "MANAGE DEVICES",
+                manageDevicesLabel: "Registered devices:",
+                thdDevicesID: "Device ID",
+                thdDevicesStatus: "State",
+                thdDevicesUser: "User",
+                notAssignedText: "Undefined",
 
             }
         }

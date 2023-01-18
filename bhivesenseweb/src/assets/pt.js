@@ -167,8 +167,13 @@ export default {
                 notifSuccessTitle: "SUCESSO",
                 notifErrorTitle: "ERRO",
                 notifWarningTitle: "ATENÇÃO",
-
                 updateApiarySuccess: "Apiário atualizado com sucesso",
+                manageDevicesTitle: "GERIR DISPOSITIVOS",
+                manageDevicesLabel: "Dispositivos registados:",
+                thdDevicesID: "ID dispositivo",
+                thdDevicesStatus: "Estado",
+                thdDevicesUser: "Utilizador",
+                notAssignedText: "Não definido",
             }
         }
     }

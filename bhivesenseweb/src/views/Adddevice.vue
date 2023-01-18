@@ -120,7 +120,6 @@ select option[disabled]:first-child {
             )
             .then((response) => {
               if (response.data.http == 200) {
-                alert(response.data.http);
                 this.isShow = false;
                 notify({
                   title: this.translate("notifSuccessTitle"),
@@ -130,7 +129,6 @@ select option[disabled]:first-child {
                   speed: 500,
                 });
               } else if (response.data.http == 206) {
-                alert(response.data.http);
                 this.isShow = false;
                 notify({
                   title: this.translate("notifErrorTitle"),
