@@ -109,10 +109,11 @@
           <section class="collapse" id="hives-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
-                <a
-                  href="#"
+                <router-link
+                  to="/managehives"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >{{ translate("sbarHivesAll") }}</a
+                  style="text-decoration: none"
+                  >{{ translate("sbarHivesAll") }}</router-link
                 >
               </li>
               <li>

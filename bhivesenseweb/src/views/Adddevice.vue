@@ -13,6 +13,7 @@ Description: implementation of the view Ficha de Inscrição
         <section class="mt-4">
           <button type="submit" class="btn me-4 my-button" @click="register">
             <section v-if="!isShow">
+              <i class="fa-solid fa-share-from-square"></i>
               {{ translate("btnSubmit") }}
             </section>
             <section
@@ -23,6 +24,7 @@ Description: implementation of the view Ficha de Inscrição
           </button>
           <button @click="back" type="button" class="btn my-button">
             <section v-if="!isShow">
+              <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
               {{ translate("btnBack") }}
             </section>
             <section

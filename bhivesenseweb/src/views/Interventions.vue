@@ -5,6 +5,7 @@
     <section class="mt-4">
       <button @click="formNew" class="btn my-button me-3">
         <section v-if="!isShow">
+          <i class="fa-solid fa-plus"></i>
           {{ translate("btnNew") }}
         </section>
         <section
@@ -15,6 +16,7 @@
       </button>
       <button @click="back" class="btn my-button">
         <section v-if="!isShow">
+          <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
           {{ translate("btnBack") }}
         </section>
         <section
@@ -181,15 +183,15 @@
                 //}
               }
               /*if (this.interventions.length == 0) {
-                                                  this.hasInterventions = false;
-                                                  notify({
-                                                    title: this.translate("notifWarningTitle"),
-                                                    text: this.translate("mesNoInterventions"),
-                                                    type: "warn",
-                                                    duration: 3000,
-                                                    speed: 500,
-                                                  });
-                                                }*/
+                                                      this.hasInterventions = false;
+                                                      notify({
+                                                        title: this.translate("notifWarningTitle"),
+                                                        text: this.translate("mesNoInterventions"),
+                                                        type: "warn",
+                                                        duration: 3000,
+                                                        speed: 500,
+                                                      });
+                                                    }*/
             }
           })
           .catch(() => {

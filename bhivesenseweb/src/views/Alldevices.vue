@@ -11,7 +11,14 @@ Description: implementation of the view Gestão de Alunos (Admin)
     <section class="row mt-3">
       <h4 class="my-text-color">{{ translate("manageDevicesLabel") }}</h4>
     </section>
-    <section class="card mt-2">
+    <input
+      type="search"
+      v-model="searchName"
+      class="form-control mt-4"
+      v-bind:placeholder="translate('searchPholderUser')"
+    />
+
+    <section class="card mt-4">
       <section
         class="card-body"
         style="
@@ -28,9 +35,9 @@ Description: implementation of the view Gestão de Alunos (Admin)
               <!--<th class="text-center">{{ translate("thdUsersStatus") }}</th>-->
               <th class="text-center">{{ translate("thdUsersActions") }}</th>
             </tr>
-            <tr v-for="device of this.devices" :key="device.id">
+            <tr v-for="device in filteredPersons" :key="device.id">
               <td>{{ device.id }}</td>
-              <td class="text-center">{{ device.user }}</td>
+              <td>{{ device.user }}</td>
               <!--<td class="text-center">{{ user.lastlogin }}</td>-->
               <td class="text-center">
                 <button
@@ -115,6 +122,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
     data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
+        searchName: "",
         data: localStorage.token,
         devices: [],
         message: {
@@ -138,11 +146,32 @@ Description: implementation of the view Gestão de Alunos (Admin)
         level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
       }),
+      filteredPersons: function () {
+        return this.devices.filter(this.filterByName).sort(this.orderBy);
+      },
     },
     mounted() {
       this.getDevices();
     },
     methods: {
+      filterByName: function (device) {
+        // no search, don't filter :
+        if (this.searchName.length === 0) {
+          return true;
+        }
+
+        return (
+          device.user.toLowerCase().indexOf(this.searchName.toLowerCase()) > -1
+        );
+      },
+      orderBy: function (userA, userB) {
+        let condition = userA[this.sortKey] > userB[this.sortKey];
+        if (this.reverse) {
+          return !condition;
+        } else {
+          return condition;
+        }
+      },
       translate(prop) {
         return this[this.lang][prop];
       },
@@ -162,7 +191,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
               if (devices[i].user == null) {
                 this.devices.push({
                   id: devices[i]._id,
-                  user: "Not assigned",
+                  user: this.translate("notAssignedText"),
                 });
               } else {
                 this.getUser(devices[i].user, (callback) => {

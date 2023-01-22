@@ -103,9 +103,9 @@ const routes = [{
             }
         },
         {
-            path: 'devices',
+            path: 'hives',
             component: () =>
-                import ('../views/Devices.vue'),
+                import ('../views/Hives.vue'),
             meta: {
                 requiresAuth: true,
             }
@@ -138,6 +138,22 @@ const routes = [{
             path: 'alldevices',
             component: () =>
                 import ('../views/Alldevices.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'managehives',
+            component: () =>
+                import ('../views/Managehives.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'hivedetails',
+            component: () =>
+                import ('../views/Hivedetails.vue'),
             meta: {
                 requiresAuth: true,
             }

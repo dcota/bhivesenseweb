@@ -322,7 +322,8 @@
         this.$router.push("interventions");
       },
       getApiaryDevices(id) {
-        this.$router.push("devices");
+        localStorage.setItem("apiaryIDtoget", id);
+        this.$router.push("hives");
       },
     },
   };

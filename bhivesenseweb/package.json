@@ -19,6 +19,7 @@
     "vue": "^3.2.13",
     "vue-persist": "^0.4.0",
     "vue-router": "^4.1.6",
+    "vue3-charts": "^1.1.32",
     "vue3-google-map": "^0.15.0",
     "vuejs3-google-maps": "^0.2.3",
     "vuex": "^4.0.2",
