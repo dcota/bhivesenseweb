@@ -195,6 +195,22 @@
         </section>
       </section>
     </section>
+    <section class="card p-2">
+      <area-chart
+        :data="chartData"
+        label="Temperature"
+        :min="0"
+        :max="13"
+        :download="true"
+        width="100%"
+        height="500px"
+        :colors="['#a17f05', '#666']"
+        :dataset="{ borderWidth: 2 }"
+        loading="Loading..."
+        xtitle="Time"
+        ytitle="Temperature (Deg. Celsius)"
+      ></area-chart>
+    </section>
 
     <ModalDetails
       v-show="isModalDetailsVisible"
@@ -251,6 +267,29 @@
     data: function () {
       const lang = localStorage.getItem("lang") || "pt";
       return {
+        chartData: [
+          ["Jan", 4],
+          ["Feb", 2],
+          ["Mar", 10],
+          ["Apr", 5],
+          ["May", 3],
+        ],
+        /*data: [
+                                                            {
+                                                              name: "Workout",
+                                                              data: {
+                                                                "2017-01-01 00:00:00 -0800": 3,
+                                                                "2017-01-02 00:00:00 -0800": 4,
+                                                              },
+                                                            },
+                                                            {
+                                                              name: "Call parents",
+                                                              data: {
+                                                                "2017-01-01 00:00:00 -0800": 5,
+                                                                "2017-01-02 00:00:00 -0800": 3,
+                                                              },
+                                                            },
+                                                          ],*/
         devices: [],
         img: require("../assets/IMG1220.png"),
         lang: lang,
