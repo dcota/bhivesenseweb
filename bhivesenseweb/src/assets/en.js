@@ -195,6 +195,7 @@ export default {
                 hiveDetailsTitle: "HIVE DATA",
                 lblBtnMap: "MAP",
                 lblLastData: "Last data received: ",
+                lblAt: " at ",
             }
         }
     }

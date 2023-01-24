@@ -192,7 +192,7 @@
         this.devices = [];
         await axios
           .get(
-            "https://bhsapi.duartecota.com/device/apiary/" +
+            "https://bhsapi.duartecota.com/device/forapiary/" +
               localStorage.getItem("apiaryIDtoget"),
             {
               headers: {
@@ -333,7 +333,7 @@
         this.$router.push("apiaries");
       },
       loadDetails(id) {
-        localStorage.setItem("hivedetails", id);
+        localStorage.setItem("hiveIDtoget", id);
         //alert(id);
         this.$router.push("/hivedetails");
       },

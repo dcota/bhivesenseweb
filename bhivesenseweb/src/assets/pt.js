@@ -193,6 +193,7 @@ export default {
                 hiveDetailsTitle: "DADOS DA COLMEIA",
                 lblBtnMap: "MAPA",
                 lblLastData: "Últimos dados recebidos: ",
+                lblAt: " às ",
 
             }
         }

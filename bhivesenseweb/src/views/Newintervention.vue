@@ -209,13 +209,11 @@ select option[disabled]:first-child {
             this.padTo2Digits(this.range.start.getHours()) +
             ":" +
             this.padTo2Digits(this.range.start.getMinutes());
-          console.log(startTime);
           //format end time
           let endTime =
             this.padTo2Digits(this.range.end.getHours()) +
             ":" +
             this.padTo2Digits(this.range.end.getMinutes());
-          console.log(endTime);
           let postData = {
             apiary: localStorage.getItem("idtointerventions"),
             startDate: this.range.start,

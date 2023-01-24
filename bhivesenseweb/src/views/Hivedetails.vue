@@ -26,15 +26,14 @@
         ></section>
       </button>
     </section>
-    <section class="mt-3">
-      <h5>{{ translate("lblLastData") }}</h5>
+    <section class="mt-3" v-bind="latestData">
+      <h5>
+        {{ translate("lblLastData") }} {{ latestData.date }}
+        {{ translate("lblAt") }} {{ latestData.hours }}h{{ latestData.minutes }}
+      </h5>
     </section>
-    <section class="row mt-4">
-      <section
-        class="col-12 col-md-4 col-lg-2"
-        v-for="device of this.devices"
-        :key="device._id"
-      >
+    <section class="row mt-4" v-bind="latestData">
+      <section class="col-12 col-md-4 col-lg-2">
         <section
           class="card mb-5 mh-100"
           style="
@@ -52,31 +51,11 @@
               >
             </h6>
             <hr />
-            <section class="text-center">-</section>
-            <!--<section class="text-center">
-              <section class="row">
-                <section class="col-sm-12 mt-1 text-center">
-                  <button
-                    data-bs-toggle="tooltip"
-                    v-bind:title="translate('lblCardApiaryBtn')"
-                    data-bs-placement="bottom"
-                    data-bs-custom-class="custom-tooltip"
-                    class="btn text-center bn_card"
-                    @click="detailsModal(apiary._id)"
-                  >
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                  </button>
-                </section>
-              </section>
-            </section>-->
+            <section class="text-center">{{ latestData.ti }}</section>
           </section>
         </section>
       </section>
-      <section
-        class="col-12 col-md-4 col-lg-2"
-        v-for="device of this.devices"
-        :key="device._id"
-      >
+      <section class="col-12 col-md-4 col-lg-2">
         <section
           class="card mb-5 mh-100"
           style="
@@ -92,15 +71,11 @@
               >
             </h6>
             <hr />
-            <section class="text-center">-</section>
+            <section class="text-center">{{ latestData.hi }}</section>
           </section>
         </section>
       </section>
-      <section
-        class="col-12 col-md-4 col-lg-2"
-        v-for="device of this.devices"
-        :key="device._id"
-      >
+      <section class="col-12 col-md-4 col-lg-2">
         <section
           class="card mb-5 mh-100"
           style="
@@ -118,15 +93,11 @@
               >
             </h6>
             <hr />
-            <section class="text-center">-</section>
+            <section class="text-center">{{ latestData.to }}</section>
           </section>
         </section>
       </section>
-      <section
-        class="col-12 col-md-4 col-lg-2"
-        v-for="device of this.devices"
-        :key="device._id"
-      >
+      <section class="col-12 col-md-4 col-lg-2">
         <section
           class="card mb-5 mh-100"
           style="
@@ -142,15 +113,11 @@
               >
             </h6>
             <hr />
-            <section class="text-center">-</section>
+            <section class="text-center">{{ latestData.ho }}</section>
           </section>
         </section>
       </section>
-      <section
-        class="col-12 col-md-4 col-lg-2"
-        v-for="device of this.devices"
-        :key="device._id"
-      >
+      <section class="col-12 col-md-4 col-lg-2">
         <section
           class="card mb-5 mh-100"
           style="
@@ -166,15 +133,11 @@
               >
             </h6>
             <hr />
-            <section class="text-center">-</section>
+            <section class="text-center">{{ latestData.w }}</section>
           </section>
         </section>
       </section>
-      <section
-        class="col-12 col-md-4 col-lg-2"
-        v-for="device of this.devices"
-        :key="device._id"
-      >
+      <section class="col-12 col-md-4 col-lg-2">
         <section
           class="card mb-5 mh-100"
           style="
@@ -190,17 +153,18 @@
               >
             </h6>
             <hr />
-            <section class="text-center">-</section>
+            <section class="text-center">{{ latestData.s }}</section>
           </section>
         </section>
       </section>
     </section>
     <section class="card p-2">
+      <!--<Line v-if="loaded" :data="data" :options="options" />-->
       <area-chart
+        v-if="loaded"
         :data="chartData"
-        label="Temperature"
         :min="0"
-        :max="13"
+        :max="30"
         :download="true"
         width="100%"
         height="500px"
@@ -211,20 +175,6 @@
         ytitle="Temperature (Deg. Celsius)"
       ></area-chart>
     </section>
-
-    <ModalDetails
-      v-show="isModalDetailsVisible"
-      @close="closeDetailsModal"
-      @edit="edit"
-      :address="address"
-      :observations="observations"
-      :regdate="regdate"
-    />
-    <ModalDelete
-      v-show="isModalDeleteVisible"
-      @_close="closeDeleteModal"
-      @deleteAction="_delete"
-    />
     <!--<section class="spacer"></section>-->
   </section>
 </template>
@@ -245,13 +195,31 @@
 </style>
     
     <script>
+  /*import {
+                                        Chart as ChartJS,
+                                        CategoryScale,
+                                        LinearScale,
+                                        PointElement,
+                                        LineElement,
+                                        Title,
+                                        Tooltip,
+                                        Legend,
+                                      } from "chart.js";
+                                      ChartJS.register(
+                                        CategoryScale,
+                                        LinearScale,
+                                        PointElement,
+                                        LineElement,
+                                        Title,
+                                        Tooltip,
+                                        Legend
+                                      );*/
+  //import { Line } from "vue-chartjs";
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import axios from "axios";
-  import ModalDetails from "../components/ModalApiaryDetails.vue";
-  import ModalDelete from "../components/ModalDeleteApiary.vue";
   import { notify } from "@kyvg/vue3-notification";
-  import { mapGetters, mapActions } from "vuex";
+  import { mapGetters } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,
@@ -260,36 +228,46 @@
   export default {
     name: "Hives",
     mixins: [en, pt],
-    components: {
-      ModalDetails,
-      ModalDelete,
-    },
-    data: function () {
+    /*components: {
+                                          Line,
+                                        },*/
+    data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
-        chartData: [
-          ["Jan", 4],
-          ["Feb", 2],
-          ["Mar", 10],
-          ["Apr", 5],
-          ["May", 3],
-        ],
-        /*data: [
-                                                            {
-                                                              name: "Workout",
-                                                              data: {
-                                                                "2017-01-01 00:00:00 -0800": 3,
-                                                                "2017-01-02 00:00:00 -0800": 4,
-                                                              },
-                                                            },
-                                                            {
-                                                              name: "Call parents",
-                                                              data: {
-                                                                "2017-01-01 00:00:00 -0800": 5,
-                                                                "2017-01-02 00:00:00 -0800": 3,
-                                                              },
-                                                            },
-                                                          ],*/
+        chartData: [],
+        /*data: {
+                                              labels: [],
+                                              datasets: [
+                                                {
+                                                  label: "Temperature(deg. Celsius)",
+                                                  backgroundColor: "#f87979",
+                                                  data: [],
+                                                },
+                                              ],
+                                            },
+                                            options: {
+                                              responsive: true,
+                                              maintainAspectRatio: false,
+                                              legend: {
+                                                position: "bottom",
+                                              },
+                                              plugins: {
+                                                datalabels: {},
+                                              },
+                                              scales: {
+                                                yAxes: [
+                                                  {
+                                                    ticks: {
+                                                      min: 0,
+                                                      max: 300,
+                                                      stepSize: 100,
+                                                      reverse: false,
+                                                      beginAtZero: true,
+                                                    },
+                                                  },
+                                                ],
+                                              },
+                                            },*/
         devices: [],
         img: require("../assets/IMG1220.png"),
         lang: lang,
@@ -297,9 +275,17 @@
           type: "",
           msg: "",
         },
-        address: "",
-        observations: "",
-        regdate: "",
+        latestData: {
+          to: "",
+          ti: "",
+          hi: "",
+          ho: "",
+          s: "",
+          w: "",
+          date: "",
+          hours: "",
+          minutes: "",
+        },
         isShow: true,
         isModalDetailsVisible: false,
         isModalDeleteVisible: false,
@@ -307,6 +293,7 @@
         toDeleteID: "",
         toEditID: "",
         toInterventionsID: "",
+        loaded: false,
       };
     },
     computed: {
@@ -314,20 +301,23 @@
         token: GET_USER_TOKEN_GETTER,
         level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
-        el: "#app",
+        //el: "#app",
       }),
     },
-    mounted() {
-      //localStorage.setItem("apiary", "");
-      this.getDevices();
+    async mounted() {
+      this.loaded = false;
+      this.getLatest();
+      this.getDay();
     },
     methods: {
-      async getDevices() {
+      async getLatest() {
         this.isShow = true;
         this.devices = [];
         await axios
           .get(
-            "https://bhsapi.duartecota.com/device/apiary/" +
+            "https://bhsapi.duartecota.com/device/latest/" +
+              localStorage.getItem("hiveIDtoget") +
+              "/" +
               localStorage.getItem("apiaryIDtoget"),
             {
               headers: {
@@ -347,11 +337,27 @@
                 speed: 500,
               });
             } else {
-              for (let i = 0; i < devices.length; i++) {
-                this.devices.push({
-                  _id: devices[i]._id,
-                });
-              }
+              this.latestData.ti = devices[0].data.ti;
+              this.latestData.hi = devices[0].data.hi;
+              this.latestData.to = devices[0].data.to;
+              this.latestData.ho = devices[0].data.ho;
+              this.latestData.s = devices[0].data.s;
+              this.latestData.w = devices[0].data.w;
+              let lastDate = new Date(
+                devices[0].data.date.toLocaleString("sv-SE", {
+                  timeZone: "Atlantic/Azores",
+                })
+              );
+              let sdConv = this.padTo2Digits(
+                lastDate.toLocaleDateString("sv-SE", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                })
+              );
+              this.latestData.date = sdConv;
+              this.latestData.hours = lastDate.getHours();
+              this.latestData.minutes = lastDate.getMinutes();
             }
             this.isShow = false;
           })
@@ -362,6 +368,97 @@
             this.message.type = "danger";
             this.message.msg = this.translate("mesProblem");
           });
+      },
+      async getDay() {
+        this.loaded = false;
+        this.isShow = true;
+        this.chartData = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            console.log(d);
+            if (d.length == 0) {
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noHivesInApiary"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              for (let i = 0; i < d.length; i++) {
+                let today = new Date();
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                if (today.getMonth() == lastDate.getMonth()) {
+                  let tempArray = [];
+                  /*let x =
+                      lastDate.getFullYear() +
+                      "-" +
+                      (lastDate.getMonth() + 1) +
+                      "-" +
+                      lastDate.getDate();*/
+                  let x = i;
+                  tempArray.push(x);
+                  let y = d[i].ti;
+                  tempArray.push(y);
+                  this.chartData.push(tempArray);
+                  console.log(tempArray);
+                  /*let time =
+                                                                                                                                                                                                                                this.padTo2Digits(lastDate.getHours()) +
+                                                                                                                                                                                                                                ":" +
+                                                                                                                                                                                                                                this.padTo2Digits(lastDate.getMinutes());*/
+                  //this.data.labels.push(i.toString());
+                  //temp.push(parseInt(d[i].ti));
+                }
+              }
+              //this.data.datasets[0].data = temp;
+              //console.table(this.data.labels);
+              //console.table(this.data.datasets[0].data);
+              this.loaded = true;
+              //console.log(this.chartData);
+
+              /*let lastDate = new Date(
+                                                                                                                                                                                                                                                                                                                                                  devices[0].data.date.toLocaleString("sv-SE", {
+                                                                                                                                                                                                                                                                                                                                                    timeZone: "Atlantic/Azores",
+                                                                                                                                                                                                                                                                                                                                                  })
+                                                                                                                                                                                                                                                                                                                                                );
+                                                                                                                                                                                                                                                                                                                                                let sdConv = this.padTo2Digits(
+                                                                                                                                                                                                                                                                                                                                                  lastDate.toLocaleDateString("sv-SE", {
+                                                                                                                                                                                                                                                                                                                                                    year: "numeric",
+                                                                                                                                                                                                                                                                                                                                                    month: "2-digit",
+                                                                                                                                                                                                                                                                                                                                                    day: "2-digit",
+                                                                                                                                                                                                                                                                                                                                                  })
+                                                                                                                                                                                                                                                                                                                                                );
+                                                                                                                                                                                                                                                                                                                                                this.latestData.date = sdConv;
+                                                                                                                                                                                                                                                                                                                                                this.latestData.hours = lastDate.getHours();
+                                                                                                                                                                                                                                                                                                                                                this.latestData.minutes = lastDate.getMinutes();*/
+            }
+            this.isShow = false;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.isShow = false;
+            this.showsection = true;
+            this.message.type = "danger";
+            this.message.msg = this.translate("mesProblem");
+          });
+      },
+      padTo2Digits(num) {
+        return String(num).padStart(2, "0");
       },
       translate(prop) {
         return this[this.lang][prop];
