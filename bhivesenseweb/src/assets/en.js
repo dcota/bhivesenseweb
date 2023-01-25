@@ -196,6 +196,12 @@ export default {
                 lblBtnMap: "MAP",
                 lblLastData: "Last data received: ",
                 lblAt: " at ",
+                assignHiveTitle: "ASSIGN HIVE",
+                assignMessage: "Hive successfully assigned!",
+                noDataForHive: "No data for this hive!",
+                charTempIn: "Temperature inside",
+                lblCardData: "Hive data",
+                mesApiaryOperations: "Select option for apiary.",
             }
         }
     }

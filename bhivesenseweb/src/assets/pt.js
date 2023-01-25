@@ -194,6 +194,12 @@ export default {
                 lblBtnMap: "MAPA",
                 lblLastData: "Últimos dados recebidos: ",
                 lblAt: " às ",
+                assignHiveTitle: "ASSOCIAR COLMEIA",
+                assignMessage: "Colmeia associada com sucesso!",
+                noDataForHive: "Sem dados para a colmeia!",
+                charTempIn: "Temperatura interior",
+                lblCardData: "Dados da colmeia",
+                mesApiaryOperations: "Selecione a opção para o apiário.",
 
             }
         }

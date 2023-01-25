@@ -67,10 +67,11 @@
                 >
               </li>
               <li>
-                <a
-                  href="#"
+                <router-link
+                  to="/apiaries"
                   class="link-dark d-inline-flex text-decoration-none rounded"
-                  >{{ translate("sbarApiariesAddHive") }}</a
+                  style="text-decoration: none"
+                  >{{ translate("sbarApiariesAddHive") }}</router-link
                 >
               </li>
               <li>

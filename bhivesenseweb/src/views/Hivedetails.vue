@@ -25,15 +25,25 @@
           role="status"
         ></section>
       </button>
+      <select
+        class="form-select mt-4 pull-right"
+        aria-label="Default select example"
+        style="width: 20%"
+      >
+        <option value="1" selected>Today</option>
+        <option value="2">Week</option>
+        <option value="3">Month</option>
+      </select>
     </section>
-    <section class="mt-3" v-bind="latestData">
+
+    <section class="mt-3" v-bind="latestData" v-if="hasData">
       <h5>
         {{ translate("lblLastData") }} {{ latestData.date }}
         {{ translate("lblAt") }} {{ latestData.hours }}h{{ latestData.minutes }}
       </h5>
     </section>
     <section class="row mt-4" v-bind="latestData">
-      <section class="col-12 col-md-4 col-lg-2">
+      <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
           class="card mb-5 mh-100"
           style="
@@ -55,7 +65,7 @@
           </section>
         </section>
       </section>
-      <section class="col-12 col-md-4 col-lg-2">
+      <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
           class="card mb-5 mh-100"
           style="
@@ -75,7 +85,7 @@
           </section>
         </section>
       </section>
-      <section class="col-12 col-md-4 col-lg-2">
+      <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
           class="card mb-5 mh-100"
           style="
@@ -97,7 +107,7 @@
           </section>
         </section>
       </section>
-      <section class="col-12 col-md-4 col-lg-2">
+      <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
           class="card mb-5 mh-100"
           style="
@@ -117,7 +127,7 @@
           </section>
         </section>
       </section>
-      <section class="col-12 col-md-4 col-lg-2">
+      <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
           class="card mb-5 mh-100"
           style="
@@ -137,7 +147,7 @@
           </section>
         </section>
       </section>
-      <section class="col-12 col-md-4 col-lg-2">
+      <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
           class="card mb-5 mh-100"
           style="
@@ -158,21 +168,25 @@
         </section>
       </section>
     </section>
-    <section class="card p-2">
+
+    <section class="card p-2" v-if="hasData">
+      <section class="h5 text-center">
+        {{ translate("charTempIn") }} (&deg;C)
+      </section>
       <!--<Line v-if="loaded" :data="data" :options="options" />-->
       <area-chart
         v-if="loaded"
-        :data="chartData"
+        :data="type"
         :min="0"
         :max="30"
         :download="true"
         width="100%"
         height="500px"
-        :colors="['#a17f05', '#666']"
+        :colors="['#a17f05']"
         :dataset="{ borderWidth: 2 }"
         loading="Loading..."
         xtitle="Time"
-        ytitle="Temperature (Deg. Celsius)"
+        ytitle="Temperature"
       ></area-chart>
     </section>
     <!--<section class="spacer"></section>-->
@@ -194,27 +208,7 @@
 }
 </style>
     
-    <script>
-  /*import {
-                                        Chart as ChartJS,
-                                        CategoryScale,
-                                        LinearScale,
-                                        PointElement,
-                                        LineElement,
-                                        Title,
-                                        Tooltip,
-                                        Legend,
-                                      } from "chart.js";
-                                      ChartJS.register(
-                                        CategoryScale,
-                                        LinearScale,
-                                        PointElement,
-                                        LineElement,
-                                        Title,
-                                        Tooltip,
-                                        Legend
-                                      );*/
-  //import { Line } from "vue-chartjs";
+<script>
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import axios from "axios";
@@ -228,46 +222,11 @@
   export default {
     name: "Hives",
     mixins: [en, pt],
-    /*components: {
-                                          Line,
-                                        },*/
     data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
-        chartData: [],
-        /*data: {
-                                              labels: [],
-                                              datasets: [
-                                                {
-                                                  label: "Temperature(deg. Celsius)",
-                                                  backgroundColor: "#f87979",
-                                                  data: [],
-                                                },
-                                              ],
-                                            },
-                                            options: {
-                                              responsive: true,
-                                              maintainAspectRatio: false,
-                                              legend: {
-                                                position: "bottom",
-                                              },
-                                              plugins: {
-                                                datalabels: {},
-                                              },
-                                              scales: {
-                                                yAxes: [
-                                                  {
-                                                    ticks: {
-                                                      min: 0,
-                                                      max: 300,
-                                                      stepSize: 100,
-                                                      reverse: false,
-                                                      beginAtZero: true,
-                                                    },
-                                                  },
-                                                ],
-                                              },
-                                            },*/
+        ti: [],
+        type: null,
         devices: [],
         img: require("../assets/IMG1220.png"),
         lang: lang,
@@ -294,6 +253,7 @@
         toEditID: "",
         toInterventionsID: "",
         loaded: false,
+        hasData: false,
       };
     },
     computed: {
@@ -301,15 +261,26 @@
         token: GET_USER_TOKEN_GETTER,
         level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
-        //el: "#app",
       }),
     },
-    async mounted() {
+    /*mounted() {
+                                                                                                                                                                        this.loaded = false;
+                                                                                                                                                                        this.getLatest();
+                                                                                                                                                                        this.getDay();
+                                                                                                                                                                      },*/
+    created() {
       this.loaded = false;
       this.getLatest();
       this.getDay();
+      this.timer = setInterval(this.getDay, 300000);
+    },
+    beforeUnmount() {
+      this.cancelAutoUpdate();
     },
     methods: {
+      cancelAutoUpdate() {
+        clearInterval(this.timer);
+      },
       async getLatest() {
         this.isShow = true;
         this.devices = [];
@@ -328,15 +299,17 @@
           .then((response) => {
             let devices = response.data.body;
             if (devices.length == 0) {
+              this.hasData = false;
               this.isShow = false;
               notify({
                 title: this.translate("notifWarningTitle"),
-                text: this.translate("noHivesInApiary"),
+                text: this.translate("noDataForHive"),
                 type: "warn",
                 duration: 3000,
                 speed: 500,
               });
             } else {
+              this.hasData = true;
               this.latestData.ti = devices[0].data.ti;
               this.latestData.hi = devices[0].data.hi;
               this.latestData.to = devices[0].data.to;
@@ -344,20 +317,32 @@
               this.latestData.s = devices[0].data.s;
               this.latestData.w = devices[0].data.w;
               let lastDate = new Date(
-                devices[0].data.date.toLocaleString("sv-SE", {
-                  timeZone: "Atlantic/Azores",
-                })
+                this.padTo2Digits(
+                  devices[0].data.date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                )
               );
               let sdConv = this.padTo2Digits(
                 lastDate.toLocaleDateString("sv-SE", {
                   year: "numeric",
                   month: "2-digit",
                   day: "2-digit",
+                  /*hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",*/
                 })
               );
+              alert(lastDate.getMinutes());
               this.latestData.date = sdConv;
-              this.latestData.hours = lastDate.getHours();
-              this.latestData.minutes = lastDate.getMinutes();
+              this.latestData.hours =
+                lastDate.getHours() < 10
+                  ? "0" + lastDate.getHours()
+                  : lastDate.getHours();
+              this.latestData.minutes =
+                lastDate.getMinutes() < 10
+                  ? "0" + lastDate.getMinutes()
+                  : lastDate.getMinutes();
             }
             this.isShow = false;
           })
@@ -372,7 +357,7 @@
       async getDay() {
         this.loaded = false;
         this.isShow = true;
-        this.chartData = [];
+        this.ti = [];
         await axios
           .get(
             "https://bhsapi.duartecota.com/device/" +
@@ -387,15 +372,17 @@
             let d = response.data.body.data;
             console.log(d);
             if (d.length == 0) {
+              this.hasData = false;
               this.isShow = false;
               notify({
                 title: this.translate("notifWarningTitle"),
-                text: this.translate("noHivesInApiary"),
+                text: this.translate("noDataForHive"),
                 type: "warn",
                 duration: 3000,
                 speed: 500,
               });
             } else {
+              this.hasData = true;
               for (let i = 0; i < d.length; i++) {
                 let today = new Date();
                 let lastDate = new Date(
@@ -405,47 +392,15 @@
                 );
                 if (today.getMonth() == lastDate.getMonth()) {
                   let tempArray = [];
-                  /*let x =
-                      lastDate.getFullYear() +
-                      "-" +
-                      (lastDate.getMonth() + 1) +
-                      "-" +
-                      lastDate.getDate();*/
                   let x = i;
                   tempArray.push(x);
                   let y = d[i].ti;
                   tempArray.push(y);
-                  this.chartData.push(tempArray);
-                  console.log(tempArray);
-                  /*let time =
-                                                                                                                                                                                                                                this.padTo2Digits(lastDate.getHours()) +
-                                                                                                                                                                                                                                ":" +
-                                                                                                                                                                                                                                this.padTo2Digits(lastDate.getMinutes());*/
-                  //this.data.labels.push(i.toString());
-                  //temp.push(parseInt(d[i].ti));
+                  this.ti.push(tempArray);
                 }
               }
-              //this.data.datasets[0].data = temp;
-              //console.table(this.data.labels);
-              //console.table(this.data.datasets[0].data);
+              this.type = this.ti;
               this.loaded = true;
-              //console.log(this.chartData);
-
-              /*let lastDate = new Date(
-                                                                                                                                                                                                                                                                                                                                                  devices[0].data.date.toLocaleString("sv-SE", {
-                                                                                                                                                                                                                                                                                                                                                    timeZone: "Atlantic/Azores",
-                                                                                                                                                                                                                                                                                                                                                  })
-                                                                                                                                                                                                                                                                                                                                                );
-                                                                                                                                                                                                                                                                                                                                                let sdConv = this.padTo2Digits(
-                                                                                                                                                                                                                                                                                                                                                  lastDate.toLocaleDateString("sv-SE", {
-                                                                                                                                                                                                                                                                                                                                                    year: "numeric",
-                                                                                                                                                                                                                                                                                                                                                    month: "2-digit",
-                                                                                                                                                                                                                                                                                                                                                    day: "2-digit",
-                                                                                                                                                                                                                                                                                                                                                  })
-                                                                                                                                                                                                                                                                                                                                                );
-                                                                                                                                                                                                                                                                                                                                                this.latestData.date = sdConv;
-                                                                                                                                                                                                                                                                                                                                                this.latestData.hours = lastDate.getHours();
-                                                                                                                                                                                                                                                                                                                                                this.latestData.minutes = lastDate.getMinutes();*/
             }
             this.isShow = false;
           })

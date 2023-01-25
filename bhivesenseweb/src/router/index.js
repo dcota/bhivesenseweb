@@ -158,6 +158,14 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'assignhive',
+            component: () =>
+                import ('../views/Assignhive.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

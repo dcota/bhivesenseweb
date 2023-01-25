@@ -14,6 +14,21 @@
           role="status"
         ></section>
       </button>
+      <button
+        @click="this.$router.push('assignhive')"
+        type="submit"
+        class="btn mt-4 me-3 my-button"
+      >
+        <section v-if="!isShow">
+          <i class="fa-solid fa-plus"></i>
+          {{ translate("btnNew") }}
+        </section>
+        <section
+          v-else
+          class="spinner-border spinner-border-sm"
+          role="status"
+        ></section>
+      </button>
       <button @click="back()" type="button" class="btn mt-4 my-button">
         <section v-if="!isShow">
           <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
@@ -53,16 +68,10 @@
               </p>
             </section>
             <section v-else>
-              <img
-                :src="green"
-                alt="..."
-                style="
-                  width: 10%;
-                  display: block;
-                  margin-right: auto;
-                  margin-left: auto;
-                "
-              />
+              <p class="text-center">
+                {{ translate("lblStatus") }}
+                <img :src="green" alt="..." style="width: 10%" />
+              </p>
             </section>
 
             <section class="text-center">
@@ -70,7 +79,7 @@
                 <section class="col-sm-6 mt-1">
                   <button
                     data-bs-toggle="tooltip"
-                    v-bind:title="translate('lblCardApiaryBtn')"
+                    v-bind:title="translate('lblCardData')"
                     data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
                     class="btn text-center bn_card"
