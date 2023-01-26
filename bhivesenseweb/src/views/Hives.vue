@@ -16,12 +16,12 @@
       </button>
       <button
         @click="this.$router.push('assignhive')"
-        type="submit"
+        type="button"
         class="btn mt-4 me-3 my-button"
       >
         <section v-if="!isShow">
           <i class="fa-solid fa-plus"></i>
-          {{ translate("btnNew") }}
+          {{ translate("btnAssign") }}
         </section>
         <section
           v-else

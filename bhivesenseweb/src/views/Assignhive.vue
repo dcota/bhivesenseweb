@@ -8,6 +8,23 @@ Description: implementation of the view Gestão de Alunos (Admin)
   <section class="container my-body">
     <h1 class="my-text-color">{{ translate("assignHiveTitle") }}</h1>
     <section class="line-1"></section>
+    <section>
+      <button
+        @click="$router.push('/hives')"
+        type="button"
+        class="btn mt-4 my-button"
+      >
+        <section v-if="!isShow">
+          <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
+          {{ translate("btnBack") }}
+        </section>
+        <section
+          v-else
+          class="spinner-border spinner-border-sm"
+          role="status"
+        ></section>
+      </button>
+    </section>
     <section class="row mt-3" v-if="hasHives">
       <h4 class="my-text-color">{{ translate("manageHivesLabel") }}</h4>
     </section>

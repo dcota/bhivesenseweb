@@ -40,14 +40,13 @@ body {
 
 html {
     height: -webkit-fill-available;
+    overflow-y: auto;
 }
 
 main {
     height: 100vh;
     height: -webkit-fill-available;
     max-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: hidden;
 }
 
 .dropdown-toggle {
@@ -179,4 +178,9 @@ main {
 .my-notification.success {
     background: #68CD86;
     border-left-color: #42A85F;
+}
+
+.my-notification.info {
+    background: #0c8ce2;
+    border-left-color: #0824c7;
 }

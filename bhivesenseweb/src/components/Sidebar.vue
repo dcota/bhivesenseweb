@@ -249,6 +249,7 @@
           <button type="button" class="btn bn_card position-relative">
             <strong> <i class="fas fa-bell" aria-hidden="true"></i> </strong>
             <span
+              v-if="hasEvents"
               class="
                 position-absolute
                 top-0
@@ -259,7 +260,7 @@
                 bg-danger
               "
             >
-              10+
+              {{ numEvents }}
               <span class="visually-hidden">unread messages</span>
             </span>
           </button>
@@ -482,6 +483,7 @@
 </style >
 
 <script>
+  import axios from "axios";
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import { mapActions, mapGetters } from "vuex";
@@ -491,6 +493,8 @@
     GET_USER_LEVEL_GETTER,
     GET_USER_NAME_GETTER,
     GET_USER_AVATAR_GETTER,
+    GET_USER_ID_GETTER,
+    GET_USER_TOKEN_GETTER,
   } from "../store/storeconstants";
   export default {
     name: "Sidebar",
@@ -500,6 +504,8 @@
       return {
         logo: require("../assets/logo.png"),
         lang: lang,
+        hasEvents: false,
+        numEvents: 0,
       };
     },
     computed: {
@@ -508,13 +514,44 @@
         level: GET_USER_LEVEL_GETTER,
         name: GET_USER_NAME_GETTER,
         img: GET_USER_AVATAR_GETTER,
+        token: GET_USER_TOKEN_GETTER,
+        level: GET_USER_LEVEL_GETTER,
+        _id: GET_USER_ID_GETTER,
         auth: localStorage.getItem("auth"),
       }),
+    },
+    mounted() {
+      this.getEvents();
     },
     methods: {
       ...mapActions("auth", {
         _logout: LOGOUT_ACTION,
       }),
+      async getEvents() {
+        await axios
+          .get("https://bhsapi.duartecota.com/event/" + this._id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            if (response.data.body.length == 0) {
+              this.hasEvents = false;
+            } else {
+              this.hasEvents = true;
+              this.numEvents = response.data.body.length;
+            }
+          })
+          .catch((error) => {
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
       logout() {
         this._logout();
         this.$router.replace("/");

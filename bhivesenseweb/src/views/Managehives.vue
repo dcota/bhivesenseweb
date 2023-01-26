@@ -32,7 +32,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
           <tbody>
             <tr>
               <th>{{ translate("thdDevicesID") }}</th>
-              <th class="text-center">{{ translate("thdDevicesApiary") }}</th>
+              <th>{{ translate("thdDevicesApiary") }}</th>
               <!--<th class="text-center">{{ translate("thdUsersStatus") }}</th>-->
               <th class="text-center">{{ translate("thdUsersActions") }}</th>
             </tr>

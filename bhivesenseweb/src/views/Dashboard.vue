@@ -1,9 +1,10 @@
 <template>
   <section class="dashboard">
-    <section>
+    <section class="sidebar">
       <Sidebar />
     </section>
     <section class="content">
+      <Content />
       <router-view />
     </section>
   </section>
@@ -11,24 +12,28 @@
 
 <script>
   import Sidebar from "../components/Sidebar";
+  import Content from "../components/Content.vue";
   export default {
     name: "home",
     components: {
       Sidebar,
+      Content,
     },
   };
 </script>
 
-<style scoped>
+<style>
+.sidebar {
+  position: static;
+}
 .dashboard {
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: 250px auto;
-  overflow-y: auto;
 }
-
 .content {
   background-color: #ebc002;
+  /*position: fixed;*/
   overflow-y: auto;
 }
 </style>

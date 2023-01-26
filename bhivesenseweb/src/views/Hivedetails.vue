@@ -42,10 +42,10 @@
         {{ translate("lblAt") }} {{ latestData.hours }}h{{ latestData.minutes }}
       </h5>
     </section>
-    <section class="row mt-4" v-bind="latestData">
+    <section class="row mt-3" v-bind="latestData">
       <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
-          class="card mb-5 mh-100"
+          class="card mb-3 mh-100 text-center"
           style="
             border-radius: 35px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
@@ -62,12 +62,23 @@
             </h6>
             <hr />
             <section class="text-center">{{ latestData.ti }}</section>
+            <div class="form-check d-flex justify-content-center">
+              <input
+                @change="handleChange($event)"
+                value="ti"
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDisabled"
+                id="flexRadioDisabled"
+                checked
+              />
+            </div>
           </section>
         </section>
       </section>
       <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
-          class="card mb-5 mh-100"
+          class="card mb-3 mh-100"
           style="
             border-radius: 35px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
@@ -82,12 +93,22 @@
             </h6>
             <hr />
             <section class="text-center">{{ latestData.hi }}</section>
+            <div class="form-check d-flex justify-content-center">
+              <input
+                @change="handleChange($event)"
+                value="hi"
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDisabled"
+                id="flexRadioDisabled"
+              />
+            </div>
           </section>
         </section>
       </section>
       <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
-          class="card mb-5 mh-100"
+          class="card mb-3 mh-100"
           style="
             border-radius: 35px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
@@ -104,12 +125,22 @@
             </h6>
             <hr />
             <section class="text-center">{{ latestData.to }}</section>
+            <div class="form-check d-flex justify-content-center">
+              <input
+                @change="handleChange($event)"
+                value="to"
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDisabled"
+                id="flexRadioDisabled"
+              />
+            </div>
           </section>
         </section>
       </section>
       <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
-          class="card mb-5 mh-100"
+          class="card mb-3 mh-100"
           style="
             border-radius: 35px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
@@ -124,12 +155,22 @@
             </h6>
             <hr />
             <section class="text-center">{{ latestData.ho }}</section>
+            <div class="form-check d-flex justify-content-center">
+              <input
+                @change="handleChange($event)"
+                value="ho"
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDisabled"
+                id="flexRadioDisabled"
+              />
+            </div>
           </section>
         </section>
       </section>
       <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
-          class="card mb-5 mh-100"
+          class="card mb-3 mh-100"
           style="
             border-radius: 35px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
@@ -144,12 +185,22 @@
             </h6>
             <hr />
             <section class="text-center">{{ latestData.w }}</section>
+            <div class="form-check d-flex justify-content-center">
+              <input
+                @change="handleChange($event)"
+                value="w"
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDisabled"
+                id="flexRadioDisabled"
+              />
+            </div>
           </section>
         </section>
       </section>
       <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
         <section
-          class="card mb-5 mh-100"
+          class="card mb-3 mh-100"
           style="
             border-radius: 35px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
@@ -164,36 +215,44 @@
             </h6>
             <hr />
             <section class="text-center">{{ latestData.s }}</section>
+            <div class="form-check d-flex justify-content-center">
+              <input
+                @change="handleChange($event)"
+                value="s"
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDisabled"
+                id="flexRadioDisabled"
+              />
+            </div>
           </section>
         </section>
       </section>
     </section>
 
     <section class="card p-2" v-if="hasData">
-      <section class="h5 text-center">
-        {{ translate("charTempIn") }} (&deg;C)
-      </section>
+      <section class="h5 text-center" id="title" v-html="title"></section>
       <!--<Line v-if="loaded" :data="data" :options="options" />-->
       <area-chart
         v-if="loaded"
         :data="type"
         :min="0"
-        :max="30"
+        :max="max"
         :download="true"
         width="100%"
-        height="500px"
+        height="470px"
         :colors="['#a17f05']"
         :dataset="{ borderWidth: 2 }"
         loading="Loading..."
         xtitle="Time"
-        ytitle="Temperature"
+        :ytitle="ytitle"
       ></area-chart>
     </section>
     <!--<section class="spacer"></section>-->
   </section>
 </template>
     
-    <style scoped>
+<style scoped>
 .bn_card {
   background-color: #ebc002;
   border-radius: 25px;
@@ -219,6 +278,7 @@
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
   } from "../store/storeconstants";
+  import { template } from "lodash";
   export default {
     name: "Hives",
     mixins: [en, pt],
@@ -226,14 +286,15 @@
       const lang = localStorage.getItem("lang") || "pt";
       return {
         ti: [],
+        to: [],
+        hi: [],
+        ho: [],
+        s: [],
+        w: [],
         type: null,
         devices: [],
-        img: require("../assets/IMG1220.png"),
+        //img: require("../assets/IMG1220.png"),
         lang: lang,
-        message: {
-          type: "",
-          msg: "",
-        },
         latestData: {
           to: "",
           ti: "",
@@ -254,6 +315,8 @@
         toInterventionsID: "",
         loaded: false,
         hasData: false,
+        ytitle: "",
+        title: "",
       };
     },
     computed: {
@@ -264,14 +327,15 @@
       }),
     },
     /*mounted() {
-                                                                                                                                                                        this.loaded = false;
-                                                                                                                                                                        this.getLatest();
-                                                                                                                                                                        this.getDay();
-                                                                                                                                                                      },*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    this.loaded = false;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    this.getLatest();
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    this.getDay();
+                                                                                                                                                                                                                                                                                                                                                                                                                                                  },*/
     created() {
       this.loaded = false;
       this.getLatest();
-      this.getDay();
+      this.getTI();
+      this.type = this.ti;
       this.timer = setInterval(this.getDay, 300000);
     },
     beforeUnmount() {
@@ -329,11 +393,10 @@
                   month: "2-digit",
                   day: "2-digit",
                   /*hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",*/
+                                                                                                                                                                                                                                                                                                  minute: "2-digit",
+                                                                                                                                                                                                                                                                                                  second: "2-digit",*/
                 })
               );
-              alert(lastDate.getMinutes());
               this.latestData.date = sdConv;
               this.latestData.hours =
                 lastDate.getHours() < 10
@@ -354,10 +417,122 @@
             this.message.msg = this.translate("mesProblem");
           });
       },
-      async getDay() {
+      async getTI() {
+        this.ytitle = "TEMP";
+        this.title = this.translate("charTempIn") + " (&deg;C)";
+        this.max = 30;
         this.loaded = false;
         this.isShow = true;
         this.ti = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let today = new Date();
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let x = i;
+                tempArray.push(x);
+                let y = d[i].ti;
+                tempArray.push(y);
+                this.ti.push(tempArray);
+              }
+              this.type = this.ti;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+      async getTO() {
+        this.ytitle = "TEMP";
+        this.title = this.translate("charTempOut") + " (&deg;C)";
+        this.max = "30";
+        this.loaded = false;
+        this.isShow = true;
+        this.to = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let today = new Date();
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let x = i;
+                tempArray.push(x);
+                let y = d[i].to;
+                tempArray.push(y);
+                this.to.push(tempArray);
+              }
+              this.type = this.to;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.isShow = false;
+          });
+      },
+      async getHI() {
+        this.ytitle = "HUM";
+        this.title = this.translate("charHumIn");
+        this.max = "100";
+        this.loaded = false;
+        this.isShow = true;
+        this.hi = [];
         await axios
           .get(
             "https://bhsapi.duartecota.com/device/" +
@@ -390,16 +565,14 @@
                     timeZone: "Atlantic/Azores",
                   })
                 );
-                if (today.getMonth() == lastDate.getMonth()) {
-                  let tempArray = [];
-                  let x = i;
-                  tempArray.push(x);
-                  let y = d[i].ti;
-                  tempArray.push(y);
-                  this.ti.push(tempArray);
-                }
+                let tempArray = [];
+                let x = i;
+                tempArray.push(x);
+                let y = d[i].hi;
+                tempArray.push(y);
+                this.hi.push(tempArray);
               }
-              this.type = this.ti;
+              this.type = this.hi;
               this.loaded = true;
             }
             this.isShow = false;
@@ -407,9 +580,174 @@
           .catch((error) => {
             console.log(error);
             this.isShow = false;
-            this.showsection = true;
-            this.message.type = "danger";
-            this.message.msg = this.translate("mesProblem");
+          });
+      },
+      async getHO() {
+        this.ytitle = "HUM";
+        this.title = this.translate("charHumOut");
+        this.max = "100";
+        this.loaded = false;
+        this.isShow = true;
+        this.ho = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            console.log(d);
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let today = new Date();
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let x = i;
+                tempArray.push(x);
+                let y = d[i].ho;
+                tempArray.push(y);
+                this.ho.push(tempArray);
+              }
+              this.type = this.ho;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.isShow = false;
+          });
+      },
+      async getS() {
+        this.ytitle = "SOUND LEVEL";
+        this.title = this.translate("charSound");
+        this.max = "200";
+        this.loaded = false;
+        this.isShow = true;
+        this.s = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            console.log(d);
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let today = new Date();
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let x = i;
+                tempArray.push(x);
+                let y = d[i].s;
+                tempArray.push(y);
+                this.s.push(tempArray);
+              }
+              this.type = this.s;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.isShow = false;
+          });
+      },
+      async getW() {
+        this.ytitle = "WEIGHT";
+        this.title = this.translate("charWeight");
+        this.max = "60";
+        this.loaded = false;
+        this.isShow = true;
+        this.w = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            console.log(d);
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let today = new Date();
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let x = i;
+                tempArray.push(x);
+                let y = d[i].w;
+                tempArray.push(y);
+                this.w.push(tempArray);
+              }
+              this.type = this.w;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.isShow = false;
           });
       },
       padTo2Digits(num) {
@@ -424,99 +762,19 @@
       closeDeleteModal() {
         this.isModalDeleteVisible = false;
       },
-      edit() {
-        this.isModalDetailsVisible = false;
-        localStorage.setItem("idtoedit", this.toEditID);
-        this.$router.push("editapiary");
-      },
-      async detail(id) {
-        this.isShow = true;
-        this.message.type = "";
-        this.message.msg = "";
-        //(this.isShow = true((this.message.type = ""))), (this.message.msg = "");
-        await axios
-          .get("https://bhsapi.duartecota.com/apiary/one/" + id, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
-          .then((response) => {
-            this.address = response.data.body.address;
-            this.observations = response.data.body.observations;
-            this.regdate = response.data.body.registration_date;
-            this.isShow = false;
-            return true;
-          })
-          .catch(() => {
-            this.message.msg = "Ocorreu um problema";
-            this.message.type = "warning";
-            this.isShow = false;
-            return false;
-          });
-      },
-      async _delete() {
-        this.isModalDeleteVisible = false;
-        this.isShow = true;
-        await axios
-          .delete("https://bhsapi.duartecota.com/apiary/" + this.toDeleteID, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
-          .then((response) => {
-            if (response.data.http == 200) {
-              this.isShow = false;
-              notify({
-                title: this.translate("notifSuccessTitle"),
-                text: this.translate("deleteApiarySuccess"),
-                type: "success",
-                duration: 3000,
-                speed: 500,
-              });
-              this.getApiaries();
-            } else if (response.data.http == 202) {
-              this.isShow = false;
-              notify({
-                title: this.translate("notifErrorTitle"),
-                text: this.translate("deleteApiaryFail"),
-                type: "error",
-                duration: 3000,
-                speed: 500,
-              });
-            }
-          })
-          .catch(() => {
-            this.isShow = false;
-            notify({
-              title: this.translate("notifErrorTitle"),
-              text: this.translate("mesProblems"),
-              type: "error",
-              duration: 3000,
-              speed: 500,
-            });
-          });
-      },
-      async detailsModal(id) {
-        this.toEditID = id;
-        await this.detail(id);
-        this.isModalDetailsVisible = true;
-      },
-      async deleteModal(id) {
-        this.toDeleteID = id;
-        this.isModalDeleteVisible = true;
-      },
-      interventions(id) {
-        localStorage.setItem("idtointerventions", id);
-        this.$router.push("interventions");
-      },
-      getApiaryDevices(id) {
-        alert(id);
-      },
       map() {
         this.$router.push("map");
       },
       back() {
         this.$router.push("hives");
+      },
+      handleChange(event) {
+        if (event.target.value == "ti") this.getTI();
+        if (event.target.value == "hi") this.getHI();
+        if (event.target.value == "to") this.getTO();
+        if (event.target.value == "ho") this.getHO();
+        if (event.target.value == "s") this.getS();
+        if (event.target.value == "w") this.getW();
       },
     },
   };

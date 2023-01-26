@@ -1,9 +1,5 @@
 <template >
-  <section class="content">zczxc</section>
+  <section class="content"></section>
 </template>
-<style scoped>
-.content {
-  background-color: #ebc002;
-  overflow-y: auto;
-}
+<style>
 </style>
