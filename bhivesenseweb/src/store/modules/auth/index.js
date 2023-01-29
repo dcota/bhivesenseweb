@@ -15,7 +15,8 @@ export default {
             detailid: '',
             expiresIn: 'sss',
             autoLogout: false,
-            apidtoedit: ''
+            apidtoedit: '',
+            numEvents: ''
         }
     },
     mutations,

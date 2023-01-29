@@ -11,6 +11,7 @@ import {
     GET_USER_ID_GETTER,
     GET_USER_NAME_GETTER,
     GET_USER_AVATAR_GETTER,
+    GET_NUMEVENTS_GETTER
 } from "../../storeconstants";
 
 export default {
@@ -33,4 +34,7 @@ export default {
     [GET_USER_AVATAR_GETTER]: state => {
         return state.img
     },
+    [GET_NUMEVENTS_GETTER]: state => {
+        return state.numEvents
+    }
 }

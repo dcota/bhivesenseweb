@@ -19,7 +19,10 @@ import {
     IMAGE_ACTION,
     APIDTOEDIT_ACTION,
     SET_APIDTOEDIT_MUTATION,
-    AUTO_APIDTOEDIT_ACTION
+    AUTO_APIDTOEDIT_ACTION,
+    AUTO_NUMEVENTS_ACTION,
+    NUMEVENTS_ACTION,
+    SET_NUMEVENTS_MUTATION
 } from '../../storeconstants'
 
 import axios from 'axios'
@@ -35,7 +38,7 @@ export default {
             level: null,
             token: null,
             img: null,
-            expiresIn: null
+            expiresIn: null,
         })
         localStorage.removeItem('userData')
         if (timer) {
@@ -86,7 +89,8 @@ export default {
                 level: response.data.body.level,
                 img: img,
                 expiresIn: expirationTime,
-                token: response.headers.authorization
+                token: response.headers.authorization,
+                numEvents: null
             }
             localStorage.setItem('userData', JSON.stringify(tokenData))
             context.commit(SET_USER_TOKEN_DATA_MUTATION, tokenData)
@@ -111,5 +115,15 @@ export default {
     [IMAGE_ACTION](context, payload) {
         context.commit(SET_IMAGE_MUTATION, payload)
     },
+
+    async [AUTO_NUMEVENTS_ACTION](context, payload) {
+        return context.dispatch(NUMEVENTS_ACTION, {
+            ...payload
+        })
+    },
+
+    [NUMEVENTS_ACTION](context, payload) {
+        context.commit(SET_NUMEVENTS_MUTATION, payload)
+    }
 
 }

@@ -24,7 +24,7 @@ body {
 }
 
 .my-button {
-    width: 120px;
+    width: 150px!important;
     background-color: rgb(80, 77, 77);
     color: white;
 }

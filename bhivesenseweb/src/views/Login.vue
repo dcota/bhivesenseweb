@@ -51,12 +51,10 @@ Description: implementation of the view Login
   border-color: #ebc002;
   width: 150px;
 }
-
 .bn:hover {
   background-color: #947902;
   border-color: #947902;
 }
-
 .form-signin {
   max-width: 380px;
   padding: 15px 35px 45px;
@@ -68,6 +66,7 @@ Description: implementation of the view Login
 </style>
 
 <script>
+  import axios from "axios";
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import { mapActions, mapGetters, mapMutations } from "vuex";
@@ -75,6 +74,8 @@ Description: implementation of the view Login
     LOADING_SPINNER_SHOW_MUTATION,
     LOGIN_ACTION,
     GET_USER_LEVEL_GETTER,
+    GET_USER_ID_GETTER,
+    AUTO_NUMEVENTS_ACTION,
   } from "../store/storeconstants";
   export default {
     name: "login",
@@ -94,11 +95,13 @@ Description: implementation of the view Login
     computed: {
       ...mapGetters("auth", {
         level: GET_USER_LEVEL_GETTER,
+        _id: GET_USER_ID_GETTER,
       }),
     },
     methods: {
       ...mapActions("auth", {
         _login: LOGIN_ACTION,
+        _numEventsChng: AUTO_NUMEVENTS_ACTION,
       }),
       ...mapMutations({
         showLoader: LOADING_SPINNER_SHOW_MUTATION,
@@ -125,9 +128,42 @@ Description: implementation of the view Login
         });
         if (response) {
           this.isShow = false;
-          if (this.level == "admin") this.$router.replace("/");
-          else if (this.level == "beekeeper") this.$router.replace("/");
+          this.getNumEvents();
+          if (this.level == "admin") this.$router.replace("/admin");
+          else if (this.level == "beekeeper") this.$router.replace("/beekeeper");
         }
+      },
+      async getNumEvents() {
+        await axios
+          .get("https://bhsapi.duartecota.com/event/num/" + this._id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            console.log(response.data.body);
+            if (response.data.body > 0) {
+              this.numEventsChng({
+                numEvents: response.data.body,
+              });
+            } else {
+              this.numEventsChng({
+                numEvents: null,
+              });
+            }
+          })
+          .catch((error) => {
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
+      async numEventsChng(num) {
+        await this._numEventsChng(num);
       },
     },
   };

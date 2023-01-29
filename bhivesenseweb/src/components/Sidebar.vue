@@ -66,7 +66,7 @@
                   >{{ translate("sbarApiariesNew") }}</router-link
                 >
               </li>
-              <li>
+              <!-- <li>
                 <router-link
                   to="/apiaries"
                   class="link-dark d-inline-flex text-decoration-none rounded"
@@ -80,14 +80,7 @@
                   class="link-dark d-inline-flex text-decoration-none rounded"
                   >{{ translate("sbarApiariesRemoveHive") }}</a
                 >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="link-dark d-inline-flex text-decoration-none rounded"
-                  >{{ translate("sbarApiariesProblem") }}</a
-                >
-              </li>
+              </li>-->
             </ul>
           </section>
         </li>
@@ -125,10 +118,17 @@
                   >{{ translate("sbarHivesNew") }}</router-link
                 >
               </li>
+              <li>
+                <a
+                  href="#"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  >{{ translate("sbarApiariesProblem") }}</a
+                >
+              </li>
             </ul>
           </section>
         </li>
-        <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
+        <!--<li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
             class="
               btn btn-toggle
@@ -169,7 +169,7 @@
               </li>
             </ul>
           </section>
-        </li>
+        </li>-->
 
         <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
           <button
@@ -246,10 +246,14 @@
           style="margin-left: 50px"
           v-if="isAuthenticated && level == 'beekeeper'"
         >
-          <button type="button" class="btn bn_card position-relative">
+          <button
+            type="button"
+            class="btn bn_card position-relative"
+            @click="$router.push('/notifications')"
+          >
             <strong> <i class="fas fa-bell" aria-hidden="true"></i> </strong>
             <span
-              v-if="hasEvents"
+              v-if="this._numEvents != null"
               class="
                 position-absolute
                 top-0
@@ -260,7 +264,7 @@
                 bg-danger
               "
             >
-              {{ numEvents }}
+              {{ _numEvents }}
               <span class="visually-hidden">unread messages</span>
             </span>
           </button>
@@ -486,6 +490,7 @@
   import axios from "axios";
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
+  import { notify } from "@kyvg/vue3-notification";
   import { mapActions, mapGetters } from "vuex";
   import {
     IS_USER_AUTHENTICATED_GETTER,
@@ -495,6 +500,8 @@
     GET_USER_AVATAR_GETTER,
     GET_USER_ID_GETTER,
     GET_USER_TOKEN_GETTER,
+    GET_NUMEVENTS_GETTER,
+    AUTO_NUMEVENTS_ACTION,
   } from "../store/storeconstants";
   export default {
     name: "Sidebar",
@@ -504,8 +511,8 @@
       return {
         logo: require("../assets/logo.png"),
         lang: lang,
-        hasEvents: false,
-        numEvents: 0,
+        timer: "",
+        loged: false,
       };
     },
     computed: {
@@ -515,45 +522,61 @@
         name: GET_USER_NAME_GETTER,
         img: GET_USER_AVATAR_GETTER,
         token: GET_USER_TOKEN_GETTER,
-        level: GET_USER_LEVEL_GETTER,
+        //level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
+        _numEvents: GET_NUMEVENTS_GETTER,
         auth: localStorage.getItem("auth"),
       }),
     },
     mounted() {
-      this.getEvents();
+      this.getNumEvents();
+      this.timer = setInterval(this.getNumEvents, 30000);
+    },
+    beforeUnmount() {
+      clearInterval(this.timer);
+      this.timer = null;
     },
     methods: {
       ...mapActions("auth", {
         _logout: LOGOUT_ACTION,
+        _numEventsChng: AUTO_NUMEVENTS_ACTION,
       }),
-      async getEvents() {
-        await axios
-          .get("https://bhsapi.duartecota.com/event/" + this._id, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
-          .then((response) => {
-            if (response.data.body.length == 0) {
-              this.hasEvents = false;
-            } else {
-              this.hasEvents = true;
-              this.numEvents = response.data.body.length;
-            }
-          })
-          .catch((error) => {
-            notify({
-              title: this.translate("notifErrorTitle"),
-              text: this.translate("mesProblem"),
-              type: "error",
-              duration: 3000,
-              speed: 500,
+      async numEventsChng(num) {
+        await this._numEventsChng(num);
+      },
+      async getNumEvents() {
+        if (this.isAuthenticated) {
+          await axios
+            .get("https://bhsapi.duartecota.com/event/num/" + this._id, {
+              headers: {
+                Authorization: this.token,
+              },
+            })
+            .then((response) => {
+              if (response.data.body > 0) {
+                this.numEventsChng({
+                  numEvents: response.data.body,
+                });
+              } else {
+                this.numEventsChng({
+                  numEvents: null,
+                });
+              }
+            })
+            .catch((error) => {
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesProblem"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
             });
-          });
+        }
       },
       logout() {
         this._logout();
+        clearInterval(this.timer);
         this.$router.replace("/");
       },
       account() {

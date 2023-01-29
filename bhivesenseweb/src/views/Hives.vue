@@ -50,7 +50,7 @@
         <section
           class="card mb-5 mh-100"
           style="
-            border-radius: 35px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
               0 6px 20px 0 rgba(0, 0, 0, 0.1);
           "
@@ -127,7 +127,7 @@
   <style scoped>
 .bn_card {
   background-color: #ebc002;
-  border-radius: 25px;
+  border-radius: 10px;
   width: 50px;
 }
 

@@ -13,9 +13,15 @@ const routes = [{
     path: '',
     component: Dashboard,
     children: [{
-            path: '',
+            path: 'beekeeper',
             component: () =>
-                import ('../views/Home.vue'),
+                import ('../views/Homebeekeeper.vue'),
+            meta: { auth: false }
+        },
+        {
+            path: 'admin',
+            component: () =>
+                import ('../views/Homeadmin.vue'),
             meta: { auth: false }
         },
         {
@@ -162,6 +168,14 @@ const routes = [{
             path: 'assignhive',
             component: () =>
                 import ('../views/Assignhive.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'notifications',
+            component: () =>
+                import ('../views/Notifications.vue'),
             meta: {
                 requiresAuth: true,
             }

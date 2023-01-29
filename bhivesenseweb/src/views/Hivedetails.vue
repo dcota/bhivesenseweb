@@ -47,7 +47,7 @@
         <section
           class="card mb-3 mh-100 text-center"
           style="
-            border-radius: 35px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
               0 6px 20px 0 rgba(0, 0, 0, 0.1);
           "
@@ -80,7 +80,7 @@
         <section
           class="card mb-3 mh-100"
           style="
-            border-radius: 35px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
               0 6px 20px 0 rgba(0, 0, 0, 0.1);
           "
@@ -110,7 +110,7 @@
         <section
           class="card mb-3 mh-100"
           style="
-            border-radius: 35px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
               0 6px 20px 0 rgba(0, 0, 0, 0.1);
           "
@@ -142,7 +142,7 @@
         <section
           class="card mb-3 mh-100"
           style="
-            border-radius: 35px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
               0 6px 20px 0 rgba(0, 0, 0, 0.1);
           "
@@ -172,7 +172,7 @@
         <section
           class="card mb-3 mh-100"
           style="
-            border-radius: 35px;
+            border-radius: px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
               0 6px 20px 0 rgba(0, 0, 0, 0.1);
           "
@@ -202,7 +202,7 @@
         <section
           class="card mb-3 mh-100"
           style="
-            border-radius: 35px;
+            border-radius: px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
               0 6px 20px 0 rgba(0, 0, 0, 0.1);
           "
@@ -230,7 +230,7 @@
       </section>
     </section>
 
-    <section class="card p-2" v-if="hasData">
+    <section class="card p-2" v-if="hasData" style="border-radius: 10px">
       <section class="h5 text-center" id="title" v-html="title"></section>
       <!--<Line v-if="loaded" :data="data" :options="options" />-->
       <area-chart
@@ -253,15 +253,6 @@
 </template>
     
 <style scoped>
-.bn_card {
-  background-color: #ebc002;
-  border-radius: 25px;
-  width: 50px;
-}
-
-.bn_card:hover {
-  background-color: #947902;
-}
 .spacer {
   height: 200px;
 }
@@ -327,10 +318,10 @@
       }),
     },
     /*mounted() {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    this.loaded = false;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    this.getLatest();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    this.getDay();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                  },*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.loaded = false;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.getLatest();
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.getDay();
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    },*/
     created() {
       this.loaded = false;
       this.getLatest();
@@ -393,8 +384,8 @@
                   month: "2-digit",
                   day: "2-digit",
                   /*hour: "2-digit",
-                                                                                                                                                                                                                                                                                                  minute: "2-digit",
-                                                                                                                                                                                                                                                                                                  second: "2-digit",*/
+                                                                                                                                                                                                                                                                                                                    minute: "2-digit",
+                                                                                                                                                                                                                                                                                                                    second: "2-digit",*/
                 })
               );
               this.latestData.date = sdConv;
