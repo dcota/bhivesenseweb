@@ -221,6 +221,7 @@ export default {
                 modalSolveHiveText: "Deseja dar a anomalia como resolvida?",
                 bntSolveHive: "Resolver",
                 notifHiveEventSolved: "Anomalia na colmeia resolvida.",
+                lblMap: "Ver no mapa",
 
             }
         }

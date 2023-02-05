@@ -3,17 +3,6 @@
     <h2 class="my-text-color">{{ translate("hivesAllTitle") }}</h2>
     <section class="line-1"></section>
     <section>
-      <button @click="map" type="submit" class="btn mt-4 me-3 my-button">
-        <section v-if="!isShow">
-          <i class="fa-solid fa-map-location-dot"></i>
-          {{ translate("lblBtnMap") }}
-        </section>
-        <section
-          v-else
-          class="spinner-border spinner-border-sm"
-          role="status"
-        ></section>
-      </button>
       <button
         @click="this.$router.push('assignhive')"
         type="button"
@@ -76,7 +65,7 @@
 
             <section class="text-center">
               <section class="row mt-2">
-                <section class="col-sm-6 mt-1">
+                <section class="col-sm-4 mt-1">
                   <button
                     data-bs-toggle="tooltip"
                     v-bind:title="translate('lblCardData')"
@@ -88,7 +77,19 @@
                     <i class="fa-solid fa-chart-line"></i>
                   </button>
                 </section>
-                <section class="col-sm-6 mt-1">
+                <section class="col-sm-4 mt-1">
+                  <button
+                    data-bs-toggle="tooltip"
+                    v-bind:title="translate('lblMap')"
+                    data-bs-placement="bottom"
+                    data-bs-custom-class="custom-tooltip"
+                    class="btn text-center bn_card"
+                    @click="map"
+                  >
+                    <i class="fa-solid fa-map-location-dot"></i>
+                  </button>
+                </section>
+                <section class="col-sm-4 mt-1">
                   <button
                     data-bs-toggle="tooltip"
                     v-bind:title="translate('btnUnassignModal')"

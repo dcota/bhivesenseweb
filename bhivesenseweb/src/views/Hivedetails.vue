@@ -238,6 +238,7 @@
         :data="type"
         :min="0"
         :max="max"
+        :xmin="0"
         :download="true"
         width="100%"
         height="470px"
@@ -284,7 +285,6 @@
         w: [],
         type: null,
         devices: [],
-        //img: require("../assets/IMG1220.png"),
         lang: lang,
         latestData: {
           to: "",
@@ -318,16 +318,16 @@
       }),
     },
     /*mounted() {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.loaded = false;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.getLatest();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.getDay();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    },*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.loaded = false;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.getLatest();
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      this.getDay();
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    },*/
     created() {
       this.loaded = false;
       this.getLatest();
       this.getTI();
       this.type = this.ti;
-      this.timer = setInterval(this.getDay, 300000);
+      this.timer = setInterval(this.getLatest, 300000);
     },
     beforeUnmount() {
       this.cancelAutoUpdate();
@@ -384,8 +384,8 @@
                   month: "2-digit",
                   day: "2-digit",
                   /*hour: "2-digit",
-                                                                                                                                                                                                                                                                                                                    minute: "2-digit",
-                                                                                                                                                                                                                                                                                                                    second: "2-digit",*/
+                                                                                                                                                                                                                                                                                                                                    minute: "2-digit",
+                                                                                                                                                                                                                                                                                                                                    second: "2-digit",*/
                 })
               );
               this.latestData.date = sdConv;
@@ -411,7 +411,7 @@
       async getTI() {
         this.ytitle = "TEMP";
         this.title = this.translate("charTempIn") + " (&deg;C)";
-        this.max = 30;
+        this.max = 40;
         this.loaded = false;
         this.isShow = true;
         this.ti = [];
@@ -465,7 +465,7 @@
       async getTO() {
         this.ytitle = "TEMP";
         this.title = this.translate("charTempOut") + " (&deg;C)";
-        this.max = "30";
+        this.max = "40";
         this.loaded = false;
         this.isShow = true;
         this.to = [];

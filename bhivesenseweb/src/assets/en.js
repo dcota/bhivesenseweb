@@ -224,6 +224,7 @@ export default {
                 modalSolveHiveText: "Do you wish to set the anomaly as solved?",
                 bntSolveHive: "Solve",
                 notifHiveEventSolved: "Hive anomaly solved.",
+                lblMap: "See on map",
             }
         }
     }
