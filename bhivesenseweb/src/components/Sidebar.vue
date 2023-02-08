@@ -526,6 +526,7 @@
       }),
     },
     mounted() {
+      this.$router.push("home");
       this.getNumEvents();
       this.timer = setInterval(this.getNumEvents, 30000);
     },
@@ -574,7 +575,7 @@
       logout() {
         this._logout();
         clearInterval(this.timer);
-        this.$router.replace("/");
+        this.$router.replace("home");
       },
       account() {
         this.$router.replace("account");

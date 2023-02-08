@@ -19,9 +19,9 @@ const routes = [{
             meta: { auth: false }
         },
         {
-            path: 'admin',
+            path: 'home',
             component: () =>
-                import ('../views/Homeadmin.vue'),
+                import ('../views/Home.vue'),
             meta: { auth: false }
         },
         {
