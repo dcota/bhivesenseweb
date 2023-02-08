@@ -86,6 +86,8 @@ export default {
                 _id: response.data.body._id,
                 firstname: response.data.body.firstname,
                 lastname: response.data.body.lastname,
+                name: response.data.body.name,
+                email: response.data.body.email,
                 level: response.data.body.level,
                 img: img,
                 expiresIn: expirationTime,

@@ -94,6 +94,7 @@
         description: "",
         observations: "",
         interventiontoedit: "",
+        warnForIntervention: false,
       };
     },
     computed: {
@@ -158,7 +159,6 @@
               this.interventions = [];
               let resArray = response.data.body;
               for (let i = 0; i < resArray.length; i++) {
-                //if (resArray[i].concluded == false) {
                 let sd = new Date(resArray[i].startDate);
                 let ed = new Date(resArray[i].endDate);
                 let dates = "";
@@ -170,6 +170,14 @@
                 if (resArray[i].type == 1) color = "green";
                 else if (resArray[i].type == 2) color = "orange";
                 else color = "red";
+                let today = new Date();
+                if (
+                  (sd < today || ed < today) &&
+                  resArray[i].concluded == false
+                ) {
+                  color = "gray";
+                  this.warnForIntervention = true;
+                }
                 this.interventions.push({
                   _id: resArray[i]._id,
                   color: color,
@@ -180,18 +188,16 @@
                   observations: resArray[i].observations,
                   isComplete: resArray[i].concluded,
                 });
-                //}
               }
-              /*if (this.interventions.length == 0) {
-                                                            this.hasInterventions = false;
-                                                            notify({
-                                                              title: this.translate("notifWarningTitle"),
-                                                              text: this.translate("mesNoInterventions"),
-                                                              type: "warn",
-                                                              duration: 3000,
-                                                              speed: 500,
-                                                            });
-                                                          }*/
+              if (this.warnForIntervention) {
+                notify({
+                  title: this.translate("notifWarningTitle"),
+                  text: this.translate("notInterventionPassed"),
+                  type: "warn",
+                  duration: 3000,
+                  speed: 500,
+                });
+              }
             }
           })
           .catch(() => {
@@ -329,6 +335,7 @@
                 duration: 3000,
                 speed: 500,
               });
+              this.warnForIntervention = false;
               this.getInterventions();
             } else {
               this.isShow = false;

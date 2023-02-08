@@ -8,7 +8,7 @@ Description: implementation of the view Ficha de Inscrição
   <!--<section class="scrolling-component" ref="scrollcomponent" name="lang">-->
   <section class="container my-body">
     <h2 class="my-text-color">
-      {{ translate("formNewInterventionTitle") }}
+      {{ translate("editInterventionTitle") }}
     </h2>
     <section class="line-1"></section>
     <form class="form-signin" v-on:submit.prevent="update">
@@ -61,7 +61,7 @@ Description: implementation of the view Ficha de Inscrição
               {{ translate("lblDiv") }}
               {{ endTime }}
             </section>
-            <section class="form-check mt-4">
+            <!--<section class="form-check mt-4">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -74,7 +74,7 @@ Description: implementation of the view Ficha de Inscrição
               <label class="form-check-label" for="subscribenews">
                 {{ translate("lblAlterDateTime") }}</label
               >
-            </section>
+            </section>-->
           </section>
         </section>
         <section class="col-md-6">
@@ -208,8 +208,8 @@ select option[disabled]:first-child {
         endDate: "",
         startTime: "",
         endTime: "",
-        newDate: false,
-        alterDateTime: false,
+        newDate: true,
+        //alterDateTime: false,
         color: "",
         isShow: false,
         lang: lang,

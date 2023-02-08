@@ -11,7 +11,9 @@ import {
     GET_USER_ID_GETTER,
     GET_USER_NAME_GETTER,
     GET_USER_AVATAR_GETTER,
-    GET_NUMEVENTS_GETTER
+    GET_NUMEVENTS_GETTER,
+    GET_USER_FULLNAME_GETTER,
+    GET_USER_EMAIL_GETTER
 } from "../../storeconstants";
 
 export default {
@@ -36,5 +38,11 @@ export default {
     },
     [GET_NUMEVENTS_GETTER]: state => {
         return state.numEvents
+    },
+    [GET_USER_FULLNAME_GETTER]: state => {
+        return state.name
+    },
+    [GET_USER_EMAIL_GETTER]: state => {
+        return state.email
     }
 }

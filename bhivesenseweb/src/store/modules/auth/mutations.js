@@ -11,6 +11,8 @@ export default {
         state._id = payload._id
         state.firstname = payload.firstname
         state.lastname = payload.lastname
+        state.name = payload.name
+        state.email = payload.email
         state.level = payload.level
         state.token = payload.token
         state.img = payload.img

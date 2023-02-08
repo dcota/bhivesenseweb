@@ -10,6 +10,7 @@ export default {
             token: '',
             firstname: '',
             lastname: '',
+            name: '',
             level: '',
             img: '',
             detailid: '',

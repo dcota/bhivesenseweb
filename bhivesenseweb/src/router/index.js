@@ -180,6 +180,30 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'report',
+            component: () =>
+                import ('../views/Report.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'allmessages',
+            component: () =>
+                import ('../views/Allmessages.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'newmessages',
+            component: () =>
+                import ('../views/Newmessages.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

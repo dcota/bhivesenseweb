@@ -17,6 +17,8 @@ export const IS_USER_AUTHENTICATED_GETTER = '[getters] is user autenticated'
 export const GET_USER_LEVEL_GETTER = '[getters] user level'
 export const GET_USER_ID_GETTER = '[getters] user id'
 export const GET_USER_NAME_GETTER = '[getters] user name'
+export const GET_USER_FULLNAME_GETTER = '[getters] user full name'
+export const GET_USER_EMAIL_GETTER = '[getters] user email'
 export const GET_USER_AVATAR_GETTER = '[getters] user avatar'
 export const GET_NUMEVENTS_GETTER = '[getters] num events'
 

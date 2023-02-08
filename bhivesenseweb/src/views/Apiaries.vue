@@ -183,13 +183,6 @@
     },
     mounted() {
       localStorage.setItem("idtoedit", "");
-      notify({
-        title: this.translate("mesApiaryOperations"),
-        //text: this.translate("mesApiaryOperations"),
-        type: "info",
-        duration: 3000,
-        speed: 500,
-      });
       this.getApiaries();
     },
     methods: {

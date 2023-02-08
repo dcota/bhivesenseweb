@@ -31,16 +31,15 @@ Description: implementation of the view Gestão de Alunos (Admin)
           <tbody>
             <tr>
               <th>{{ translate("thdDevicesID") }}</th>
-              <th class="text-center">{{ translate("thdDevicesUser") }}</th>
+              <th>{{ translate("thdDevicesUser") }}</th>
               <!--<th class="text-center">{{ translate("thdUsersStatus") }}</th>-->
               <th class="text-center">{{ translate("thdUsersActions") }}</th>
             </tr>
             <tr v-for="device in filteredPersons" :key="device.id">
               <td>{{ device.id }}</td>
               <td>{{ device.user }}</td>
-              <!--<td class="text-center">{{ user.lastlogin }}</td>-->
               <td class="text-center">
-                <button
+                <!--<button
                   data-bs-toggle="tooltip"
                   v-bind:title="translate('lblDetailsUser')"
                   data-bs-placement="bottom"
@@ -51,7 +50,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
                   style="width: 50px"
                 >
                   <i class="fas fa-search" aria-hidden="true"></i>
-                </button>
+                </button>-->
                 <button
                   data-bs-toggle="tooltip"
                   v-bind:title="translate('lblDelete')"
@@ -74,7 +73,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
     <ModalDelete
       v-show="isModalDeleteVisible"
       @close="closeModalDelete"
-      @cancel="cancelUser"
+      @cancel="deleteDevice"
     />
     <section class="text-center">
       <section v-if="isShow" class="text-center">
@@ -105,7 +104,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
   import axios from "axios";
   import { notify } from "@kyvg/vue3-notification";
   import ModalDetails from "../components/ModalUserDetails.vue";
-  import ModalDelete from "../components/ModalCancelAccount.vue";
+  import ModalDelete from "../components/ModalDeleteDevice.vue";
   import { mapGetters } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
