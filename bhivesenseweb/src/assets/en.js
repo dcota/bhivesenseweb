@@ -251,6 +251,9 @@ export default {
                 modalMessageText: "Message: ",
                 modalBtnAnswer: "Answer",
                 msgAnswer: "Reply sent successfully!",
+                tempInSp: "Inside temperature setpoint",
+                humInSp: "Inside humidity setpoint",
+                weightSp: "Weight setpoint",
 
             }
         }
