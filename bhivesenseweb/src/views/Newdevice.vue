@@ -10,7 +10,7 @@ Description: implementation of the view Ficha de Inscrição
       <section class="container my-body">
         <h1 class="my-text-color">{{ translate("formNewDeviceTitle") }}</h1>
         <section class="line-1"></section>
-        <section class="container" style="max-width: 70%">
+        <section class="container" style="max-width: 80%">
           <form class="form-signin" @submit.prevent="submit">
             <section class="row">
               <section class="col-md-12 g-4 flex">

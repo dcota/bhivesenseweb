@@ -251,6 +251,9 @@ export default {
                 tempInSp: "Setpoint temperatura interior",
                 humInSp: "Setpoint humidade interior",
                 weightSp: "Setpoint peso",
+                editHiveTitle: "EDITAR COLMEIA",
+                mesEditSuccess: "Altere os dados de setpoint.",
+                mesEditSubmited: "Dados alterados com sucesso.",
             }
         }
     }

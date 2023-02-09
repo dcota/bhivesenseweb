@@ -254,6 +254,9 @@ export default {
                 tempInSp: "Inside temperature setpoint",
                 humInSp: "Inside humidity setpoint",
                 weightSp: "Weight setpoint",
+                editHiveTitle: "EDIT HIVE",
+                mesEditSuccess: "Change setpoint data.",
+                mesEditSubmited: "Setpoint values successfully updated.",
 
             }
         }
