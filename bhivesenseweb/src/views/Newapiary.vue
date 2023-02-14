@@ -37,7 +37,7 @@ Description: implementation of the view Ficha de Inscrição
               role="status"
             ></section>
           </button>
-          <button @click="back()" type="button" class="btn mt-4 my-button">
+          <button @click="back" type="button" class="btn mt-4 my-button">
             <section v-if="!isShow">
               <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
               {{ translate("btnBack") }}
@@ -212,7 +212,7 @@ select option[disabled]:first-child {
         this.showsection = false;
       },
       back() {
-        this.$router.replace("/");
+        this.$router.replace("/beekeeper");
       },
       checkForm() {
         if (this.form.location == "" || this.form.address == "") return false;

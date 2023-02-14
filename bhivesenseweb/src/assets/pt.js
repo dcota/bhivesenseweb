@@ -215,13 +215,16 @@ export default {
                 noNotifications: "Não tem notificações.",
                 hiveText: "TAMPA DA COLMEIA ABERTA",
                 interText: "INTERVENÇÃO NOS PRÓXIMOS DIAS",
+                tempText: "TEMPERATURA INTERIOR ELEVADA",
+                humText: "HUMIDADE INTERIOR ELEVADA",
+                weightText: "VALOR DE COLHEITA ATINGIDO",
                 thdEvent: "Notificação",
                 thdHive: "Colmeia",
                 lblBtnIgnore: "Ignorar",
                 modalSolveHiveTitle: "RESOLVER ANOMALIA",
                 modalSolveHiveText: "Deseja dar a anomalia como resolvida?",
                 bntSolveHive: "Resolver",
-                notifHiveEventSolved: "Anomalia na colmeia resolvida.",
+                notifHiveEventSolved: "Notificação de colmeia resolvida.",
                 lblMap: "Ver no mapa",
                 notInterventionPassed: "Tem intervenções passadas por concluir.",
                 editInterventionTitle: "EDITAR INTERVENÇÃO",
@@ -254,6 +257,7 @@ export default {
                 editHiveTitle: "EDITAR COLMEIA",
                 mesEditSuccess: "Altere os dados de setpoint.",
                 mesEditSubmited: "Dados alterados com sucesso.",
+                myDashTitle: "O MEU DASHBOARD",
             }
         }
     }

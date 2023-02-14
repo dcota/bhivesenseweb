@@ -213,10 +213,13 @@ export default {
                 lblCardData: "Hive data",
                 mesApiaryOperations: "Select option for apiary.",
                 notificationsTitle: "NOTIFICATIONS",
-                eventsLabel: "Notification of hive anomaly",
-                interventionLabel: "Notification of intervention:",
+                eventsLabel: "Notifications for hives",
+                interventionLabel: "Notifications for interventions:",
                 noNotifications: "You don't have notifications.",
                 hiveText: "HIVE LID OPEN",
+                tempText: "INTERIOR TEMPERATURE HIGH",
+                humText: "INTERIOR HUMIDITY HIGH",
+                weightText: "HARVEST SETPOINT REACHED",
                 interText: "INTERVENTION IN THE NEXT DAYS",
                 thdEvent: "Notification",
                 thdHive: "Hive",
@@ -224,7 +227,7 @@ export default {
                 modalSolveHiveTitle: "SOLVE ANOMALY",
                 modalSolveHiveText: "Do you wish to set the anomaly as solved?",
                 bntSolveHive: "Solve",
-                notifHiveEventSolved: "Hive anomaly solved.",
+                notifHiveEventSolved: "Hive notification solved.",
                 lblMap: "See on map",
                 notInterventionPassed: "You have past interventions to conclude.",
                 editInterventionTitle: "EDIT INTERVENTION",
@@ -257,6 +260,9 @@ export default {
                 editHiveTitle: "EDIT HIVE",
                 mesEditSuccess: "Change setpoint data.",
                 mesEditSubmited: "Setpoint values successfully updated.",
+                myDashTitle: "MY DASHBOARD",
+                sbarDash: "Dashboard",
+                myDash: "My dashboard"
 
             }
         }

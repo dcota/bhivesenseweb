@@ -5,8 +5,9 @@ Description: implementation of the view Home
 */
 
 <template>
-  <section class="jumbotron d-flex align-items-center min-vh-100">
-    {{ numEvents }}
+  <section class="container my-body">
+    <h2 class="my-text-color">{{ translate("myDashTitle") }}</h2>
+    <section class="line-1"></section>
     <!--<section class="text-center">
       <img class="my-img" :src="logo" alt="image" />
     </section>-->
@@ -14,11 +15,6 @@ Description: implementation of the view Home
 </template>
 
 <style scoped>
-.my-body {
-  display: flex;
-  align-items: center;
-}
-
 .my-img {
   max-width: 30%;
   height: auto;
@@ -35,6 +31,8 @@ h3 {
 
 <script>
   import axios from "axios";
+  import en from "../assets/en.js";
+  import pt from "../assets/pt.js";
   import { mapActions, mapGetters } from "vuex";
   import {
     IS_USER_AUTHENTICATED_GETTER,
@@ -44,6 +42,7 @@ h3 {
     GET_NUMEVENTS_GETTER,
   } from "../store/storeconstants";
   export default {
+    mixins: [en, pt],
     data: function () {
       const lang = localStorage.getItem("lang") || "pt";
       return {
@@ -64,6 +63,9 @@ h3 {
       ...mapActions("auth", {
         _numEventsChng: AUTO_NUMEVENTS_ACTION,
       }),
+      translate(prop) {
+        return this[this.lang][prop];
+      },
     },
   };
 </script>

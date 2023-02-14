@@ -43,11 +43,23 @@ Description: implementation of the view Gestão de Alunos (Admin)
             <tr>
               <th>{{ translate("thdEvent") }}</th>
               <th class="text-center">{{ translate("thdHive") }}</th>
+              <th class="text-center">{{ translate("tdDate") }}</th>
               <th class="text-center">{{ translate("thdUsersActions") }}</th>
             </tr>
             <tr v-for="event in hiveEvents" :key="event._id">
               <td>{{ event.text }}</td>
-              <td class="text-center">{{ event.device }}</td>
+              <td class="text-center">
+                <a
+                  @click="loadDetails(event.device)"
+                  style="
+                    text-decoration: underline;
+                    color: brown;
+                    cursor: pointer;
+                  "
+                  >{{ event.device }}</a
+                >
+              </td>
+              <td class="text-center">{{ event.date }}</td>
               <td class="text-center">
                 <button
                   data-bs-toggle="tooltip"
@@ -201,6 +213,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
         hasHiveEvents: false,
         hasInterventionEvents: false,
         timer: "",
+        text: "",
       };
     },
     computed: {
@@ -261,21 +274,44 @@ Description: implementation of the view Gestão de Alunos (Admin)
             } else {
               for (let i = 0; i < events.length; i++) {
                 if (events[i].cat == "hive") {
+                  let date = new Date(events[i].registration_date);
+                  let year = date.getFullYear();
+                  let month =
+                    date.getMonth() + 1 < 10
+                      ? "0" + (date.getMonth() + 1)
+                      : date.getMonth() + 1;
+                  let day =
+                    date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                  let text;
+                  switch (events[i].type) {
+                    case "LIDOPEN":
+                      this.text = this.translate("hiveText");
+                      break;
+                    case "TEMPHIGH":
+                      this.text = this.translate("tempText");
+                      break;
+                    case "HUMHIGH":
+                      this.text = this.translate("humText");
+                      break;
+                    case "HARVEST":
+                      this.text = this.translate("weightText");
+                      break;
+                    default:
+                      break;
+                  }
                   this.hiveEvents.push({
                     _id: events[i]._id,
                     apiary: events[i].apiary,
                     device: events[i].device,
-                    text:
-                      events[i].type == "LIDOPEN"
-                        ? this.translate("hiveText")
-                        : "",
+                    date: year + "-" + month + "-" + day,
+                    text: this.text,
                   });
                 } else {
                   this.interventionEvents.push({
                     id: events[i]._id,
                     text:
                       events[i].type == "INTER"
-                        ? this.translate("interTExt")
+                        ? this.translate("interText")
                         : "",
                   });
                 }
@@ -404,6 +440,10 @@ Description: implementation of the view Gestão de Alunos (Admin)
               speed: 500,
             });
           });
+      },
+      loadDetails(id) {
+        localStorage.setItem("hiveIDtoget", id);
+        this.$router.push("/hivedetails");
       },
     },
   };

@@ -14,7 +14,7 @@
           text-decoration-none
         "
       >
-        <router-link to="/"
+        <router-link to="/home"
           ><img :src="logo" style="width: 90%" alt=""
         /></router-link>
       </a>
@@ -73,6 +73,7 @@
           </section>
         </li>
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
+          <!--hives-->
           <button
             class="
               btn btn-toggle
@@ -113,6 +114,37 @@
                 >{{ translate("sbarApiariesProblem") }}</router-link
               >
               <li></li>
+            </ul>
+          </section>
+        </li>
+
+        <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
+          <!--dashboard-->
+          <button
+            class="
+              btn btn-toggle
+              d-inline-flex
+              align-items-center
+              rounded
+              border-0
+              collapsed
+            "
+            data-bs-toggle="collapse"
+            data-bs-target="#dash-collapse"
+            aria-expanded="false"
+          >
+            {{ translate("sbarDash") }}
+          </button>
+          <section id="dash-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li>
+                <router-link
+                  to="/beekeeper"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none"
+                  >{{ translate("myDash") }}</router-link
+                >
+              </li>
             </ul>
           </section>
         </li>
