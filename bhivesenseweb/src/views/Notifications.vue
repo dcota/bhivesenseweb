@@ -8,26 +8,14 @@ Description: implementation of the view Gestão de Alunos (Admin)
   <section class="container my-body">
     <h1 class="my-text-color">{{ translate("notificationsTitle") }}</h1>
     <section class="line-1"></section>
-    <section>
-      <button
-        @click="$router.push('/')"
-        type="button"
-        class="btn mt-4 my-button"
-      >
-        <section v-if="!isShow">
-          <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
-          {{ translate("btnBack") }}
-        </section>
-        <section
-          v-else
-          class="spinner-border spinner-border-sm"
-          role="status"
-        ></section>
-      </button>
-    </section>
-    <!--table for hive notifictions-->
     <section class="row mt-3" v-if="hasHiveEvents">
       <h4 class="my-text-color">{{ translate("eventsLabel") }}</h4>
+    </section>
+    <section
+      class="card mt-5 text-center p-4"
+      v-if="!hasHiveEvents && !hasInterventionEvents"
+    >
+      <h3>{{ translate("cardNoEvents") }}</h3>
     </section>
     <section class="card mt-2" v-if="hasHiveEvents">
       <section
@@ -263,15 +251,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
           .then((response) => {
             this.isShow = false;
             let events = response.data.body;
-            if (events.length == 0) {
-              notify({
-                title: this.translate("notifWarningTitle"),
-                text: this.translate("noNotifications"),
-                type: "warn",
-                duration: 3000,
-                speed: 500,
-              });
-            } else {
+            if (!events.length == 0) {
               for (let i = 0; i < events.length; i++) {
                 if (events[i].cat == "hive") {
                   let date = new Date(events[i].registration_date);

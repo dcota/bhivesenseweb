@@ -62,7 +62,7 @@ export default {
                 mesChangeInvalid: "Invalid values, please check...",
                 mesNoApiaries: "No apiaries found for this user...",
                 mesNoInterventions: "No interventions scheduled for this apiary.",
-                maccFormTitle: "ACCOUNT DETAILS",
+                accFormTitle: "ACCOUNT DETAILS",
                 userMenuProfile: "Manage account",
                 userMenuLogout: "Logout",
                 userMenuCancel: "Cancel account",
@@ -262,7 +262,8 @@ export default {
                 mesEditSubmited: "Setpoint values successfully updated.",
                 myDashTitle: "MY DASHBOARD",
                 sbarDash: "Dashboard",
-                myDash: "My dashboard"
+                myDash: "My dashboard",
+                cardNoEvents: "You don't have active notifications.",
 
             }
         }

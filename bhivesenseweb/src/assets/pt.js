@@ -258,6 +258,9 @@ export default {
                 mesEditSuccess: "Altere os dados de setpoint.",
                 mesEditSubmited: "Dados alterados com sucesso.",
                 myDashTitle: "O MEU DASHBOARD",
+                sbarDash: "Dashboard",
+                myDash: "O meu dashboard",
+                cardNoEvents: "Não tem notificações ativas",
             }
         }
     }

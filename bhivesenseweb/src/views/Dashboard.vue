@@ -33,7 +33,6 @@
 }
 .content {
   background-color: #ebc002;
-  /*position: fixed;*/
   overflow-y: auto;
 }
 </style>

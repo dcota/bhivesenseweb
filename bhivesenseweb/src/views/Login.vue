@@ -129,8 +129,8 @@ Description: implementation of the view Login
         if (response) {
           this.isShow = false;
           this.getNumEvents();
-          if (this.level == "admin") this.$router.replace("/newmessages");
-          else if (this.level == "beekeeper") this.$router.replace("/beekeeper");
+          if (this.level == "admin") this.$router.push("/newmessages");
+          else if (this.level == "beekeeper") this.$router.push("/beekeeper");
         }
       },
       async getNumEvents() {

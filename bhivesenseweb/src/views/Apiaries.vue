@@ -151,7 +151,7 @@
       ModalDetails,
       ModalDelete,
     },
-    data: function () {
+    data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
         apiaries: [],

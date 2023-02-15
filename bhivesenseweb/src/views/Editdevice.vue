@@ -74,6 +74,34 @@ Description: implementation of the view Ficha de Inscrição
                 />
               </section>
             </section>
+            <section class="row mt-4">
+              <section>
+                <section class="form-check">
+                  <input
+                    v-if="form.notifications == true"
+                    @change="handleChange($event)"
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="form.notifications"
+                    checked
+                    id="subscribenews"
+                    style="text-align: left: important;"
+                  />
+                  <input
+                    v-else-if="form.notifications == false"
+                    @change="handleChange($event)"
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="form.notifications"
+                    id="subscribenews"
+                    style="text-align: left: important;"
+                  />
+                  <label class="form-check-label" for="subscribenews">
+                    {{ translate("newAccSubs") }}</label
+                  >
+                </section>
+              </section>
+            </section>
           </form>
           <section class="spacer"></section>
         </section>
@@ -117,6 +145,7 @@ select option[disabled]:first-child {
           tempInSetpoint: "",
           humInSetpoint: "",
           weightSetpoint: "",
+          notifications: "",
         },
         isShow: false,
         lang: lang,
@@ -133,6 +162,19 @@ select option[disabled]:first-child {
       this.getDeviceData();
     },
     methods: {
+      handleChange(event) {
+        if (!event.target.checked) {
+          (this.form.tempInSetpoint = 0),
+            (this.form.humInSetpoint = 0),
+            (this.form.weightSetpoint = 0),
+            (this.form.notifications = false);
+        } else {
+          (this.form.tempInSetpoint = 35),
+            (this.form.humInSetpoint = 80),
+            (this.form.weightSetpoint = 40),
+            (this.form.notifications = true);
+        }
+      },
       async update() {
         if (this.checkForm()) {
           this.isShow = true;
@@ -141,6 +183,7 @@ select option[disabled]:first-child {
             tempInSetpoint: parseInt(this.form.tempInSetpoint),
             humInSetpoint: parseInt(this.form.humInSetpoint),
             weightSetpoint: parseInt(this.form.weightSetpoint),
+            notifications: this.form.notifications,
           };
           await axios
             .put("https://bhsapi.duartecota.com/device/update/" + id, putData, {
@@ -208,6 +251,9 @@ select option[disabled]:first-child {
               this.form.tempInSetpoint = data.tempInSetpoint;
               this.form.humInSetpoint = data.humInSetpoint;
               this.form.weightSetpoint = data.weightSetpoint;
+              this.form.notifications = data.notifications;
+              if (data.notifications) this.notifSubscribed = true;
+              else this.notifSubscribed = false;
               notify({
                 title: this.translate("notifSuccessTitle"),
                 text: this.translate("mesEditSuccess"),

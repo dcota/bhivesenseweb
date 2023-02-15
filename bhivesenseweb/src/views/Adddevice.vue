@@ -88,6 +88,25 @@ Description: implementation of the view Ficha de Inscrição
                 />
               </section>
             </section>
+            <section class="row mt-4">
+              <section>
+                <section class="form-check">
+                  <input
+                    @change="handleChange($event)"
+                    class="form-check-input"
+                    type="checkbox"
+                    v-model="form.notifications"
+                    value=""
+                    id="subscribenews"
+                    checked
+                    style="text-align: left: important;"
+                  />
+                  <label class="form-check-label" for="subscribenews">
+                    {{ translate("newAccSubs") }}</label
+                  >
+                </section>
+              </section>
+            </section>
           </form>
           <section class="spacer"></section>
         </section>
@@ -132,6 +151,7 @@ select option[disabled]:first-child {
           tempInSetpoint: 35,
           humInSetpoint: 80,
           weightSetpoint: 40,
+          notifications: true,
         },
         isShow: false,
         lang: lang,
@@ -150,6 +170,10 @@ select option[disabled]:first-child {
           this.isShow = true;
           let postData = {
             user: this._id,
+            tempInSetpoint: this.form.tempInSetpoint,
+            humInSetpoint: this.form.humInSetpoint,
+            weightSetpoint: this.form.weightSetpoint,
+            notifications: this.form.notifications,
           };
           await axios
             .post(
@@ -214,6 +238,20 @@ select option[disabled]:first-child {
           return false;
         } else {
           return true;
+          s;
+        }
+      },
+      handleChange(event) {
+        if (!event.target.checked) {
+          (this.form.tempInSetpoint = 0),
+            (this.form.humInSetpoint = 0),
+            (this.form.weightSetpoint = 0),
+            (this.form.notifications = false);
+        } else {
+          (this.form.tempInSetpoint = 35),
+            (this.form.humInSetpoint = 80),
+            (this.form.weightSetpoint = 40),
+            (this.form.notifications = true);
         }
       },
     },

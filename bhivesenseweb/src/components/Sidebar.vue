@@ -558,9 +558,9 @@
       }),
     },
     mounted() {
-      this.$router.push("home");
+      //this.$router.push("home");
       this.getNumEvents();
-      this.timer = setInterval(this.getNumEvents, 30000);
+      this.timer = setInterval(this.getNumEvents, 5000);
     },
     beforeUnmount() {
       clearInterval(this.timer);
@@ -614,7 +614,7 @@
       },
       handleChange(event) {
         localStorage.setItem("lang", event.target.value);
-        window.location.reload();
+        location.reload(true);
       },
       translate(prop) {
         return this[this.lang][prop];

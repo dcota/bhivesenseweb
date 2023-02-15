@@ -75,8 +75,8 @@ export default {
         }
         let response = await axios.post(payload.url, postData)
         if (response.data.http === 200) {
-            let expirationTime = +response.data.body.expiresIn * 1000
-                //let expirationTime = 600000
+            let expirationTime = response.data.body.expiresIn * 1000
+                //let expirationTime = 6000
             timer = setTimeout(() => {
                 context.dispatch(AUTO_LOGOUT_ACTION)
             }, expirationTime)
