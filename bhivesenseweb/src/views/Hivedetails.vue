@@ -341,6 +341,7 @@
         clearInterval(this.timer);
       },
       async getLatest() {
+        console.log;
         this.isShow = true;
         this.devices = [];
         await axios

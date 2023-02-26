@@ -4,6 +4,7 @@
       class="d-flex flex-column flex-shrink-0 p-3 fixed-top"
       style="width: 280px"
     >
+      <!--top logo-->
       <a
         class="
           d-flex
@@ -18,6 +19,7 @@
           ><img :src="logo" style="width: 90%" alt=""
         /></router-link>
       </a>
+      <!--lang-->
       <section class="d-flex justify-content-center" style="width: 90%">
         <select
           class="form-select mt-2"
@@ -33,7 +35,7 @@
       </section>
 
       <hr style="width: 90%" />
-
+      <!--beekeeper apiaries-->
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
@@ -72,8 +74,8 @@
             </ul>
           </section>
         </li>
+        <!--beekeeper hives-->
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
-          <!--hives-->
           <button
             class="
               btn btn-toggle
@@ -117,9 +119,8 @@
             </ul>
           </section>
         </li>
-
+        <!--beekeeper dashboard-->
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
-          <!--dashboard-->
           <button
             class="
               btn btn-toggle
@@ -148,7 +149,7 @@
             </ul>
           </section>
         </li>
-
+        <!--admin users-->
         <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
           <button
             class="
@@ -178,9 +179,8 @@
             </ul>
           </section>
         </li>
-
+        <!--admin devices-->
         <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
-          <!--devices-->
           <button
             class="
               btn btn-toggle
@@ -217,7 +217,7 @@
             </ul>
           </section>
         </li>
-
+        <!--admin messages-->
         <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
           <!--reports-->
           <button
@@ -266,7 +266,7 @@
         </li>
 
         <hr v-if="isAuthenticated" style="width: 90%" />
-
+        <!--events button-->
         <section
           class="mt-3"
           style="margin-left: 50px"
@@ -334,7 +334,7 @@
           </section>
         </li>
       </ul>
-
+      <!--user section-->
       <section
         class="dropdown-toogle mb-3 fixed-bottom ms-4"
         v-if="isAuthenticated"
@@ -358,9 +358,33 @@
             height="55"
             class="rounded-circle me-2"
           />
+          <span
+            v-if="this._numEvents != null"
+            class="
+              top-0
+              start-100
+              translate-middle
+              badge
+              rounded-pill
+              bg-danger
+            "
+          >
+            {{ _numEvents }}
+            <span class="visually-hidden">unread messages</span>
+          </span>
           <strong>{{ name }}</strong>
         </a>
         <ul class="dropdown-menu text-small shadow">
+          <li v-if="_numEvents > 0">
+            <router-link
+              to="notifications"
+              class="dropdown-item"
+              style="text-decoration: none; color: red"
+              >{{ translate("dashNotif") }}
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </router-link>
+          </li>
+
           <li>
             <router-link
               to=""
@@ -370,6 +394,7 @@
               >{{ translate("userMenuProfile") }}
             </router-link>
           </li>
+
           <li>
             <hr class="dropdown-sectionider" style="width: 90%" />
           </li>
@@ -551,14 +576,12 @@
         name: GET_USER_NAME_GETTER,
         img: GET_USER_AVATAR_GETTER,
         token: GET_USER_TOKEN_GETTER,
-        //level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
         _numEvents: GET_NUMEVENTS_GETTER,
         auth: localStorage.getItem("auth"),
       }),
     },
     mounted() {
-      //this.$router.push("home");
       this.getNumEvents();
       this.timer = setInterval(this.getNumEvents, 5000);
     },

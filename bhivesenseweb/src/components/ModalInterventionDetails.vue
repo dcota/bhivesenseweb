@@ -23,6 +23,10 @@
               {{ translate("modalInterventionObservations") }}
               {{ observations }}
             </p>
+            <p style="color: this.color">
+              {{ translate("modalInterventionType") }}
+              {{ type }}
+            </p>
           </slot>
         </section>
 
@@ -68,11 +72,8 @@
                 @click="close"
                 aria-label="Interventions"
               >
-                <i
-                  class="fas fa-arrow-left me-1 act-btn"
-                  aria-hidden="true"
-                ></i>
-                {{ translate("btnModalBack") }}
+                <i class="fa-solid fa-xmark me-1"></i>
+                {{ translate("btnModalClose") }}
               </button>
             </div>
           </div>
@@ -103,7 +104,7 @@
   display: flex;
   flex-direction: column;
   width: 60%;
-  height: 30%;
+  height: auto;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -146,7 +147,7 @@
   export default {
     name: "Modal",
     mixins: [en, pt],
-    props: ["description", "observations"],
+    props: ["description", "observations", "type", "color"],
     data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {

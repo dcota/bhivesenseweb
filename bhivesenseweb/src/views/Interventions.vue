@@ -14,7 +14,7 @@
           role="status"
         ></section>
       </button>
-      <button @click="back" class="btn my-button">
+      <!--<button @click="back" class="btn my-button">
         <section v-if="!isShow">
           <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
           {{ translate("btnBack") }}
@@ -24,7 +24,7 @@
           class="spinner-border spinner-border-sm"
           role="status"
         ></section>
-      </button>
+      </button>-->
     </section>
 
     <section class="mt-4" v-if="hasInterventions != false">
@@ -47,6 +47,8 @@
       @delete="clickcancel"
       :description="description"
       :observations="observations"
+      :type="type"
+      :color="color"
     />
 
     <ModalDelete
@@ -93,6 +95,8 @@
         isModalConcludeVisible: false,
         description: "",
         observations: "",
+        type: "",
+        color: "",
         interventiontoedit: "",
         warnForIntervention: false,
       };
@@ -186,6 +190,7 @@
                   startTime: resArray[i].startTime,
                   endTime: resArray[i].endTime,
                   observations: resArray[i].observations,
+                  type: resArray[i].type,
                   isComplete: resArray[i].concluded,
                 });
               }
@@ -286,10 +291,23 @@
             date.getTime() >= sdFinal.getTime() &&
             date.getTime() <= edFinal.getTime()
           ) {
+            let type = this.interventions[i].type;
+            switch (type) {
+              case 1:
+                this.type = this.translate("formNewInterventionType1");
+                break;
+              case 2:
+                this.type = this.translate("formNewInterventionType2");
+                break;
+              case 3:
+                this.type = this.translate("formNewInterventionType3");
+                break;
+            }
             this.interventiontoedit = this.interventions[i]._id;
             localStorage.setItem("interventiontoedit", this.interventiontoedit);
             this.description = this.interventions[i].description;
             this.observations = this.interventions[i].observations;
+            this.color = this.interventions[i].color;
             this.isModalDetailsVisible = true;
             break;
           }

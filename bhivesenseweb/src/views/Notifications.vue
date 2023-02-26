@@ -38,7 +38,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
               <td>{{ event.text }}</td>
               <td class="text-center">
                 <a
-                  @click="loadDetails(event.device)"
+                  @click="loadDetails(event.apiary, event.device)"
                   style="
                     text-decoration: underline;
                     color: brown;
@@ -202,6 +202,10 @@ Description: implementation of the view Gestão de Alunos (Admin)
         hasInterventionEvents: false,
         timer: "",
         text: "",
+        location: "",
+        address: "",
+        observations: "",
+        regdate: "",
       };
     },
     computed: {
@@ -421,8 +425,10 @@ Description: implementation of the view Gestão de Alunos (Admin)
             });
           });
       },
-      loadDetails(id) {
-        localStorage.setItem("hiveIDtoget", id);
+      loadDetails(apiary, hive) {
+        localStorage.setItem("hiveIDtoget", hive);
+        localStorage.setItem("apiaryIDtoget", apiary);
+        console.log(apiary, " ", hive);
         this.$router.push("/hivedetails");
       },
     },

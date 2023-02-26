@@ -37,7 +37,7 @@ Description: implementation of the view Ficha de Inscrição
               role="status"
             ></section>
           </button>
-          <button @click="back" type="button" class="btn mt-4 my-button">
+          <!--<button @click="back" type="button" class="btn mt-4 my-button">
             <section v-if="!isShow">
               <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
               {{ translate("btnBack") }}
@@ -47,7 +47,7 @@ Description: implementation of the view Ficha de Inscrição
               class="spinner-border spinner-border-sm"
               role="status"
             ></section>
-          </button>
+          </button>-->
         </section>
         <section class="row">
           <section class="col-md-6 g-4">

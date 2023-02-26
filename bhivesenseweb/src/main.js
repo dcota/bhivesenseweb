@@ -7,6 +7,9 @@ import VCalendar from 'v-calendar';
 import 'v-calendar/dist/style.css';
 import VueChartkick from 'vue-chartkick'
 import 'chartkick/chart.js'
+import mitt from 'mitt'
+
+const emitter = mitt()
 
 const app = createApp(App);
 
@@ -18,5 +21,7 @@ app.use(VCalendar, {
 
 });
 app.use(VueChartkick);
+
+app.config.globalProperties.emitter = emitter
 
 app.mount('#app');

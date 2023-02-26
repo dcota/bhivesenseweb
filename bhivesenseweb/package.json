@@ -15,6 +15,7 @@
     "chart.js": "^4.2.0",
     "core-js": "^3.8.3",
     "mdb-vue-ui-kit": "^3.1.1",
+    "mitt": "^3.0.0",
     "postcss": "^8.4.20",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.2.13",

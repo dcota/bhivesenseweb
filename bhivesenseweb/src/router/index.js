@@ -212,6 +212,14 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'sooninterventions',
+            component: () =>
+                import ('../views/Interventionsoon.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 
