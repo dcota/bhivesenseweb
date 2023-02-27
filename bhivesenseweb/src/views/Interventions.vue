@@ -45,10 +45,7 @@
       @edit="edit"
       @done="clickConclude"
       @delete="clickcancel"
-      :description="description"
-      :observations="observations"
-      :type="type"
-      :color="color"
+      :details="details"
     />
 
     <ModalDelete
@@ -87,16 +84,13 @@
       const lang = localStorage.getItem("lang") || "pt";
       return {
         interventions: [],
+        details: [],
         lang: lang,
         isShow: false,
         hasInterventions: false,
         isModalDetailsVisible: false,
         isModalDeleteVisible: false,
         isModalConcludeVisible: false,
-        description: "",
-        observations: "",
-        type: "",
-        color: "",
         interventiontoedit: "",
         warnForIntervention: false,
       };
@@ -175,10 +169,10 @@
                 else if (resArray[i].type == 2) color = "orange";
                 else color = "red";
                 let today = new Date();
-                if (
-                  (sd < today || ed < today) &&
-                  resArray[i].concluded == false
-                ) {
+                let timeDiff = new Date(sd) - today;
+                let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                console.log(diffDays);
+                if (Math.abs(diffDays) < 0 && resArray[i].concluded == false) {
                   color = "gray";
                   this.warnForIntervention = true;
                 }
@@ -267,49 +261,58 @@
       },
       dayClicked(day) {
         this.interventiontoedit = "";
+        this.details = [];
         let date = new Date(day.id);
-        for (let i = 0; i < this.interventions.length; i++) {
-          let sd = new Date(this.interventions[i].dates.start);
-          let sdConv = this.padTo2Digits(
-            sd.toLocaleDateString("sv-SE", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            })
-          );
-          let sdFinal = new Date(sdConv);
-          let ed = new Date(this.interventions[i].dates.end);
-          let edConv = this.padTo2Digits(
-            ed.toLocaleDateString("sv-SE", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            })
-          );
-          let edFinal = new Date(edConv);
-          if (
-            date.getTime() >= sdFinal.getTime() &&
-            date.getTime() <= edFinal.getTime()
-          ) {
-            let type = this.interventions[i].type;
-            switch (type) {
-              case 1:
-                this.type = this.translate("formNewInterventionType1");
-                break;
-              case 2:
-                this.type = this.translate("formNewInterventionType2");
-                break;
-              case 3:
-                this.type = this.translate("formNewInterventionType3");
-                break;
+        if (this.interventions.length > 0) {
+          for (let i = 0; i < this.interventions.length; i++) {
+            let sd = new Date(this.interventions[i].dates.start);
+            let sdConv = this.padTo2Digits(
+              sd.toLocaleDateString("sv-SE", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+            );
+            let sdFinal = new Date(sdConv);
+            let ed = new Date(this.interventions[i].dates.end);
+            let edConv = this.padTo2Digits(
+              ed.toLocaleDateString("sv-SE", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              })
+            );
+            let edFinal = new Date(edConv);
+            if (
+              date.getTime() >= sdFinal.getTime() &&
+              date.getTime() <= edFinal.getTime()
+            ) {
+              let type = this.interventions[i].type;
+              switch (type) {
+                case 1:
+                  this.type = this.translate("formNewInterventionType1");
+                  break;
+                case 2:
+                  this.type = this.translate("formNewInterventionType2");
+                  break;
+                case 3:
+                  this.type = this.translate("formNewInterventionType3");
+                  break;
+              }
+              let instance = {
+                _id: this.interventions[i]._id,
+                color: this.interventions[i].color,
+                startDate: sdConv,
+                endDate: edConv,
+                startTime: this.interventions[i].startTime,
+                endTime: this.interventions[i].endTime,
+                description: this.interventions[i].description,
+                observations: this.interventions[i].observations,
+                type: this.type,
+              };
+              this.details.push(instance);
             }
-            this.interventiontoedit = this.interventions[i]._id;
-            localStorage.setItem("interventiontoedit", this.interventiontoedit);
-            this.description = this.interventions[i].description;
-            this.observations = this.interventions[i].observations;
-            this.color = this.interventions[i].color;
-            this.isModalDetailsVisible = true;
-            break;
+            if (this.details.length > 0) this.isModalDetailsVisible = true;
           }
         }
       },
@@ -330,7 +333,6 @@
       },
       edit() {
         this.isModalDetailsVisible = false;
-        //localStorage.setItem("interventiontoedit", this.interventiontoedit);
         this.$router.push("editintervention");
       },
       async conclude() {

@@ -288,6 +288,7 @@ export default {
                 modalDetaisNextSD: " Starts:",
                 modalDetaisNextED: " Ends:",
                 btnModalMore: "More details",
+                warnMap: "This device is not yet operating!",
 
             }
         }

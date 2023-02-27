@@ -160,6 +160,7 @@ select option[disabled]:first-child {
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
+    GET_USER_EMAIL_GETTER,
   } from "../store/storeconstants";
   export default {
     name: "new intervention",
@@ -196,6 +197,7 @@ select option[disabled]:first-child {
         token: GET_USER_TOKEN_GETTER,
         level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
+        _userEmail: GET_USER_EMAIL_GETTER,
       }),
     },
     methods: {
@@ -216,6 +218,7 @@ select option[disabled]:first-child {
             this.padTo2Digits(this.range.end.getMinutes());
           let postData = {
             apiary: localStorage.getItem("idtointerventions"),
+            userEmail: this._userEmail,
             startDate: this.range.start,
             endDate: this.range.end,
             startTime: startTime,

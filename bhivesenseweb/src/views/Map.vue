@@ -2,13 +2,17 @@
   <section class="container my-body">
     <h2 class="my-text-color">{{ translate("devicesAllTitle") }}</h2>
     <section class="line-1"></section>
-    <section class="text-center mt-4">
+    <section>
+      <button @click="back()" type="button" class="btn mt-4 my-button">
+        {{ translate("btnBack") }}
+      </button>
+    </section>
+    <section class="text-center mt-4" v-if="showMap">
       <GoogleMap
         api-key="AIzaSyBS5cccM97lkMCpieTfkCKC4oiyY-r5vOI"
-        :options="mapStyle"
-        style="width: 100%; height: 500px"
+        style="width: 100%; height: calc(100vh - 200px)"
         :center="center"
-        :zoom="19"
+        :zoom="18"
       >
         <Marker :options="markerOptions">
           <!--<InfoWindow :options="{ position: center, content: 'Hello World!' }" />-->
@@ -46,12 +50,6 @@
     </section>
 
     <section class="text-center">
-      <button @click="back()" type="button" class="btn mt-4 my-button">
-        {{ translate("btnBack") }}
-      </button>
-    </section>
-
-    <section class="text-center">
       <section v-if="isShow" class="text-center">
         <section class="spinner-border mt-4" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -79,7 +77,7 @@
 <script>
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
-  import axios from "axios";
+  import { notify } from "@kyvg/vue3-notification";
   import { defineComponent } from "vue";
   import { GoogleMap, Marker, InfoWindow } from "vue3-google-map";
   import { mapGetters, mapActions } from "vuex";
@@ -93,7 +91,12 @@
     mixins: [en, pt],
     components: { GoogleMap, Marker, InfoWindow },
     setup() {
-      const center = { lat: 37.7458399, lng: -25.6651378 };
+      //const center = { lat: 37.7458399, lng: -25.6651378 };
+
+      const center = {
+        lat: parseFloat(localStorage.getItem("lat")),
+        lng: parseFloat(localStorage.getItem("lon")),
+      };
       const markerOptions = {
         position: center,
         label: "H",
@@ -107,19 +110,8 @@
         apiaries: [],
         img: require("../assets/IMG1220.png"),
         lang: lang,
-        message: {
-          type: "",
-          msg: "",
-        },
-        address: "",
-        observations: "",
-        regdate: "",
         isShow: true,
-        isModalDetailsVisible: false,
-        isModalDeleteVisible: false,
-        toDeleteID: "",
-        toEditID: "",
-        toInterventionsID: "",
+        showMap: true,
       };
     },
     computed: {
@@ -130,8 +122,26 @@
         el: "#app",
       }),
     },
-    created() {
+    mounted() {
       this.isShow = false;
+      console.log(
+        localStorage.getItem("lat") + " " + localStorage.getItem("lon")
+      );
+      if (
+        localStorage.getItem("lat") == "null" ||
+        localStorage.getItem("lon") == "null"
+      ) {
+        this.showMap = false;
+        notify({
+          title: this.translate("notifWarningTitle"),
+          text: this.translate("warnMap"),
+          type: "warn",
+          duration: 3000,
+          speed: 500,
+        });
+      } else {
+        console.log("else");
+      }
     },
     methods: {
       translate(prop) {

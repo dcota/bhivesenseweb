@@ -210,7 +210,7 @@ Description: implementation of the view Ficha de Inscrição
             />
           </section>
         </section>
-        <!--<section class="row mt-4">
+        <section class="row mt-4">
           <section>
             <section class="form-check">
               <input
@@ -227,7 +227,7 @@ Description: implementation of the view Ficha de Inscrição
               >
             </section>
           </section>
-        </section>-->
+        </section>
         <section class="text-center">
           <button type="submit" class="btn mt-4 me-4 my-button">
             <section v-if="!isShow">
@@ -312,7 +312,7 @@ select option[disabled]:first-child {
             username: "",
             password: "",
           },
-          //notifications: true,
+          notifications: true,
         },
         message: {
           type: "",
@@ -358,7 +358,7 @@ select option[disabled]:first-child {
         postData.append("bdate", this.form.bdate);
         postData.append("username", this.form.auth.username);
         postData.append("password", this.form.auth.password);
-        //postData.append("notifications", this.form.notifications);
+        postData.append("notifications", this.form.notifications);
         postData.append("img", this.item.image);
         postData.append("lang", this.lang);
         if (this.checkForm() == true) {
@@ -435,8 +435,8 @@ select option[disabled]:first-child {
             username: "",
             password: "",
           }),
-          //(this.form.notifications = true);
-          (this.item.imageUrl = null);
+          (this.form.notifications = true);
+        this.item.imageUrl = null;
         this.item.image = null;
         this.isShow = false;
         this.showsection = false;

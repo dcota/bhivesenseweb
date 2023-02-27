@@ -285,6 +285,7 @@ export default {
                 modalDetaisNextSD: " Início:",
                 modalDetaisNextED: " Fim:",
                 btnModalMore: "Detalhes",
+                warnMap: "Este dispositivo ainda não se encontra em funcionamento!",
             }
         }
     }

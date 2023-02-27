@@ -12,59 +12,99 @@
             {{ translate("modalIntervention") }}
           </slot>
         </header>
-
-        <section class="modal-body ms-4" id="modalDescription">
-          <slot name="body">
-            <p>
-              {{ translate("modalInterventionDescription") }}
-              {{ description }}
-            </p>
-            <p>
-              {{ translate("modalInterventionObservations") }}
-              {{ observations }}
-            </p>
-            <p style="color: this.color">
-              {{ translate("modalInterventionType") }}
-              {{ type }}
-            </p>
+        <section class="modal-body p-4" id="modalDescription">
+          <slot
+            name="body"
+            v-for="intervention in details"
+            :key="intervention._id"
+          >
+            <section class="card p-3 mb-4">
+              <p>
+                <strong>{{ translate("modalDetaisNextInterv") }}</strong>
+              </p>
+              <p>
+                {{ translate("modalDetaisNextSD") }}
+                {{ intervention.startDate }}
+                {{ translate("lblAt") }}
+                {{ intervention.startTime }}
+              </p>
+              <p>
+                {{ translate("modalDetaisNextED") }}
+                {{ intervention.endDate }}
+                {{ translate("lblAt") }}
+                {{ intervention.endTime }}
+              </p>
+              <p>
+                {{ translate("modalInterventionDescription") }}
+                {{ intervention.description }}
+              </p>
+              <p>
+                {{ translate("modalInterventionObservations") }}
+                {{ intervention.observations }}
+              </p>
+              <p>
+                <section v-if="intervention.color=='green'" style="color: green">
+                  {{ translate("modalInterventionType") }}
+                  <strong>{{ intervention.type }}</strong>
+                </section>
+                <section v-else-if="intervention.color=='orange'" style="color: orange">
+                  {{ translate("modalInterventionType") }}
+                  <strong>{{ intervention.type }}</strong>
+                </section>
+                <section v-else-if="intervention.color=='red'" style="color: red">
+                  {{ translate("modalInterventionType") }}
+                  <strong>{{ intervention.type }}</strong>
+                </section>
+              </p>
+              <section class="modal-footer">
+                <div class="row">
+                  <div class="col-md-4">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="edit(intervention._id)"
+                      aria-label="Edit"
+                    >
+                      <i
+                        class="fas fa-edit me-1 act-btn"
+                        aria-hidden="true"
+                      ></i>
+                      {{ translate("btnModalEdit") }}
+                    </button>
+                  </div>
+                  <div class="col-md-4">
+                    <button
+                      type="button"
+                      class="btn btn-success"
+                      @click="done(intervention._id)"
+                      aria-label="Interventions"
+                    >
+                      <i class="fa-solid fa-check"></i>
+                      {{ translate("btnModalDone") }}
+                    </button>
+                  </div>
+                  <div class="col-md-4">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      @click="cancel(intervention._id)"
+                      aria-label="Interventions"
+                    >
+                      <i
+                        class="fas fa-trash me-1 act-btn"
+                        aria-hidden="true"
+                      ></i>
+                      {{ translate("btnModalDelete") }}
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </section>
           </slot>
         </section>
 
         <footer class="modal-footer">
           <div class="row">
-            <div class="col-md-3">
-              <button
-                type="button"
-                class="btn btn-primary"
-                @click="edit"
-                aria-label="Edit"
-              >
-                <i class="fas fa-edit me-1 act-btn" aria-hidden="true"></i>
-                {{ translate("btnModalEdit") }}
-              </button>
-            </div>
-            <div class="col-md-3">
-              <button
-                type="button"
-                class="btn btn-success"
-                @click="done"
-                aria-label="Interventions"
-              >
-                <i class="fa-solid fa-check"></i>
-                {{ translate("btnModalDone") }}
-              </button>
-            </div>
-            <div class="col-md-3">
-              <button
-                type="button"
-                class="btn btn-danger"
-                @click="cancel"
-                aria-label="Interventions"
-              >
-                <i class="fas fa-trash me-1 act-btn" aria-hidden="true"></i>
-                {{ translate("btnModalDelete") }}
-              </button>
-            </div>
             <div class="col-md-3">
               <button
                 type="button"
@@ -104,7 +144,7 @@
   display: flex;
   flex-direction: column;
   width: 60%;
-  height: auto;
+  height: 90%;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -147,7 +187,7 @@
   export default {
     name: "Modal",
     mixins: [en, pt],
-    props: ["description", "observations", "type", "color"],
+    props: ["details"],
     data() {
       const lang = localStorage.getItem("lang") || "pt";
       return {
@@ -166,13 +206,16 @@
       close() {
         this.$emit("close");
       },
-      edit() {
+      edit(id) {
+        localStorage.setItem("interventiontoedit", id);
         this.$emit("edit");
       },
-      done() {
+      done(id) {
+        localStorage.setItem("interventiontoedit", id);
         this.$emit("done");
       },
-      cancel() {
+      cancel(id) {
+        localStorage.setItem("interventiontoedit", id);
         this.$emit("delete");
       },
       translate(prop) {

@@ -96,7 +96,7 @@
                     data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
                     class="btn text-center bn_card"
-                    @click="map"
+                    @click="map(device.lat, device.lon)"
                   >
                     <i class="fa-solid fa-map-location-dot"></i>
                   </button>
@@ -238,6 +238,8 @@
                 this.devices.push({
                   _id: devices[i]._id,
                   state: devices[i].state,
+                  lat: devices[i].lat,
+                  lon: devices[i].lon,
                 });
               }
             }
@@ -348,7 +350,9 @@
       getApiaryDevices(id) {
         alert(id);
       },
-      map() {
+      map(lat, lon) {
+        localStorage.setItem("lat", lat);
+        localStorage.setItem("lon", lon);
         this.$router.push("map");
       },
       back() {
@@ -356,7 +360,6 @@
       },
       loadDetails(id) {
         localStorage.setItem("hiveIDtoget", id);
-        //alert(id);
         this.$router.push("/hivedetails");
       },
       loadEditPage(id) {
