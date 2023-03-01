@@ -57,6 +57,7 @@
                 </section>
               </p>
               <section class="modal-footer">
+                <section v-if="!intervention.concluded">
                 <div class="row">
                   <div class="col-md-4">
                     <button
@@ -98,6 +99,40 @@
                     </button>
                   </div>
                 </div>
+              </section>
+              <section v-else>
+                <div class="row">
+                  <div class="col-md-6">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="edit(intervention._id)"
+                      aria-label="Edit"
+                    >
+                      <i
+                        class="fas fa-edit me-1 act-btn"
+                        aria-hidden="true"
+                      ></i>
+                      {{ translate("btnModalEdit") }}
+                    </button>
+                  </div>
+
+                  <div class="col-md-6">
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      @click="cancel(intervention._id)"
+                      aria-label="Interventions"
+                    >
+                      <i
+                        class="fas fa-trash me-1 act-btn"
+                        aria-hidden="true"
+                      ></i>
+                      {{ translate("btnModalDelete") }}
+                    </button>
+                  </div>
+                </div>
+              </section>
               </section>
             </section>
           </slot>
@@ -144,7 +179,7 @@
   display: flex;
   flex-direction: column;
   width: 60%;
-  height: 90%;
+  height: 70%;
   position: absolute;
   left: 50%;
   top: 50%;

@@ -3,7 +3,12 @@
     <h2 class="my-text-color">{{ translate("hiveDetailsTitle") }}</h2>
     <section class="line-1"></section>
     <section>
-      <button @click="map" type="button" class="btn mt-4 me-3 my-button">
+      <button
+        @click="map"
+        type="button"
+        class="btn mt-4 me-3 my-button"
+        v-if="hasData"
+      >
         <section v-if="!isShow">
           <i class="fa-solid fa-map-location-dot"></i>
           {{ translate("lblBtnMap") }}
@@ -26,6 +31,7 @@
         ></section>
       </button>
       <select
+        v-if="hasData"
         class="form-select mt-4 pull-right"
         aria-label="Default select example"
         style="width: 20%"
@@ -43,7 +49,7 @@
       </h5>
     </section>
     <section class="row mt-3" v-bind="latestData">
-      <section class="col-12 col-md-4 col-lg-2" v-if="hasData">
+      <section class="col-12 col-md-6 col-lg-2" v-if="hasData">
         <section
           class="card mb-3 mh-100 text-center"
           style="
@@ -341,7 +347,6 @@
         clearInterval(this.timer);
       },
       async getLatest() {
-        console.log;
         this.isShow = true;
         this.devices = [];
         await axios
@@ -357,8 +362,9 @@
             }
           )
           .then((response) => {
-            let devices = response.data.body;
-            if (devices.length == 0) {
+            let device = response.data.body.data;
+            console.log(device);
+            if (!device) {
               this.hasData = false;
               this.isShow = false;
               notify({
@@ -370,16 +376,17 @@
               });
             } else {
               this.hasData = true;
-              this.latestData.ti = devices[0].data.ti;
-              this.latestData.hi = devices[0].data.hi;
-              this.latestData.to = devices[0].data.to;
-              this.latestData.ho = devices[0].data.ho;
-              this.latestData.s = devices[0].data.s;
-              this.latestData.w = devices[0].data.w;
+              this.latestData.ti = device.ti;
+              this.latestData.hi = device.hi;
+              this.latestData.to = device.to;
+              this.latestData.ho = device.ho;
+              this.latestData.s = device.s;
+              this.latestData.w = device.w;
+              let TMZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
               let lastDate = new Date(
                 this.padTo2Digits(
-                  devices[0].data.date.toLocaleString("sv-SE", {
-                    timeZone: "Atlantic/Azores",
+                  device.date.toLocaleString("sv-SE", {
+                    timeZone: TMZ,
                   })
                 )
               );
@@ -433,6 +440,7 @@
           )
           .then((response) => {
             let d = response.data.body.data;
+            console.log(d);
             if (d.length == 0) {
               this.hasData = false;
               this.isShow = false;

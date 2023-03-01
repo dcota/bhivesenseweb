@@ -86,7 +86,7 @@ Description: implementation of the view Home
                 role="status"
               ></section>
               <hr />
-              <section class="text-center">
+              <section class="text-center" v-if="!isShow">
                 <button
                   @click="this.$router.push('sooninterventions')"
                   type="button"
@@ -96,6 +96,11 @@ Description: implementation of the view Home
                   {{ translate("dashIntervBtn") }}
                 </button>
               </section>
+              <section
+                v-else
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></section>
             </section>
             <section class="text-center my-text-red" v-if="nInterventions > 0">
               {{ interventionsText }}
@@ -197,7 +202,7 @@ Description: implementation of the view Home
               <hr />
               <section class="text-center">
                 <button
-                  @click="this.$router.push('apiaries')"
+                  @click="this.$router.push('newapiary')"
                   type="button"
                   class="btn btn-success"
                   style="font-size: small; width: 160px"
@@ -237,12 +242,12 @@ Description: implementation of the view Home
               <hr />
               <section class="text-center">
                 <button
-                  @click="this.$router.push('apiaries')"
+                  @click="this.$router.push('newdevice')"
                   type="button"
                   class="btn btn-success"
                   style="font-size: small; width: 160px"
                 >
-                  {{ translate("dashApiariesBtn") }}
+                  {{ translate("dashHivesBtn") }}
                 </button>
               </section>
             </section>

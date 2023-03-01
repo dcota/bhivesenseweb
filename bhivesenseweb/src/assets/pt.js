@@ -286,6 +286,7 @@ export default {
                 modalDetaisNextED: " Fim:",
                 btnModalMore: "Detalhes",
                 warnMap: "Este dispositivo ainda não se encontra em funcionamento!",
+                notInterventionClick: "Escolha uma intervenção para editar ou obter detalhes.",
             }
         }
     }

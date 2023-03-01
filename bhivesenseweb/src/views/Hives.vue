@@ -32,7 +32,7 @@
     </section>
     <section class="row mt-4">
       <section
-        class="col-12 col-md-4 col-lg-3"
+        class="col-12 col-md-3 col-lg-4"
         v-for="device of this.devices"
         :key="device._id"
       >

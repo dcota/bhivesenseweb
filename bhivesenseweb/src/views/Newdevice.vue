@@ -55,7 +55,7 @@ Description: implementation of the view Ficha de Inscrição
                   role="status"
                 ></section>
               </button>
-              <button @click="back" type="button" class="btn mt-5 my-button">
+              <!--<button @click="back" type="button" class="btn mt-5 my-button">
                 <section v-if="!isShow">
                   {{ translate("btnBack") }}
                 </section>
@@ -64,7 +64,7 @@ Description: implementation of the view Ficha de Inscrição
                   class="spinner-border spinner-border-sm"
                   role="status"
                 ></section>
-              </button>
+              </button>-->
             </section>
           </form>
           <section class="text-center">
@@ -195,14 +195,13 @@ select option[disabled]:first-child {
           });
       },
       back() {
-        this.$router.replace("/");
+        this.$router.push("beekeeper");
       },
       translate(prop) {
         return this[this.lang][prop];
       },
       async copyText(id) {
         if (this.form.id == "") {
-          //alert("vazio");
           notify({
             title: this.translate("notifErrorTitle"),
             text: this.translate("newDeviceNoID"),

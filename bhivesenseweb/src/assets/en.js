@@ -273,7 +273,8 @@ export default {
                 dashMess: "Messages",
                 dashMessBtn: "Go to messages",
                 dashTotalApiaries: "Total apiaries",
-                dashApiariesBtn: "Go to apiaries",
+                dashApiariesBtn: "Add apiaries",
+                dashHivesBtn: "Add hives",
                 dashTotalHives: "Total hives",
                 dashInterventions: "Interventions",
                 dashEventsTextYes: "You have hives needing your attention",
@@ -289,6 +290,7 @@ export default {
                 modalDetaisNextED: " Ends:",
                 btnModalMore: "More details",
                 warnMap: "This device is not yet operating!",
+                notInterventionClick: "Choose an intervention to edit or get details.",
 
             }
         }
