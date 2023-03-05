@@ -161,6 +161,7 @@ select option[disabled]:first-child {
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
     GET_USER_EMAIL_GETTER,
+    GET_USER_FULLNAME_GETTER,
   } from "../store/storeconstants";
   export default {
     name: "new intervention",
@@ -198,6 +199,7 @@ select option[disabled]:first-child {
         level: GET_USER_LEVEL_GETTER,
         _id: GET_USER_ID_GETTER,
         _userEmail: GET_USER_EMAIL_GETTER,
+        userName: GET_USER_FULLNAME_GETTER,
       }),
     },
     methods: {
@@ -226,6 +228,7 @@ select option[disabled]:first-child {
             type: this.form.type,
             description: this.form.description,
             observations: this.form.observations,
+            name: this.userName,
           };
           await axios
             .post("https://bhsapi.duartecota.com/intervention", postData, {

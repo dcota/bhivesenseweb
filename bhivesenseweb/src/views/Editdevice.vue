@@ -257,7 +257,7 @@ select option[disabled]:first-child {
               notify({
                 title: this.translate("notifSuccessTitle"),
                 text: this.translate("mesEditSuccess"),
-                type: "success",
+                type: "info",
                 duration: 3000,
                 speed: 500,
               });

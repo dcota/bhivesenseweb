@@ -120,7 +120,7 @@
 .bn_card {
   background-color: #ebc002;
   border-radius: 10px;
-  width: 50px;
+  width: auto;
 }
 
 .bn_card:hover {

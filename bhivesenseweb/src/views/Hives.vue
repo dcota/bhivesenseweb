@@ -246,11 +246,14 @@
             this.isShow = false;
           })
           .catch((error) => {
-            console.log(error);
             this.isShow = false;
-            this.showsection = true;
-            this.message.type = "danger";
-            this.message.msg = this.translate("mesProblem");
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
           });
       },
       translate(prop) {

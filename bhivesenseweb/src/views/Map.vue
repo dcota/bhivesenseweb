@@ -4,10 +4,11 @@
     <section class="line-1"></section>
     <section>
       <button @click="back()" type="button" class="btn mt-4 my-button">
+        <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
         {{ translate("btnBack") }}
       </button>
     </section>
-    <section class="text-center mt-4" v-if="showMap">
+    <section class="mt-4" v-if="showMap">
       <GoogleMap
         api-key="AIzaSyBS5cccM97lkMCpieTfkCKC4oiyY-r5vOI"
         style="width: 100%; height: calc(100vh - 200px)"
@@ -19,28 +20,19 @@
           <InfoWindow>
             <div id="contet">
               <div id="siteNotice"></div>
-              <h2 id="firstHeading" class="firstHeading">Uluru</h2>
+              <h2 id="firstHeading" class="firstHeading">Apiary</h2>
               <div id="bodyContent">
                 <p>
-                  <b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a
-                  large sandstone rock formation in the southern part of the
-                  Northern Territory, central Australia. It lies 335&#160;km
-                  (208&#160;mi) south west of the nearest large town, Alice
-                  Springs; 450&#160;km (280&#160;mi) by road. Kata Tjuta and
-                  Uluru are the two major features of the Uluru - Kata Tjuta
-                  National Park. Uluru is sacred to the Pitjantjatjara and
-                  Yankunytjatjara, the Aboriginal people of the area. It has
-                  many springs, waterholes, rock caves and ancient paintings.
-                  Uluru is listed as a World Heritage Site.
+                  <b>{{ translate("modalApiaryLocation") }}{{ location }}</b>
                 </p>
                 <p>
-                  Attribution: Uluru,
-                  <a
-                    href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194"
+                  <b>{{ translate("modalApiaryAddress") }}{{ address }}</b>
+                </p>
+                <p>
+                  <b
+                    >{{ translate("modalApiaryObservations")
+                    }}{{ observations }}</b
                   >
-                    https://en.wikipedia.org/w/index.php?title=Uluru</a
-                  >
-                  (last visited June 22, 2009).
                 </p>
               </div>
             </div>
@@ -75,6 +67,7 @@
 }
 </style>
 <script>
+  import axios from "axios";
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
   import { notify } from "@kyvg/vue3-notification";
@@ -91,16 +84,14 @@
     mixins: [en, pt],
     components: { GoogleMap, Marker, InfoWindow },
     setup() {
-      //const center = { lat: 37.7458399, lng: -25.6651378 };
-
       const center = {
         lat: parseFloat(localStorage.getItem("lat")),
         lng: parseFloat(localStorage.getItem("lon")),
       };
       const markerOptions = {
         position: center,
-        label: "H",
-        title: "LADY LIBERTY",
+        label: "",
+        title: "Hive",
       };
       return { center, markerOptions };
     },
@@ -108,10 +99,12 @@
       const lang = localStorage.getItem("lang") || "pt";
       return {
         apiaries: [],
-        img: require("../assets/IMG1220.png"),
         lang: lang,
         isShow: true,
         showMap: true,
+        address: "",
+        location: "",
+        observations: "",
       };
     },
     computed: {
@@ -123,15 +116,13 @@
       }),
     },
     mounted() {
+      this.detail();
+      this.showMap = false;
       this.isShow = false;
-      console.log(
-        localStorage.getItem("lat") + " " + localStorage.getItem("lon")
-      );
       if (
         localStorage.getItem("lat") == "null" ||
         localStorage.getItem("lon") == "null"
       ) {
-        this.showMap = false;
         notify({
           title: this.translate("notifWarningTitle"),
           text: this.translate("warnMap"),
@@ -140,15 +131,47 @@
           speed: 500,
         });
       } else {
-        console.log("else");
+        this.showMap = true;
       }
     },
     methods: {
       translate(prop) {
         return this[this.lang][prop];
       },
+      async detail() {
+        this.isShow = true;
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/apiary/one/" +
+              localStorage.getItem("apiaryIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            console.log(response);
+            this.address = response.data.body.address;
+            this.observations = response.data.body.observations;
+            this.location = response.data.body.location;
+            this.isShow = false;
+            return true;
+          })
+          .catch(() => {
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+            this.isShow = false;
+            return false;
+          });
+      },
       back() {
-        this.$router.push("hives");
+        this.$router.push("apiaries");
       },
       teste() {
         alert("teste");
