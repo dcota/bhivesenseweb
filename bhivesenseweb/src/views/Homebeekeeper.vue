@@ -26,8 +26,9 @@ Description: implementation of the view Home
                 ><span> {{ translate("dashNotif") }}</span></strong
               >
             </h6>
-            <hr />
             <section class="text-center my-text-green" v-if="nEvents == 0">
+              <hr />
+              <i class="fa-regular fa-face-smile" style="font-size: 30px"></i>
               {{ eventsText }}
               <hr />
               <section class="text-center">
@@ -42,6 +43,10 @@ Description: implementation of the view Home
               </section>
             </section>
             <section class="text-center my-text-red" v-if="nEvents > 0">
+              <hr />
+              <p>
+                <i class="fa-regular fa-face-frown" style="font-size: 30px"></i>
+              </p>
               {{ eventsText }}
               <hr />
               <section class="text-center">
@@ -74,18 +79,19 @@ Description: implementation of the view Home
                 ><span> {{ translate("dashInterventions") }}</span></strong
               >
             </h6>
-            <hr />
+
             <section
               class="text-center my-text-green"
               v-if="nInterventions == 0"
             >
+              <hr />
               <section v-if="!isShow">{{ interventionsText }}</section>
               <section
                 v-else
                 class="spinner-border spinner-border-sm"
                 role="status"
               ></section>
-              <hr />
+
               <section class="text-center" v-if="!isShow">
                 <button
                   @click="this.$router.push('sooninterventions')"
@@ -96,6 +102,7 @@ Description: implementation of the view Home
                   {{ translate("dashIntervBtn") }}
                 </button>
               </section>
+
               <section
                 v-else
                 class="spinner-border spinner-border-sm"
@@ -103,6 +110,13 @@ Description: implementation of the view Home
               ></section>
             </section>
             <section class="text-center my-text-red" v-if="nInterventions > 0">
+              <hr />
+              <p>
+                <i
+                  class="fa-solid fa-circle-exclamation"
+                  style="font-size: 30px"
+                ></i>
+              </p>
               {{ interventionsText }}
               <hr />
               <section class="text-center">
@@ -122,12 +136,11 @@ Description: implementation of the view Home
     </section>
     <!--2nd row-->
     <section class="row mt-3">
-      <!--messages-->
-      <!--<section class="col-12 col-md-3 col-lg-3">
+      <!--harvest-->
+      <section class="col-12 col-md-6 col-lg-6">
         <section
           class="card mb-3 mh-100 text-center"
           style="
-            height: 210px;
             border-radius: 10px;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
               0 6px 20px 0 rgba(0, 0, 0, 0.1);
@@ -136,44 +149,135 @@ Description: implementation of the view Home
           <section class="card-body">
             <h6 class="card-title text-center">
               <strong
-                ><span> {{ translate("dashMess") }}</span></strong
+                ><span> {{ translate("dashHarvest") }}</span></strong
               >
             </h6>
-            <hr />
-            <section
-              class="text-center my-indicator-green"
-              v-if="nMessages == 0"
-            >
-              {{ nMessages }}
+            <section class="text-center my-text-green" v-if="nHarvest == 0">
               <hr />
-              <section class="text-center">
+              <section v-if="!isShow">
+                <p>
+                  <span
+                    class="material-symbols-outlined"
+                    style="font-size: 30px"
+                  >
+                    emoji_nature
+                  </span>
+                </p>
+                {{ harvestText }}
+              </section>
+              <section
+                v-else
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></section>
+              <hr />
+              <section class="text-center" v-if="!isShow">
                 <button
-                  @click="this.$router.push('notifications')"
+                  @click="this.$router.push('sooninterventions')"
                   type="button"
                   class="btn btn-success"
                   style="font-size: small; width: 160px"
                 >
-                  {{ translate("dashMessBtn") }}
+                  {{ translate("dashBtnHarvest") }}
                 </button>
               </section>
+              <section
+                v-else
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></section>
             </section>
-            <section class="text-center my-indicator-red" v-if="nMessages > 0">
-              {{ nEvents }}
+            <section class="text-center my-text-red" v-if="nHarvest > 0">
+              <hr />
+              {{ harvestText }}
               <hr />
               <section class="text-center">
                 <button
-                  @click="this.$router.push('notifications')"
+                  @click="interventionsEvent"
                   type="button"
                   class="btn btn-danger"
                   style="font-size: small; width: 160px"
                 >
-                  {{ translate("dashMessBtn") }}
+                  {{ translate("dashBtnHarvest") }}
                 </button>
               </section>
             </section>
           </section>
         </section>
-      </section>-->
+      </section>
+
+      <!--logs-->
+      <section class="col-12 col-md-6 col-lg-6">
+        <section
+          class="card mb-3 mh-100 text-center"
+          style="
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
+              0 6px 20px 0 rgba(0, 0, 0, 0.1);
+          "
+        >
+          <section class="card-body">
+            <h6 class="card-title text-center">
+              <strong
+                ><span> {{ translate("dashHarvest") }}</span></strong
+              >
+            </h6>
+            <section class="text-center my-text-green" v-if="nHarvest == 0">
+              <hr />
+              <section v-if="!isShow">
+                <p>
+                  <span
+                    class="material-symbols-outlined"
+                    style="font-size: 30px"
+                  >
+                    emoji_nature
+                  </span>
+                </p>
+                {{ harvestText }}
+              </section>
+              <section
+                v-else
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></section>
+              <hr />
+              <section class="text-center" v-if="!isShow">
+                <button
+                  @click="this.$router.push('sooninterventions')"
+                  type="button"
+                  class="btn btn-success"
+                  style="font-size: small; width: 160px"
+                >
+                  {{ translate("dashBtnHarvest") }}
+                </button>
+              </section>
+              <section
+                v-else
+                class="spinner-border spinner-border-sm"
+                role="status"
+              ></section>
+            </section>
+            <section class="text-center my-text-red" v-if="nHarvest > 0">
+              <hr />
+              {{ harvestText }}
+              <hr />
+              <section class="text-center">
+                <button
+                  @click="interventionsEvent"
+                  type="button"
+                  class="btn btn-danger"
+                  style="font-size: small; width: 160px"
+                >
+                  {{ translate("dashBtnHarvest") }}
+                </button>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </section>
+    <!--3rd row-->
+    <section class="row mt-3">
       <!--apiaries-->
       <section class="col-12 col-md-3 col-lg-3">
         <section
@@ -310,7 +414,7 @@ h3 {
         lang: lang,
         nEvents: "",
         eventsText: "",
-        nInterventions: "",
+        nInterventions: 0,
         interventionsText: "",
         nMessages: 0,
         totalApiaries: "",
@@ -318,6 +422,9 @@ h3 {
         timer: "",
         isShow: true,
         interventions: [],
+        harvestEvents: [],
+        nHarvest: 0,
+        harvestText: "",
       };
     },
     computed: {
@@ -331,6 +438,7 @@ h3 {
     },
     mounted() {
       this.updateEvents();
+      this.updateHarvest();
       this.refreshDashboard();
       this.timer = setInterval(this.updateEvents, 1000);
     },
@@ -343,7 +451,6 @@ h3 {
         _numEventsChng: AUTO_NUMEVENTS_ACTION,
       }),
       interventionsEvent() {
-        //this.emitter.emit("interventionsEvent", this.interventions);
         console.log(this.interventions);
         localStorage.setItem("teste", JSON.stringify(this.interventions));
         this.$router.push("sooninterventions");
@@ -364,8 +471,6 @@ h3 {
         }
       },
       async updateInterventions() {
-        //this.nInterventions = 0;
-        //this.interventionsText = this.translate("dashIntervTextNo");
         this.isShow = true;
         await axios
           .get("https://bhsapi.duartecota.com/intervention/notify/" + this._id, {
@@ -382,6 +487,39 @@ h3 {
               this.nInterventions = response.data.body.length;
               this.interventionsText = this.translate("dashIntervTextYes");
             }
+          });
+      },
+      async updateHarvest() {
+        this.isShow = true;
+        await axios
+          .get("https://bhsapi.duartecota.com/event/" + this._id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            this.isShow = false;
+            let events = response.data.body;
+            if (events.length == 0) {
+              this.nHarvest = 0;
+              this.harvestText = this.translate("dashHarvestNo");
+            } else {
+              for (let i = 0; i < events.length; i++) {
+                if (events[i].type == "HARVEST") {
+                  this.nHarvest = events.length;
+                  this.harvestText = this.translate("dashHarvestYes");
+                  break;
+                } else {
+                  this.nHarvest = 0;
+                  this.harvestText = this.translate("dashHarvestNo");
+                }
+              }
+            }
+            console.log(this.harvestText);
+            console.log(this.nHarvest);
+          })
+          .catch((error) => {
+            console.log(error);
           });
       },
       async updateTotalApiaries() {

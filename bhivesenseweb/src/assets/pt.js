@@ -279,6 +279,7 @@ export default {
                 dashEventsTextNo: "Sem eventos",
                 dashIntervTextYes: "Tem intervenções nos próximos dias",
                 dashIntervTextNo: "Não tem intervenções nos próximos dias",
+                dashIntervBtn: "Ir para intervenções",
                 nextInterventionsTitle: "PRÓXIMAS INTERVENÇÕES",
                 modalDetaisNextInterv: "INFORMAÇÃO DE AGENDAMENTO",
                 modalDetaisApiaryInfo: "INFORMAÇÃO DO APIÁRIO",
@@ -287,6 +288,8 @@ export default {
                 btnModalMore: "Detalhes",
                 warnMap: "Este dispositivo ainda não se encontra em funcionamento!",
                 notInterventionClick: "Escolha uma intervenção para editar ou obter detalhes.",
+                dashHarvest: "Colheita",
+                dashHarvestYes: "Tem colmeias para colheita"
             }
         }
     }

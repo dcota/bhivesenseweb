@@ -291,7 +291,10 @@ export default {
                 btnModalMore: "More details",
                 warnMap: "This device is not yet operating!",
                 notInterventionClick: "Choose an intervention to edit or get details.",
-
+                dashHarvest: "Harvest",
+                dashHarvestYes: "You have hives to harvest",
+                dashHarvestNo: "You don't have hives to harvest",
+                dashBtnHarvest: "Go to hives"
             }
         }
     }

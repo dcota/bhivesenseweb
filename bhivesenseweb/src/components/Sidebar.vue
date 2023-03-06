@@ -6,14 +6,7 @@
     >
       <!--top logo-->
       <a
-        class="
-          d-flex
-          align-items-center
-          mb-3 mb-md-0
-          me-md-auto
-          link-dark
-          text-decoration-none
-        "
+        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
       >
         <router-link to="/home"
           ><img :src="logo" style="width: 90%" alt=""
@@ -39,14 +32,7 @@
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
-            class="
-              btn btn-toggle
-              d-inline-flex
-              align-items-center
-              rounded
-              border-0
-              collapsed
-            "
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#apiaries-collapse"
             aria-expanded="false"
@@ -77,14 +63,7 @@
         <!--beekeeper hives-->
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
-            class="
-              btn btn-toggle
-              d-inline-flex
-              align-items-center
-              rounded
-              border-0
-              collapsed
-            "
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#hives-collapse"
             aria-expanded="false"
@@ -122,14 +101,7 @@
         <!--beekeeper dashboard-->
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button
-            class="
-              btn btn-toggle
-              d-inline-flex
-              align-items-center
-              rounded
-              border-0
-              collapsed
-            "
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#dash-collapse"
             aria-expanded="false"
@@ -152,14 +124,7 @@
         <!--admin users-->
         <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
           <button
-            class="
-              btn btn-toggle
-              d-inline-flex
-              align-items-center
-              rounded
-              border-0
-              collapsed
-            "
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#users-collapse"
             aria-expanded="false"
@@ -182,14 +147,7 @@
         <!--admin devices-->
         <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
           <button
-            class="
-              btn btn-toggle
-              d-inline-flex
-              align-items-center
-              rounded
-              border-0
-              collapsed
-            "
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#devices-collapse"
             aria-expanded="false"
@@ -221,14 +179,7 @@
         <li class="mb-1" v-if="isAuthenticated && level == 'admin'">
           <!--reports-->
           <button
-            class="
-              btn btn-toggle
-              d-inline-flex
-              align-items-center
-              rounded
-              border-0
-              collapsed
-            "
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#reports-collapse"
             aria-expanded="false"
@@ -277,18 +228,20 @@
             class="btn bn_card position-relative"
             @click="$router.push('/notifications')"
           >
-            <strong> <i class="fas fa-bell" aria-hidden="true"></i> </strong>
+            <section v-if="this._numEvents > 0">
+              <strong>
+                <i class="fas fa-bell" aria-hidden="true"></i>
+              </strong>
+            </section>
+            <section v-else>
+              <strong>
+                <i class="fas fa-bell-slash" aria-hidden="true"></i>
+              </strong>
+            </section>
+
             <span
               v-if="this._numEvents != null"
-              class="
-                position-absolute
-                top-0
-                start-100
-                translate-middle
-                badge
-                rounded-pill
-                bg-danger
-              "
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
             >
               {{ _numEvents }}
               <span class="visually-hidden">unread messages</span>
@@ -298,14 +251,7 @@
 
         <li class="mb-1" v-if="!isAuthenticated">
           <button
-            class="
-              btn btn-toggle
-              d-inline-flex
-              align-items-center
-              rounded
-              border-0
-              collapsed
-            "
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
             data-bs-toggle="collapse"
             data-bs-target="#account-collapse"
             aria-expanded="false"
@@ -341,13 +287,7 @@
       >
         <a
           href="#"
-          class="
-            d-flex
-            align-items-center
-            link-dark
-            text-decoration-none
-            dropdown-toggle
-          "
+          class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
@@ -360,14 +300,7 @@
           />
           <span
             v-if="this._numEvents != null"
-            class="
-              top-0
-              start-100
-              translate-middle
-              badge
-              rounded-pill
-              bg-danger
-            "
+            class="top-0 start-100 translate-middle badge rounded-pill bg-danger"
           >
             {{ _numEvents }}
             <span class="visually-hidden">unread messages</span>

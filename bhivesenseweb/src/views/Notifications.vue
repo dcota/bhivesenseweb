@@ -11,10 +11,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
     <section class="row mt-3" v-if="hasHiveEvents">
       <h4 class="my-text-color">{{ translate("eventsLabel") }}</h4>
     </section>
-    <section
-      class="card mt-5 text-center p-4"
-      v-if="!hasHiveEvents && !hasInterventionEvents"
-    >
+    <section class="card mt-5 text-center p-4" v-if="!hasHiveEvents && !isShow">
       <h3>{{ translate("cardNoEvents") }}</h3>
     </section>
     <section class="card mt-2" v-if="hasHiveEvents">
@@ -80,59 +77,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
       </section>
     </section>
     <!--table for intervention notifictions-->
-    <section class="row mt-3" v-if="hasInterventionEvents">
-      <h4 class="my-text-color">{{ translate("eventsLabel") }}</h4>
-    </section>
-    <section class="card mt-2" v-if="hasInterventionEvents">
-      <section
-        class="card-body"
-        style="
-          border-radius: 3px;
-          box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
-            rgba(0, 0, 0, 0.22) 0px 10px 10px;
-        "
-      >
-        <table class="table mt-2 table-striped">
-          <tbody>
-            <tr>
-              <th>{{ translate("thdEvent") }}</th>
-              <th class="text-center">{{ translate("thdHive") }}</th>
-              <th class="text-center">{{ translate("thdUsersActions") }}</th>
-            </tr>
-            <tr v-for="event in hiveEvents" :key="event._id">
-              <td>{{ event.text }}</td>
-              <td class="text-center">{{ event.device }}</td>
-              <td class="text-center">
-                <button
-                  data-bs-toggle="tooltip"
-                  v-bind:title="translate('lblCardApiary')"
-                  data-bs-placement="bottom"
-                  data-bs-custom-class="custom-tooltip"
-                  @click="detailsModal(event.apiary)"
-                  type="button"
-                  class="btn btn-info btn-sm me-2 ac-btn"
-                  style="width: 50px"
-                >
-                  <i class="fas fa-search" aria-hidden="true"></i>
-                </button>
-                <button
-                  data-bs-toggle="tooltip"
-                  v-bind:title="translate('lblBtnIgnore')"
-                  data-bs-placement="bottom"
-                  data-bs-custom-class="custom-tooltip"
-                  @click="solve(event._id)"
-                  type="button"
-                  class="btn btn-danger btn-sm me-2 ac-btn"
-                  style="width: 50px"
-                >
-                  <i class="fa-solid fa-xmark"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-    </section>
+
     <ModalDelete
       v-show="isModalDeleteVisible"
       @close="closeDeleteModalHive"
@@ -206,6 +151,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
         address: "",
         observations: "",
         regdate: "",
+        hiveEvents: [],
       };
     },
     computed: {
@@ -244,7 +190,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
       },
       async getEvents() {
         this.hiveEvents = [];
-        this.interventionEvents = [];
         this.isShow = true;
         await axios
           .get("https://bhsapi.duartecota.com/event/" + this._id, {
@@ -266,38 +211,23 @@ Description: implementation of the view Gestão de Alunos (Admin)
                       : date.getMonth() + 1;
                   let day =
                     date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                  let text;
-                  switch (events[i].type) {
-                    case "LIDOPEN":
-                      this.text = this.translate("hiveText");
-                      break;
-                    case "TEMPHIGH":
-                      this.text = this.translate("tempText");
-                      break;
-                    case "HUMHIGH":
-                      this.text = this.translate("humText");
-                      break;
-                    case "HARVEST":
-                      this.text = this.translate("weightText");
-                      break;
-                    default:
-                      break;
+                  this.text = "";
+                  if (events[i].type == "LIDOPEN") {
+                    this.text = this.translate("hiveText");
+                  } else if (events[i].type == "TEMPHIGH") {
+                    this.text = this.translate("tempText");
+                  } else if (events[i].type == "HUMHIGH") {
+                    this.text = this.translate("humText");
                   }
-                  this.hiveEvents.push({
-                    _id: events[i]._id,
-                    apiary: events[i].apiary,
-                    device: events[i].device,
-                    date: year + "-" + month + "-" + day,
-                    text: this.text,
-                  });
-                } else {
-                  this.interventionEvents.push({
-                    id: events[i]._id,
-                    text:
-                      events[i].type == "INTER"
-                        ? this.translate("interText")
-                        : "",
-                  });
+                  if (events[i].type != "HARVEST")
+                    this.hiveEvents.push({
+                      _id: events[i]._id,
+                      apiary: events[i].apiary,
+                      device: events[i].device,
+                      date: year + "-" + month + "-" + day,
+                      text: this.text,
+                    });
+                  console.log(this.hiveEvents);
                 }
               }
             }
