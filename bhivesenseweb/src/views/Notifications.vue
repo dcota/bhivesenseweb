@@ -144,7 +144,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
         isModalDetailsVisible: false,
         isModalDeleteVisible: false,
         hasHiveEvents: false,
-        hasInterventionEvents: false,
         timer: "",
         text: "",
         location: "",
@@ -234,9 +233,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
             this.hiveEvents.length > 0
               ? (this.hasHiveEvents = true)
               : (this.hasHiveEvents = false);
-            this.interventionEvents.length > 0
-              ? (this.hasInterventionEvents = true)
-              : (this.hasInterventionEvents = false);
           })
           .catch((error) => {
             console.log(error);

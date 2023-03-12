@@ -220,6 +220,14 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'harvest',
+            component: () =>
+                import ('../views/Harvest.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 
