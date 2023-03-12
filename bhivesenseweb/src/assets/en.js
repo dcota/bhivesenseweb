@@ -311,7 +311,9 @@ export default {
                 notifHarvestIgnored: "Harvest ignored.",
                 modalHarvestTitle: "REGISTER HARVEST",
                 modalHarvestText1: "Reported weight (kg):",
-                modalHarvestText2: "Insert net weight (kg):"
+                modalHarvestText2: "Insert net weight (kg):",
+                dashSwarmingTitle: "Swarming",
+                dashSwarmingBtn: "See more",
 
             }
         }

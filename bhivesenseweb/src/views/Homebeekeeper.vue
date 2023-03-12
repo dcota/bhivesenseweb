@@ -270,7 +270,7 @@ Description: implementation of the view Home
                   <h6 class="card-title text-center">
                     <strong
                       ><span>
-                        {{ translate("dashTotalApiaries") }}</span
+                        {{ translate("dashSwarmingTitle") }}</span
                       ></strong
                     >
                   </h6>
@@ -285,7 +285,7 @@ Description: implementation of the view Home
                         class="btn btn-success"
                         style="font-size: small; width: 160px"
                       >
-                        {{ translate("dashApiariesBtn") }}
+                        {{ translate("dashSwarmingBtn") }}
                       </button>
                     </section>
                   </section>
