@@ -253,7 +253,7 @@
         :xmin="0"
         :download="true"
         width="100%"
-        height="470px"
+        class="ch"
         :colors="['#a17f05']"
         :dataset="{ borderWidth: 2 }"
         loading="Loading..."
@@ -269,6 +269,9 @@
 .spacer {
   height: 50px;
 }
+.ch {
+  height: calc(100vh - 410px) !important;
+}
 </style>
     
 <script>
@@ -282,8 +285,6 @@
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
   } from "../store/storeconstants";
-  import { template } from "lodash";
-  import { thisTypeAnnotation } from "@babel/types";
   export default {
     name: "Hives",
     mixins: [en, pt],

@@ -233,17 +233,11 @@ Description: implementation of the view Gestão de Alunos (Admin)
                   let day =
                     date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
                   this.text = "";
-                  /*if (events[i].type == "LIDOPEN") {
-                                                                            this.text = this.translate("hiveText");
-                                                                          } else if (events[i].type == "TEMPHIGH") {
-                                                                            this.text = this.translate("tempText");
-                                                                          } else if (events[i].type == "HUMHIGH") {
-                                                                            this.text = this.translate("humText");
-                                                                          }*/
                   if (events[i].type == "HARVEST") {
                     this.text = this.translate("harvestText");
                     this.hiveEvents.push({
                       _id: events[i]._id,
+                      user: events[i].user,
                       apiary: events[i].apiary,
                       device: events[i].device,
                       date: year + "-" + month + "-" + day,
@@ -327,11 +321,50 @@ Description: implementation of the view Gestão de Alunos (Admin)
           });
         this.getEvents();
       },
-      async assign(id) {
-        alert(id);
-        alert(localStorage.getItem("apiaryIDtoget"));
+      async solveHarvest() {
+        this.isModalDeleteVisible = false;
+        let id = localStorage.getItem("idhivetosolve");
         await axios
-          .patch(
+          .put("https://bhsapi.duartecota.com/event/solve/" + id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            if (response.data.http == 200) {
+              this.isShow = false;
+            } else {
+              this.isShow = false;
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesProblem"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
+            }
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+        this.getEvents();
+      },
+      async assign() {
+        /*let postData = {
+                                                  apiary: 
+                                                  device:
+                                                  weight_reported:
+                                                  weight_registered:
+                                                }*/
+        await axios
+          .post(
             "https://bhsapi.duartecota.com/device/" +
               id +
               "/" +
@@ -381,21 +414,69 @@ Description: implementation of the view Gestão de Alunos (Admin)
         this.$router.push("/hivedetails");
       },
       harvest(id, value) {
-        console.log(value);
-        localStorage.setItem("hiveIDtoharvest", id);
+        localStorage.setItem("eventID", id);
+        localStorage.setItem("harvestValue", value);
+        localStorage.setItem("idhivetosolve", id);
         this.value = value;
         this.isModalHarvestVisible = true;
       },
       closeModalHarvest() {
         this.isModalHarvestVisible = false;
       },
-      register() {
+      async register() {
         this.isModalHarvestVisible = false;
-        alert(
-          localStorage.getItem("hiveIDtoharvest") +
-            ";" +
-            localStorage.getItem("harvestValue")
-        );
+        this.isShow = true;
+        for (let i = 0; i < this.hiveEvents.length; i++) {
+          if (localStorage.getItem("eventID") == this.hiveEvents[i]._id) {
+            let postData = {
+              user: this.hiveEvents[i].user,
+              apiary: this.hiveEvents[i].apiary,
+              device: this.hiveEvents[i].device,
+              weight_reported: this.hiveEvents[i].value,
+              weight_registered: parseFloat(localStorage.getItem("harvestValue")),
+            };
+            console.log(postData);
+            await axios
+              .post("https://bhsapi.duartecota.com/harvest", postData, {
+                headers: {
+                  Authorization: this.token,
+                },
+              })
+              .then((response) => {
+                if (response.data.http == 201) {
+                  this.isShow = false;
+                  notify({
+                    title: this.translate("notifSuccessTitle"),
+                    text: this.translate("mesNewHarvest"),
+                    type: "success",
+                    duration: 3000,
+                    speed: 500,
+                  });
+                } else {
+                  this.isShow = false;
+                  notify({
+                    title: this.translate("notifErrorTitle"),
+                    text: this.translate("mesProblem"),
+                    type: "error",
+                    duration: 3000,
+                    speed: 500,
+                  });
+                }
+              })
+              .catch((error) => {
+                this.isShow = false;
+                notify({
+                  title: this.translate("notifErrorTitle"),
+                  text: this.translate("mesProblem"),
+                  type: "error",
+                  duration: 3000,
+                  speed: 500,
+                });
+              });
+            this.solveHarvest();
+            break;
+          }
+        }
       },
     },
   };

@@ -314,6 +314,9 @@ export default {
                 modalHarvestText2: "Insert net weight (kg):",
                 dashSwarmingTitle: "Swarming",
                 dashSwarmingBtn: "See more",
+                mesNewHarvest: "Harvest successfuly registered.",
+                stateOnline: "ONLINE",
+                stateOffline: "OFFLINE",
 
             }
         }

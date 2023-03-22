@@ -308,7 +308,12 @@ export default {
                 notifHarvestIgnored: "Colheita ignorada.",
                 modalHarvestTitle: "REGISTAR COLHEITA",
                 modalHarvestText1: "Peso reportado (g): ",
-                modalHarvestText2: "Inserir peso líquido (kg):"
+                modalHarvestText2: "Inserir peso líquido (kg):",
+                dashSwarmingTitle: "Swarming",
+                dashSwarmingBtn: "Ver mais",
+                mesNewHarvest: "Colheita registada com sucesso.",
+                stateOnline: "ONLINE",
+                stateOffline: "OFFLINE",
             }
         }
     }

@@ -66,7 +66,7 @@
   </transition>
 </template>
         
-        <style scoped>
+<style scoped>
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -183,7 +183,7 @@
       },
       validateNumber: (event) => {
         let keyCode = event.keyCode;
-        if (keyCode < 48 || keyCode > 57) {
+        if (keyCode != 46 && (keyCode < 48 || keyCode > 57)) {
           event.preventDefault();
         }
       },

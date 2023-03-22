@@ -52,13 +52,13 @@
             <p class="text-center" style="font-size: small">{{ device._id }}</p>
             <section v-if="!device.state">
               <p class="text-center">
-                {{ translate("lblStatus") }}
+                {{ translate("stateOffline") }}
                 <img :src="red" alt="..." style="width: 10%" />
               </p>
             </section>
             <section v-else>
               <p class="text-center">
-                {{ translate("lblStatus") }}
+                {{ translate("stateOnline") }}
                 <img :src="green" alt="..." style="width: 10%" />
               </p>
             </section>
