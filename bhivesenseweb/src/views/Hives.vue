@@ -354,6 +354,7 @@
         alert(id);
       },
       map(lat, lon) {
+        localStorage.setItem("lastroute", this.$route.path);
         localStorage.setItem("lat", lat);
         localStorage.setItem("lon", lon);
         this.$router.push("map");

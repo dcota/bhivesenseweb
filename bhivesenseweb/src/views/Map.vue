@@ -171,7 +171,9 @@
           });
       },
       back() {
-        this.$router.push("apiaries");
+        if (localStorage.getItem("lastroute") == "/hives")
+          this.$router.push("hives");
+        else this.$router.push("hivedetails");
       },
       teste() {
         alert("teste");

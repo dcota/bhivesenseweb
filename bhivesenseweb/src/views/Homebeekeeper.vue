@@ -5,7 +5,7 @@ Description: implementation of the view Home
 */
 
 <template>
-  <section class="container my-body">
+  <section class="container my-body ch">
     <h2 class="my-text-color">{{ translate("myDashTitle") }}</h2>
     <section class="line-1"></section>
     <section v-if="!isShow">
@@ -417,6 +417,9 @@ Description: implementation of the view Home
 </template>
 
 <style scoped>
+.ch {
+  height: calc(100vh - 410px) !important;
+}
 .my-text-green {
   font-size: 17px;
   color: #198754;

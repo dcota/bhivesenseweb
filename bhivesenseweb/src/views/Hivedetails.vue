@@ -302,6 +302,8 @@
         devices: [],
         lang: lang,
         latestData: {
+          lat: "",
+          lon: "",
           to: "",
           ti: "",
           hi: "",
@@ -350,6 +352,8 @@
       async getLatest() {
         this.isShow = true;
         this.devices = [];
+        localStorage.setItem("lat", 0);
+        localStorage.setItem("lat", 0);
         await axios
           .get(
             "https://bhsapi.duartecota.com/device/latest/" +
@@ -364,7 +368,7 @@
           )
           .then((response) => {
             let device = response.data.body.data;
-            console.log(device);
+            console.log(response.data.body.lat);
             if (!device) {
               this.hasData = false;
               this.isShow = false;
@@ -377,6 +381,8 @@
               });
             } else {
               this.hasData = true;
+              this.latestData.lat = response.data.body.lat;
+              this.latestData.lon = response.data.body.lon;
               this.latestData.ti = device.ti;
               this.latestData.hi = device.hi;
               this.latestData.to = device.to;
@@ -807,6 +813,9 @@
         this.isModalDeleteVisible = false;
       },
       map() {
+        localStorage.setItem("lastroute", this.$route.path);
+        localStorage.setItem("lat", this.latestData.lat);
+        localStorage.setItem("lon", this.latestData.lon);
         this.$router.push("map");
       },
       back() {
