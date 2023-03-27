@@ -5,7 +5,7 @@ Description: implementation of the view Home
 */
 
 <template>
-  <section class="container my-body ch">
+  <section class="container my-body">
     <h2 class="my-text-color">{{ translate("myDashTitle") }}</h2>
     <section class="line-1"></section>
     <section v-if="!isShow">
@@ -226,14 +226,18 @@ Description: implementation of the view Home
                   <table class="table mt-2">
                     <tbody>
                       <tr>
-                        <th>{{ translate("dashLogsTHEvent") }}</th>
+                        <th>
+                          {{ translate("dashLogsTHEvent") }}
+                        </th>
                         <th>
                           {{ translate("dashLogsTHDate") }}
                         </th>
                       </tr>
                       <tr v-for="event in hiveEvents" :key="event._id">
                         <td>{{ event.text }}</td>
-                        <td>{{ event.date }}</td>
+                        <td>
+                          {{ event.date }}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -241,7 +245,7 @@ Description: implementation of the view Home
                 <hr />
                 <section class="text-center">
                   <button
-                    @click="this.$router.push('sooninterventions')"
+                    @click="this.$router.push('log')"
                     type="button"
                     class="btn btn-success"
                     style="font-size: small; width: 160px"
@@ -255,7 +259,7 @@ Description: implementation of the view Home
         </section>
         <section class="col-12 col-md-6 col-lg-6">
           <section class="row">
-            <!--apiaries-->
+            <!--swarming-->
             <section class="col">
               <section
                 class="card mb-3 mh-100 text-center"
@@ -274,8 +278,8 @@ Description: implementation of the view Home
                       ></strong
                     >
                   </h6>
-                  <hr />
                   <section class="text-center my-indicator-green">
+                    <hr />
                     <section>{{ totalApiaries }}</section>
                     <hr />
                     <section class="text-center">
@@ -292,7 +296,7 @@ Description: implementation of the view Home
                 </section>
               </section>
             </section>
-            <!--hives-->
+            <!--production-->
             <section class="col">
               <section
                 class="card mb-3 mh-100 text-center"
@@ -306,21 +310,21 @@ Description: implementation of the view Home
                 <section class="card-body">
                   <h6 class="card-title text-center">
                     <strong
-                      ><span> {{ translate("dashTotalHives") }}</span></strong
+                      ><span> {{ translate("prodTotalTitle") }}</span></strong
                     >
                   </h6>
-                  <hr />
-                  <section class="text-center my-indicator-green">
-                    <section>{{ totalHives }}</section>
+                  <section class="text-center my-indicator-blue">
+                    <hr />
+                    <section>{{ totalProduction }} Kg</section>
                     <hr />
                     <section class="text-center">
                       <button
                         @click="this.$router.push('newdevice')"
                         type="button"
-                        class="btn btn-success"
+                        class="btn btn-primary"
                         style="font-size: small; width: 160px"
                       >
-                        {{ translate("dashHivesBtn") }}
+                        {{ translate("prodTotalBtn") }}
                       </button>
                     </section>
                   </section>
@@ -348,15 +352,15 @@ Description: implementation of the view Home
                       ></strong
                     >
                   </h6>
-                  <hr />
-                  <section class="text-center my-indicator-green">
+                  <section class="text-center my-indicator-blue">
+                    <hr />
                     <section>{{ totalApiaries }}</section>
                     <hr />
                     <section class="text-center">
                       <button
                         @click="this.$router.push('newapiary')"
                         type="button"
-                        class="btn btn-success"
+                        class="btn btn-primary"
                         style="font-size: small; width: 160px"
                       >
                         {{ translate("dashApiariesBtn") }}
@@ -383,15 +387,15 @@ Description: implementation of the view Home
                       ><span> {{ translate("dashTotalHives") }}</span></strong
                     >
                   </h6>
-                  <hr />
-                  <section class="text-center my-indicator-green">
+                  <section class="text-center my-indicator-blue">
+                    <hr />
                     <section>{{ totalHives }}</section>
                     <hr />
                     <section class="text-center">
                       <button
                         @click="this.$router.push('newdevice')"
                         type="button"
-                        class="btn btn-success"
+                        class="btn btn-primary"
                         style="font-size: small; width: 160px"
                       >
                         {{ translate("dashHivesBtn") }}
@@ -417,9 +421,6 @@ Description: implementation of the view Home
 </template>
 
 <style scoped>
-.ch {
-  height: calc(100vh - 410px) !important;
-}
 .my-text-green {
   font-size: 17px;
   color: #198754;
@@ -439,6 +440,10 @@ Description: implementation of the view Home
 .my-indicator-red {
   font-size: 30px;
   color: #dc3545;
+}
+.my-indicator-blue {
+  font-size: 30px;
+  color: #007bff;
 }
 .my-indicator-yello {
   font-size: 30px;
@@ -484,6 +489,7 @@ h3 {
         nMessages: 0,
         totalApiaries: "",
         totalHives: "",
+        totalProduction: "",
         timer: "",
         isShow: true,
         interventions: [],
@@ -516,82 +522,7 @@ h3 {
       ...mapActions("auth", {
         _numEventsChng: AUTO_NUMEVENTS_ACTION,
       }),
-      async getLog() {
-        this.isShow = true;
-        await axios
-          .get("https://bhsapi.duartecota.com/event/log/" + this._id, {
-            headers: {
-              Authorization: this.token,
-            },
-          })
-          .then((response) => {
-            this.isShow = false;
-            let events = response.data.body;
-            if (!events.length == 0) {
-              if (events.length <= 6) {
-                for (let i = 0; i < events.length; i++) {
-                  if (events[i].cat == "hive") {
-                    let date = new Date(events[i].registration_date);
-                    let year = date.getFullYear();
-                    let month =
-                      date.getMonth() + 1 < 10
-                        ? "0" + (date.getMonth() + 1)
-                        : date.getMonth() + 1;
-                    let day =
-                      date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                    this.text = "";
-                    if (events[i].type == "LIDOPEN") {
-                      this.text = this.translate("hiveText");
-                    } else if (events[i].type == "TEMPHIGH") {
-                      this.text = this.translate("tempText");
-                    } else if (events[i].type == "HUMHIGH") {
-                      this.text = this.translate("humText");
-                    }
-                    if (events[i].type != "HARVEST")
-                      this.hiveEvents.push({
-                        _id: events[i]._id,
-                        apiary: events[i].apiary,
-                        device: events[i].device,
-                        date: year + "-" + month + "-" + day,
-                        text: this.text,
-                      });
-                  }
-                }
-              } else {
-                for (let i = 0; i < 6; i++) {
-                  if (events[i].cat == "hive") {
-                    let date = new Date(events[i].registration_date);
-                    let year = date.getFullYear();
-                    let month =
-                      date.getMonth() + 1 < 10
-                        ? "0" + (date.getMonth() + 1)
-                        : date.getMonth() + 1;
-                    let day =
-                      date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                    this.text = "";
-                    if (events[i].type == "LIDOPEN") {
-                      this.text = this.translate("hiveText");
-                    } else if (events[i].type == "TEMPHIGH") {
-                      this.text = this.translate("tempText");
-                    } else if (events[i].type == "HUMHIGH") {
-                      this.text = this.translate("humText");
-                    }
-                    if (events[i].type != "HARVEST")
-                      this.hiveEvents.push({
-                        _id: events[i]._id,
-                        apiary: events[i].apiary,
-                        device: events[i].device,
-                        date: year + "-" + month + "-" + day,
-                        text: this.text,
-                      });
-                  }
-                }
-              }
 
-              console.table(this.hiveEvents);
-            }
-          });
-      },
       interventionsEvent() {
         console.log(this.interventions);
         localStorage.setItem("teste", JSON.stringify(this.interventions));
@@ -602,6 +533,7 @@ h3 {
         this.updateInterventions();
         this.updateTotalApiaries();
         this.updateTotalHives();
+        this.updateTotalProduction();
         this.getLog();
       },
       updateEvents() {
@@ -707,6 +639,71 @@ h3 {
             });
           });
         this.isShow = false;
+      },
+      async updateTotalProduction() {
+        this.isShow = true;
+        await axios
+          .get("https://bhsapi.duartecota.com/harvest/total/" + this._id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            this.totalProduction = response.data.body.totalProduction;
+          })
+          .catch((error) => {
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+        this.isShow = false;
+      },
+      async getLog() {
+        this.isShow = true;
+        await axios
+          .get("https://bhsapi.duartecota.com/event/log/" + this._id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
+          .then((response) => {
+            this.isShow = false;
+            let events = response.data.body;
+            if (!events.length == 0) {
+              for (let i = 0; i < events.length; i++) {
+                if (events[i].cat == "hive") {
+                  let date = new Date(events[i].registration_date);
+                  let year = date.getFullYear();
+                  let month =
+                    date.getMonth() + 1 < 10
+                      ? "0" + (date.getMonth() + 1)
+                      : date.getMonth() + 1;
+                  let day =
+                    date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                  this.text = "";
+                  if (events[i].type == "LIDOPEN") {
+                    this.text = this.translate("hiveText");
+                  } else if (events[i].type == "TEMPHIGH") {
+                    this.text = this.translate("tempText");
+                  } else if (events[i].type == "HUMHIGH") {
+                    this.text = this.translate("humText");
+                  }
+                  if (events[i].type != "HARVEST")
+                    this.hiveEvents.push({
+                      _id: events[i]._id,
+                      apiary: events[i].apiary,
+                      device: events[i].device,
+                      date: year + "-" + month + "-" + day,
+                      text: this.text,
+                    });
+                }
+              }
+            }
+          });
       },
       translate(prop) {
         return this[this.lang][prop];

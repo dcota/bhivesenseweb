@@ -147,7 +147,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
         _id: GET_USER_ID_GETTER,
       }),
       filteredPersons: function () {
-        return this.devices.filter(this.filterByID).sort(this.orderBy);
+        return this.devices.filter(this.filterByID);
       },
     },
     mounted() {
@@ -159,16 +159,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
         if (this.searchID.length === 0) {
           return true;
         }
-
         return device.id.toLowerCase().indexOf(this.searchID.toLowerCase()) > -1;
-      },
-      orderBy: function (userA, userB) {
-        let condition = userA[this.sortKey] > userB[this.sortKey];
-        if (this.reverse) {
-          return !condition;
-        } else {
-          return condition;
-        }
       },
       translate(prop) {
         return this[this.lang][prop];

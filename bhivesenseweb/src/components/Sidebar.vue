@@ -98,6 +98,29 @@
             </ul>
           </section>
         </li>
+        <!--beekeeper production-->
+        <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
+          <button
+            class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#prod-collapse"
+            aria-expanded="false"
+          >
+            {{ translate("sbarProduction") }}
+          </button>
+          <section class="collapse" id="prod-collapse">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+              <li>
+                <router-link
+                  to="/beekeeper"
+                  class="link-dark d-inline-flex text-decoration-none rounded"
+                  style="text-decoration: none"
+                  >{{ translate("sbarAnalytics") }}</router-link
+                >
+              </li>
+            </ul>
+          </section>
+        </li>
         <!--beekeeper dashboard-->
         <li class="mb-1" v-if="isAuthenticated && level == 'beekeeper'">
           <button

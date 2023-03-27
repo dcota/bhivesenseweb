@@ -191,6 +191,7 @@ export default {
                 assignedText: "Assigned",
                 searchPholderUser: "Search user",
                 searchPholderID: "Search ID",
+                searchPholderNotifHive: "Search notification type",
                 manageHivesTitle: "MANAGE HIVES",
                 manageHivesLabel: "Registered hives:",
                 unregisterModalTitle: "UNREGISTER HIVE",
@@ -297,7 +298,7 @@ export default {
                 dashHarvestNo: "No hives to harvest",
                 dashBtnHarvest: "Go to hives",
                 dashLogsTitle: "Event logs",
-                dashLogsBtn: "See more",
+                dashLogsBtn: "See all",
                 dashLogsTHEvent: "Event",
                 dashLogsTHDate: "Date",
                 dashHarvestTitle: "HARVEST",
@@ -317,6 +318,12 @@ export default {
                 mesNewHarvest: "Harvest successfuly registered.",
                 stateOnline: "ONLINE",
                 stateOffline: "OFFLINE",
+                prodTotalTitle: "Total production",
+                prodTotalBtn: "Go to production",
+                sbarProduction: "Production",
+                dashLogTitle: "EVENTS LOG",
+                dashLogDescr: "Events log:",
+
 
             }
         }

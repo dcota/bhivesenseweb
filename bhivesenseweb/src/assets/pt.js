@@ -188,6 +188,7 @@ export default {
                 assignedText: "Associado",
                 searchPholderUser: "Pesquisar utilizador",
                 searchPholderID: "Pesquisar ID",
+                searchPholderNotifHive: "Pesquisar notificação por tipo",
                 manageHivesTitle: "GERIR COLMEIAS",
                 manageHivesLabel: "Colmeias resgistadas:",
                 unregisterModalTitle: "REMOVER REGISTO DE COLMEIA",
@@ -294,7 +295,7 @@ export default {
                 dashHarvestNo: "Sem colmeias para colheita",
                 dashBtnHarvest: "Ir para colmeias",
                 dashLogsTitle: "Relatório de eventos",
-                dashLogsBtn: "Ver mais",
+                dashLogsBtn: "Ver tudo",
                 dashLogsTHEvent: "Evento",
                 dashLogsTHDate: "Data",
                 dashHarvestTitle: "Colheitas",
@@ -314,6 +315,8 @@ export default {
                 mesNewHarvest: "Colheita registada com sucesso.",
                 stateOnline: "ONLINE",
                 stateOffline: "OFFLINE",
+                dashLogTitle: "RELATÓRIO DE EVENTOS",
+                dashLogDescr: "Eventos:",
             }
         }
     }

@@ -363,6 +363,7 @@
         this.$router.push("apiaries");
       },
       loadDetails(id) {
+        localStorage.setItem("lastroute", this.$route.path);
         localStorage.setItem("hiveIDtoget", id);
         this.$router.push("/hivedetails");
       },

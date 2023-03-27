@@ -228,6 +228,14 @@ const routes = [{
                 requiresAuth: true,
             }
         },
+        {
+            path: 'log',
+            component: () =>
+                import ('../views/Logdetails.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
     ]
 }]
 

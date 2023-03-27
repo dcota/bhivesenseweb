@@ -819,7 +819,8 @@
         this.$router.push("map");
       },
       back() {
-        this.$router.push("hives");
+        if (localStorage.getItem("lastroute") == "/log") this.$router.push("log");
+        else this.$router.push("hives");
       },
       handleChange(event) {
         if (event.target.value == "ti") this.getTI();
