@@ -108,7 +108,7 @@
                     data-bs-placement="bottom"
                     data-bs-custom-class="custom-tooltip"
                     class="btn text-center bn_card"
-                    @click="unassign(apiary._id)"
+                    @click="setToUnassign(device._id)"
                   >
                     <i class="fa-solid fa-right-from-bracket"></i>
                   </button>
@@ -128,12 +128,11 @@
       :observations="observations"
       :regdate="regdate"
     />
-    <ModalDelete
-      v-show="isModalDeleteVisible"
-      @_close="closeDeleteModal"
-      @deleteAction="_delete"
+    <ModalUnassign
+      v-show="isModalUnassignVisible"
+      @close="closeUnassignModal"
+      @unassign="unassign"
     />
-    <!--<section class="spacer"></section>-->
   </section>
 </template>
   
@@ -157,9 +156,9 @@
   import pt from "../assets/pt.js";
   import axios from "axios";
   import ModalDetails from "../components/ModalApiaryDetails.vue";
-  import ModalDelete from "../components/ModalDeleteApiary.vue";
+  import ModalUnassign from "../components/ModalUnassign.vue";
   import { notify } from "@kyvg/vue3-notification";
-  import { mapGetters, mapActions } from "vuex";
+  import { mapGetters } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,
@@ -170,7 +169,7 @@
     mixins: [en, pt],
     components: {
       ModalDetails,
-      ModalDelete,
+      ModalUnassign,
     },
     data: function () {
       const lang = localStorage.getItem("lang") || "pt";
@@ -189,7 +188,7 @@
         regdate: "",
         isShow: true,
         isModalDetailsVisible: false,
-        isModalDeleteVisible: false,
+        isModalUnassignVisible: false,
         showsection: false,
         toDeleteID: "",
         toEditID: "",
@@ -245,7 +244,7 @@
             }
             this.isShow = false;
           })
-          .catch((error) => {
+          .catch(() => {
             this.isShow = false;
             notify({
               title: this.translate("notifErrorTitle"),
@@ -262,8 +261,8 @@
       closeDetailsModal() {
         this.isModalDetailsVisible = false;
       },
-      closeDeleteModal() {
-        this.isModalDeleteVisible = false;
+      closeUnassignModal() {
+        this.isModalUnassignVisible = false;
       },
       edit() {
         this.isModalDetailsVisible = false;
@@ -371,8 +370,16 @@
         localStorage.setItem("hiveidtoedit", id);
         this.$router.push("/editdevice");
       },
-      unassign(id) {
-        alert(id);
+      setToUnassign(id) {
+        localStorage.setItem("idtounassign", id);
+        this.isModalUnassignVisible = true;
+      },
+      unassign() {
+        alert(
+          localStorage.getItem("idtounassign") +
+            ";" +
+            localStorage.getItem("apiaryIDtoget")
+        );
       },
     },
   };

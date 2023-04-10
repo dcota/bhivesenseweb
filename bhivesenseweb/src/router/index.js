@@ -173,9 +173,9 @@ const routes = [{
             }
         },
         {
-            path: 'notifications',
+            path: 'events',
             component: () =>
-                import ('../views/Notifications.vue'),
+                import ('../views/Events.vue'),
             meta: {
                 requiresAuth: true,
             }
@@ -232,6 +232,14 @@ const routes = [{
             path: 'log',
             component: () =>
                 import ('../views/Logdetails.vue'),
+            meta: {
+                requiresAuth: true,
+            }
+        },
+        {
+            path: 'swarming',
+            component: () =>
+                import ('../views/Swarming.vue'),
             meta: {
                 requiresAuth: true,
             }

@@ -261,7 +261,6 @@
                 <i class="fas fa-bell-slash" aria-hidden="true"></i>
               </strong>
             </section>
-
             <span
               v-if="this._numEvents != null"
               class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
@@ -317,30 +316,21 @@
           <img
             :src="img"
             alt=""
-            width="55"
-            height="55"
+            width="75"
+            height="75"
             class="rounded-circle me-2"
+            style="border: solid; border-color: grey; border-radius: 2px"
           />
-          <span
+          <!--<span
             v-if="this._numEvents != null"
             class="top-0 start-100 translate-middle badge rounded-pill bg-danger"
           >
             {{ _numEvents }}
             <span class="visually-hidden">unread messages</span>
-          </span>
+          </span>-->
           <strong>{{ name }}</strong>
         </a>
         <ul class="dropdown-menu text-small shadow">
-          <li v-if="_numEvents > 0">
-            <router-link
-              to="notifications"
-              class="dropdown-item"
-              style="text-decoration: none; color: red"
-              >{{ translate("dashNotif") }}
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </router-link>
-          </li>
-
           <li>
             <router-link
               to=""

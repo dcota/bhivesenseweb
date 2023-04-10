@@ -362,7 +362,7 @@
         this.isShow = true;
         let id = localStorage.getItem("interventiontoedit");
         await axios
-          .put("https://bhsapi.duartecota.com/intervention/one/" + id, {
+          .put("https://bhsapi.duartecota.com/intervention/conclude/" + id, {
             headers: {
               Authorization: this.token,
             },

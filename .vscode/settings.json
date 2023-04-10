@@ -3,6 +3,11 @@
     "vetur.completion.scaffoldSnippetSources": {
         "workspace": "💼",
         "user": "🗒️",
-        "vetur": "✌",
-    }
+        "vetur": "✌"
+    },
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ]
 }

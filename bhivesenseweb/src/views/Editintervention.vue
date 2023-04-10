@@ -311,7 +311,7 @@ select option[disabled]:first-child {
           //verificar API
           let id = localStorage.getItem("interventiontoedit");
           await axios
-            .patch(
+            .put(
               "https://bhsapi.duartecota.com/intervention/one/" + id,
               postData,
               {

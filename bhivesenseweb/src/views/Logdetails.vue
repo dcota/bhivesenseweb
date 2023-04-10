@@ -39,7 +39,20 @@ Description: implementation of the view Gestão de Alunos (Admin)
               <th class="text-center">{{ translate("thdDevicesApiary") }}</th>
             </tr>
             <tr v-for="event in filteredPersons" :key="event._id">
-              <td>{{ event.text }}</td>
+              <td v-if="event.active">
+                {{ event.text }}
+                <span class="red-tag">
+                  &nbsp;&nbsp;{{ this.translate("redTag") }}&nbsp;&nbsp;
+                </span>
+              </td>
+              <td v-else>
+                {{ event.text }}
+                <span style="color: green">
+                  <i
+                    ><strong>{{ this.translate("greenTag") }}</strong></i
+                  ></span
+                >
+              </td>
               <td class="text-center">
                 <a
                   @click="loadDetails(event.apiary, event.device)"
@@ -99,6 +112,11 @@ Description: implementation of the view Gestão de Alunos (Admin)
 </template>
 
 <style scoped>
+.red-tag {
+  color: white;
+  background-color: red;
+  border-radius: 5px;
+}
 .ac-btn {
   width: 120px;
   color: white;
@@ -202,7 +220,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
             this.isShow = false;
             let events = response.data.body;
             if (!events.length == 0) {
-              for (let i = 0; i < events.length; i++) {
+              for (let i = events.length - 1; i >= 0; i--) {
                 if (events[i].cat == "hive") {
                   let date = new Date(events[i].registration_date);
                   let year = date.getFullYear();
@@ -221,12 +239,15 @@ Description: implementation of the view Gestão de Alunos (Admin)
                     this.text = this.translate("humText");
                   } else if (events[i].type == "HARVEST") {
                     this.text = this.translate("harvestText");
+                  } else if (events[i].type == "SWARMING") {
+                    this.text = this.translate("swarmText");
                   }
                   this.hiveEvents.push({
                     _id: events[i]._id,
                     apiary: events[i].apiary,
                     device: events[i].device,
                     date: year + "-" + month + "-" + day,
+                    active: events[i].active,
                     text: this.text,
                   });
                 }

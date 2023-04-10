@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Gestão de Alunos (Admin)
-*/
-
 <template id="example-modal">
   <section class="container my-body">
     <h1 class="my-text-color">{{ translate("assignHiveTitle") }}</h1>
@@ -155,6 +149,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
         isModalDeleteVisible: false,
         hivetounregister: "",
         hasHives: false,
+        hasUnassigned: false,
       };
     },
     computed: {
@@ -215,6 +210,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
               this.hasHives = true;
               for (let i = 0; i < devices.length; i++) {
                 if (devices[i].apiary == null) {
+                  this.hasUnassigned = true;
                   this.devices.push({
                     id: devices[i]._id,
                     assigned: this.translate("notAssignedText"),
@@ -228,6 +224,15 @@ Description: implementation of the view Gestão de Alunos (Admin)
                   });
                 }
               }
+            }
+            if (this.hasUnassigned == false) {
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noHivesToAssign"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
             }
           })
           .catch((error) => {

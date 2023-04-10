@@ -358,11 +358,11 @@ Description: implementation of the view Gestão de Alunos (Admin)
       },
       async assign() {
         /*let postData = {
-                                                  apiary: 
-                                                  device:
-                                                  weight_reported:
-                                                  weight_registered:
-                                                }*/
+                                                    apiary: 
+                                                    device:
+                                                    weight_reported:
+                                                    weight_registered:
+                                                  }*/
         await axios
           .post(
             "https://bhsapi.duartecota.com/device/" +

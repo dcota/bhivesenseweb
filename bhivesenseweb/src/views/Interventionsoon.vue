@@ -2,7 +2,9 @@
   <section class="container my-body">
     <h2 class="my-text-color">{{ translate("nextInterventionsTitle") }}</h2>
     <section class="line-1"></section>
-
+    <section class="card mt-5 text-center p-4" v-if="!hasInterventions">
+      <h3>{{ translate("interventionsTextNo") }}</h3>
+    </section>
     <section class="mt-4" v-if="hasInterventions != false">
       <v-calendar
         :locale="lang"
@@ -85,7 +87,8 @@
       },
     },
     mounted() {
-      this.show();
+      //this.show();
+      this.getInterventions();
     },
     methods: {
       show() {
@@ -155,7 +158,7 @@
         this.isShow = true;
         await axios
           .get(
-            "https://bhsapi.duartecota.com/intervention/apiary/" +
+            "https://bhsapi.duartecota.com/intervention/notify/" +
               localStorage.getItem("idtointerventions"),
             {
               headers: {
@@ -167,13 +170,6 @@
             this.isShow = false;
             if (response.data.body.length == 0) {
               this.hasInterventions = false;
-              notify({
-                title: this.translate("notifWarningTitle"),
-                text: this.translate("mesNoInterventions"),
-                type: "warn",
-                duration: 3000,
-                speed: 500,
-              });
             } else {
               this.hasInterventions = true;
               this.interventions = [];
