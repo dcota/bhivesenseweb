@@ -283,8 +283,8 @@
         alert(id);
         alert(localStorage.getItem("apiaryIDtoget"));
         await axios
-          .patch(
-            "https://bhsapi.duartecota.com/device/" +
+          .put(
+            "https://bhsapi.duartecota.com/device/assign/" +
               id +
               "/" +
               localStorage.getItem("apiaryIDtoget"),

@@ -206,6 +206,7 @@ export default {
                 lblAt: " às ",
                 assignHiveTitle: "ASSOCIAR COLMEIA",
                 assignMessage: "Colmeia associada com sucesso!",
+                unassignMessage: "Colmeia desassociada com sucesso!",
                 noDataForHive: "Sem dados para a colmeia!",
                 charTempIn: "Temperatura interior",
                 charTempOut: "Temperatura exterior",
@@ -273,7 +274,6 @@ export default {
                 dashNotifBtn: "Ir para eventos",
                 dashMess: "Mensagens",
                 dashMessBtn: "Ir para mensagens",
-                dashTotalHives: "Total de apiários",
                 dashHivesBtn: "Ir para apiários",
                 dashTotalApiaries: "Total de apiários",
                 dashApiariesBtn: "Ir para apiários",
@@ -325,16 +325,13 @@ export default {
                 dashBtnGoToHarvest: "Ir para colheitas",
                 dashSwarmingTextYes: "Possível swarming!",
                 dashSwarmingTextNo: "Swarming não detetado",
-                swarmingTitle: "POSSIBLE SWARMING",
-                swarmingLbl: "List of possible swarming events:",
                 redTag: "ATIVO",
                 greenTag: "RESOLVIDO",
                 swarmingTitle: "POSSÍVEL SWARMING",
                 swarmingLbl: "Lista de possíveis eventos de swarming:",
                 swarmTextNo: "Não existem eventos de swarming para verificar.",
-                modalUnassignText: "Deseja desassociar a colmeia deste apiário? Todos os dados serão guardados..",
-
-
+                modalUnassignText: "Deseja desassociar a colmeia deste apiário?",
+                modalUnassignSave: "Guardar dados da colmeia?"
             }
         }
     }

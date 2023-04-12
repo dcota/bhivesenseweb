@@ -258,7 +258,7 @@ select option[disabled]:first-child {
                 });
               }
             })
-            .catch((error) => {
+            .catch(() => {
               this.isShow = false;
               notify({
                 title: this.translate("notifErrorTitle"),

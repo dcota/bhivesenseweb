@@ -502,6 +502,7 @@ h3 {
   import axios from "axios";
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
+  import { notify } from "@kyvg/vue3-notification";
   import { mapActions, mapGetters } from "vuex";
   import {
     IS_USER_AUTHENTICATED_GETTER,
@@ -555,9 +556,6 @@ h3 {
       clearInterval(this.timer);
       this.timer = null;
     },
-    /*beforeCreate() {
-                                                                                                                          this.$OneSignal.showSlidedownPrompt();
-                                                                                                                        },*/
     methods: {
       ...mapActions("auth", {
         _numEventsChng: AUTO_NUMEVENTS_ACTION,
@@ -647,7 +645,7 @@ h3 {
           .then((response) => {
             this.totalApiaries = response.data.body.totalApiaries;
           })
-          .catch((error) => {
+          .catch(() => {
             notify({
               title: this.translate("notifErrorTitle"),
               text: this.translate("mesProblem"),
@@ -668,7 +666,7 @@ h3 {
           .then((response) => {
             this.totalHives = response.data.body.totalHives;
           })
-          .catch((error) => {
+          .catch(() => {
             notify({
               title: this.translate("notifErrorTitle"),
               text: this.translate("mesProblem"),
@@ -690,7 +688,7 @@ h3 {
           .then((response) => {
             this.totalProduction = response.data.body.totalProduction;
           })
-          .catch((error) => {
+          .catch(() => {
             notify({
               title: this.translate("notifErrorTitle"),
               text: this.translate("mesProblem"),

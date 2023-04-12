@@ -249,7 +249,7 @@
           <button
             type="button"
             class="btn bn_card position-relative"
-            @click="$router.push('/notifications')"
+            @click="$router.push('/events')"
           >
             <section v-if="this._numEvents > 0">
               <strong>
@@ -562,7 +562,7 @@
                 });
               }
             })
-            .catch((error) => {
+            .catch(() => {
               notify({
                 title: this.translate("notifErrorTitle"),
                 text: this.translate("mesProblem"),

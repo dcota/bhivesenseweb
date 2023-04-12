@@ -374,12 +374,54 @@
         localStorage.setItem("idtounassign", id);
         this.isModalUnassignVisible = true;
       },
-      unassign() {
-        alert(
-          localStorage.getItem("idtounassign") +
-            ";" +
-            localStorage.getItem("apiaryIDtoget")
-        );
+      async unassign() {
+        this.isShow = true;
+        this.isModalUnassignVisible = false;
+        let option = localStorage.getItem("option");
+        let id = localStorage.getItem("idtounassign");
+        alert(localStorage.getItem("apiaryIDtoget"));
+        await axios
+          .put(
+            "https://bhsapi.duartecota.com/device/unassign/" + id + "/" + option,
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            if (response.data.http == 200) {
+              this.isShow = false;
+              notify({
+                title: this.translate("notifSuccessTitle"),
+                text: this.translate("unassignMessage"),
+                type: "success",
+                duration: 3000,
+                speed: 500,
+              });
+              this.isShow = false;
+              this.getDevices();
+            } else {
+              this.isShow = false;
+              notify({
+                title: this.translate("notifErrorTitle"),
+                text: this.translate("mesProblem"),
+                type: "error",
+                duration: 3000,
+                speed: 500,
+              });
+            }
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
       },
     },
   };

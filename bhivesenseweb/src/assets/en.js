@@ -209,6 +209,7 @@ export default {
                 lblAt: " at ",
                 assignHiveTitle: "ASSIGN HIVE",
                 assignMessage: "Hive successfully assigned!",
+                unassignMessage: "Hive successfully unassigned!",
                 noDataForHive: "No data for this hive!",
                 charTempIn: "Temperature inside",
                 charTempOut: "Temperature outside",
@@ -334,8 +335,8 @@ export default {
                 swarmingLbl: "List of possible swarming events:",
                 swarmTextNo: "You don't have swarming events to handle.",
                 interventionsTextNo: "You don't have interventions in the next 5 days",
-                modalUnassignText: "Do you wish to unassign this hive from this apiary? All data will be saved.",
-
+                modalUnassignText: "Do you wish to unassign this hive from this apiary?",
+                modalUnassignSave: "Save hive data?"
 
             }
         }

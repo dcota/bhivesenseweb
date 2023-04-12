@@ -13,6 +13,44 @@
 
         <section class="modal-body" id="modalDescription">
           <slot name="body"> {{ translate("modalUnassignText") }} </slot>
+          <p></p>
+          <slot name="body"> {{ translate("modalUnassignSave") }} </slot>
+          <p></p>
+          <section class="my_radios">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                v-model="option"
+                type="radio"
+                value="true"
+                id="option"
+                checked="true"
+              />
+              <label
+                class="form-check-label"
+                for="flexRadioDefault1"
+                style="color: red"
+              >
+                <strong>{{ translate("modalNotifTrue") }}</strong>
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                v-model="option"
+                type="radio"
+                value="false"
+                id="option"
+              />
+              <label
+                class="form-check-label"
+                for="flexRadioDefault2"
+                style="color: red"
+              >
+                <strong>{{ translate("modalNotifFalse") }}</strong>
+              </label>
+            </div>
+          </section>
         </section>
 
         <footer class="modal-footer">
@@ -70,7 +108,7 @@
   display: flex;
   flex-direction: column;
   width: 40%;
-  height: 30%;
+  height: 35%;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -145,6 +183,7 @@
       const lang = localStorage.getItem("lang") || "pt";
       return {
         lang: lang,
+        option: "true",
       };
     },
     methods: {
@@ -152,6 +191,7 @@
         this.$emit("close");
       },
       unassign() {
+        localStorage.setItem("option", this.option);
         this.$emit("unassign");
       },
       translate(prop) {
