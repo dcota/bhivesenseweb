@@ -356,37 +356,42 @@ Description: implementation of the view Gestão de Alunos (Admin)
           });
         this.getEvents();
       },
-      async assign() {
-        /*let postData = {
-                                                    apiary: 
-                                                    device:
-                                                    weight_reported:
-                                                    weight_registered:
-                                                  }*/
-        await axios
-          .post(
-            "https://bhsapi.duartecota.com/device/" +
-              id +
-              "/" +
-              localStorage.getItem("apiaryIDtoget"),
-            {
-              headers: {
-                Authorization: this.token,
-              },
-            }
-          )
-          .then((response) => {
-            if (response.data.http == 200) {
-              this.isShow = false;
-              notify({
-                title: this.translate("notifSuccessTitle"),
-                text: this.translate("assignMessage"),
-                type: "success",
-                duration: 3000,
-                speed: 500,
-              });
-              this.getDevices();
-            } else {
+      /*async assign() {
+          await axios
+            .post(
+              "https://bhsapi.duartecota.com/device/" +
+                id +
+                "/" +
+                localStorage.getItem("apiaryIDtoget"),
+              {
+                headers: {
+                  Authorization: this.token,
+                },
+              }
+            )
+            .then((response) => {
+              if (response.data.http == 200) {
+                this.isShow = false;
+                notify({
+                  title: this.translate("notifSuccessTitle"),
+                  text: this.translate("assignMessage"),
+                  type: "success",
+                  duration: 3000,
+                  speed: 500,
+                });
+                this.getDevices();
+              } else {
+                this.isShow = false;
+                notify({
+                  title: this.translate("notifErrorTitle"),
+                  text: this.translate("mesProblem"),
+                  type: "error",
+                  duration: 3000,
+                  speed: 500,
+                });
+              }
+            })
+            .catch(() => {
               this.isShow = false;
               notify({
                 title: this.translate("notifErrorTitle"),
@@ -395,19 +400,8 @@ Description: implementation of the view Gestão de Alunos (Admin)
                 duration: 3000,
                 speed: 500,
               });
-            }
-          })
-          .catch(() => {
-            this.isShow = false;
-            notify({
-              title: this.translate("notifErrorTitle"),
-              text: this.translate("mesProblem"),
-              type: "error",
-              duration: 3000,
-              speed: 500,
             });
-          });
-      },
+        },*/
       loadDetails(apiary, hive) {
         localStorage.setItem("hiveIDtoget", hive);
         localStorage.setItem("apiaryIDtoget", apiary);
@@ -463,7 +457,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
                   });
                 }
               })
-              .catch((error) => {
+              .catch(() => {
                 this.isShow = false;
                 notify({
                   title: this.translate("notifErrorTitle"),

@@ -69,6 +69,7 @@ Description: implementation of the view Login
   import axios from "axios";
   import en from "../assets/en.js";
   import pt from "../assets/pt.js";
+  import { notify } from "@kyvg/vue3-notification";
   import { mapActions, mapGetters, mapMutations } from "vuex";
   import {
     LOADING_SPINNER_SHOW_MUTATION,
@@ -141,7 +142,6 @@ Description: implementation of the view Login
             },
           })
           .then((response) => {
-            console.log(response.data.body);
             if (response.data.body > 0) {
               this.numEventsChng({
                 numEvents: response.data.body,
@@ -152,7 +152,7 @@ Description: implementation of the view Login
               });
             }
           })
-          .catch((error) => {
+          .catch(() => {
             notify({
               title: this.translate("notifErrorTitle"),
               text: this.translate("mesProblem"),

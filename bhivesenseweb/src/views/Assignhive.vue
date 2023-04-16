@@ -235,9 +235,7 @@
               });
             }
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch(() => {});
       },
       async unregister(id) {
         await axios

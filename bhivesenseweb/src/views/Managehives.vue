@@ -204,9 +204,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
               }
             }
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch(() => {});
       },
       async unregister(id) {
         await axios

@@ -562,7 +562,6 @@ h3 {
       }),
 
       interventionsEvent() {
-        console.log(this.interventions);
         localStorage.setItem("teste", JSON.stringify(this.interventions));
         this.$router.push("sooninterventions");
       },
@@ -630,9 +629,7 @@ h3 {
               }
             }
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch(() => {});
       },
       async updateTotalApiaries() {
         this.isShow = true;
@@ -726,9 +723,7 @@ h3 {
               }
             }
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch(() => {});
       },
       async getLog() {
         this.isShow = true;

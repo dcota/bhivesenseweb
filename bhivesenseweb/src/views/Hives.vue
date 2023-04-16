@@ -390,7 +390,7 @@
             }
           )
           .then((response) => {
-            if (response.data.http == 200) {
+            if (response.data.http == 200 || response.data.http == 201) {
               this.isShow = false;
               notify({
                 title: this.translate("notifSuccessTitle"),
