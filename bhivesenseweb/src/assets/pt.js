@@ -21,7 +21,7 @@ export default {
                 sbarHives: "Colmeias",
                 sbarHivesNew: "Adicionar nova colmeia",
                 sbarHivesAll: "Gerir colmeias",
-                sbarAnalytics: "Analíticas",
+                sbarAnalytics: "Analíticas/gerir colheitas",
                 sbarAnalyticsLast: "Últimos valores",
                 sbarAnalyticsWeek: "Semanal",
                 sbarAnalyticsMonth: "Mensal",
@@ -331,7 +331,16 @@ export default {
                 swarmingLbl: "Lista de possíveis eventos de swarming:",
                 swarmTextNo: "Não existem eventos de swarming para verificar.",
                 modalUnassignText: "Deseja desassociar a colmeia deste apiário?",
-                modalUnassignSave: "Guardar dados da colmeia?"
+                modalUnassignSave: "Guardar dados da colmeia?",
+                productionTitle: "ANALÍTICAS DE PRODUÇÃO: Escolha o apiário",
+                lblToolTipAnalytics: "Analíticas",
+                productionApiaryTitle: "PRODUÇÃO DO APIÁRIO",
+                totalApiaryProduction: "PRODUÇÃO TOTAL DO APIÁRIO: ",
+                charHarvestApiaryTitle: "Evolução da produção do apiário",
+                warnHiveProduction: "Selecionar colmeia para ver detalhes de produção.",
+                productionHiveTitle: "PRODUÇÃO DA COLMEIA",
+                totalHiveProduction: "PRODUÇÃO TOTAL DA COLMEIA: ",
+                charHarvestHiveTitle: "Evolução da produção da colmeia",
             }
         }
     }

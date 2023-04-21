@@ -21,7 +21,7 @@ export default {
                 sbarHives: "Hives",
                 sbarHivesNew: "Add new hive",
                 sbarHivesAll: "Manage hives",
-                sbarAnalytics: "Analytics",
+                sbarAnalytics: "Analytics/manage harvest",
                 sbarAnalyticsLast: "Last values",
                 sbarAnalyticsWeek: "Weekly",
                 sbarAnalyticsMonth: "Monthly",
@@ -336,8 +336,16 @@ export default {
                 swarmTextNo: "You don't have swarming events to handle.",
                 interventionsTextNo: "You don't have interventions in the next 5 days",
                 modalUnassignText: "Do you wish to unassign this hive from this apiary?",
-                modalUnassignSave: "Save hive data?"
-
+                modalUnassignSave: "Save hive data?",
+                productionTitle: "PRODUCTION ANALYTICS: Select apiary",
+                lblToolTipAnalytics: "Analytics",
+                productionApiaryTitle: "APIARY PRODUCTION",
+                totalApiaryProduction: "TOTAL APIARY PRODUCTION: ",
+                charHarvestApiaryTitle: "Apiary production evolution",
+                warnHiveProduction: "Select hive to see production details.",
+                productionHiveTitle: "HIVE PRODUCTION",
+                totalHiveProduction: "TOTAL HIVE PRODUCTION: ",
+                charHarvestHiveTitle: "Hive production evolution",
             }
         }
     }
