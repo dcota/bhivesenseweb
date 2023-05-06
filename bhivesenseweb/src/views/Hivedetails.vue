@@ -432,7 +432,7 @@
       },
       async getTIday() {
         this.ytitle = "TEMP";
-        this.title = this.translate("charTempIn") + " (&deg;C)";
+        this.title = this.translate("charTempInDay") + " (&deg;C)";
         this.max = 40;
         this.loaded = false;
         this.isShow = true;
@@ -498,9 +498,89 @@
             });
           });
       },
+      async getTIweek() {
+        this.ytitle = "TEMP";
+        this.title = this.translate("charTempInWeek") + " (&deg;C)";
+        this.max = 40;
+        this.loaded = false;
+        this.isShow = true;
+        this.ti = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/week/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let hours =
+                  lastDate.getHours() < 10
+                    ? "0" + lastDate.getHours()
+                    : lastDate.getHours();
+                let minutes =
+                  lastDate.getMinutes() < 10
+                    ? "0" + lastDate.getMinutes()
+                    : lastDate.getMinutes();
+                let year = lastDate.getFullYear();
+                let month = lastDate.getMonth() + 1;
+                let day = lastDate.getDate();
+                let x =
+                  year +
+                  "-" +
+                  (month + 1) +
+                  "-" +
+                  day +
+                  ";" +
+                  hours +
+                  "h" +
+                  minutes;
+                tempArray.push(x);
+                let y = d[i].ti;
+                tempArray.push(y);
+                this.ti.push(tempArray);
+              }
+              this.type = this.ti;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
       async getTImonth() {
         this.ytitle = "TEMP";
-        this.title = this.translate("charTempIn") + " (&deg;C)";
+        this.title = this.translate("charTempInMonth") + " (&deg;C)";
         this.max = 40;
         this.loaded = false;
         this.isShow = true;
@@ -580,7 +660,7 @@
       },
       async getTOday() {
         this.ytitle = "TEMP";
-        this.title = this.translate("charTempOut") + " (&deg;C)";
+        this.title = this.translate("charTempOutDay") + " (&deg;C)";
         this.max = "40";
         this.loaded = false;
         this.isShow = true;
@@ -639,9 +719,89 @@
             this.isShow = false;
           });
       },
+      async getTOweek() {
+        this.ytitle = "TEMP";
+        this.title = this.translate("charTempOutMonth") + " (&deg;C)";
+        this.max = 40;
+        this.loaded = false;
+        this.isShow = true;
+        this.to = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/week/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let hours =
+                  lastDate.getHours() < 10
+                    ? "0" + lastDate.getHours()
+                    : lastDate.getHours();
+                let minutes =
+                  lastDate.getMinutes() < 10
+                    ? "0" + lastDate.getMinutes()
+                    : lastDate.getMinutes();
+                let year = lastDate.getFullYear();
+                let month = lastDate.getMonth() + 1;
+                let day = lastDate.getDate();
+                let x =
+                  year +
+                  "-" +
+                  (month + 1) +
+                  "-" +
+                  day +
+                  ";" +
+                  hours +
+                  "h" +
+                  minutes;
+                tempArray.push(x);
+                let y = d[i].to;
+                tempArray.push(y);
+                this.to.push(tempArray);
+              }
+              this.type = this.to;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
       async getTOmonth() {
         this.ytitle = "TEMP";
-        this.title = this.translate("charTempOut") + " (&deg;C)";
+        this.title = this.translate("charTempOutMonth") + " (&deg;C)";
         this.max = 40;
         this.loaded = false;
         this.isShow = true;
@@ -721,7 +881,7 @@
       },
       async getHIday() {
         this.ytitle = "HUM";
-        this.title = this.translate("charHumIn");
+        this.title = this.translate("charHumInDay");
         this.max = "100";
         this.loaded = false;
         this.isShow = true;
@@ -780,9 +940,89 @@
             this.isShow = false;
           });
       },
+      async getHIweek() {
+        this.ytitle = "HUM";
+        this.title = this.translate("charHumInMonth");
+        this.max = 100;
+        this.loaded = false;
+        this.isShow = true;
+        this.hi = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/week/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let hours =
+                  lastDate.getHours() < 10
+                    ? "0" + lastDate.getHours()
+                    : lastDate.getHours();
+                let minutes =
+                  lastDate.getMinutes() < 10
+                    ? "0" + lastDate.getMinutes()
+                    : lastDate.getMinutes();
+                let year = lastDate.getFullYear();
+                let month = lastDate.getMonth() + 1;
+                let day = lastDate.getDate();
+                let x =
+                  year +
+                  "-" +
+                  (month + 1) +
+                  "-" +
+                  day +
+                  ";" +
+                  hours +
+                  "h" +
+                  minutes;
+                tempArray.push(x);
+                let y = d[i].hi;
+                tempArray.push(y);
+                this.hi.push(tempArray);
+              }
+              this.type = this.hi;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
       async getHImonth() {
         this.ytitle = "HUM";
-        this.title = this.translate("charHumIn");
+        this.title = this.translate("charHumInMonth");
         this.max = 100;
         this.loaded = false;
         this.isShow = true;
@@ -862,7 +1102,7 @@
       },
       async getHOday() {
         this.ytitle = "HUM";
-        this.title = this.translate("charHumOut");
+        this.title = this.translate("charHumOutDay");
         this.max = "100";
         this.loaded = false;
         this.isShow = true;
@@ -921,9 +1161,89 @@
             this.isShow = false;
           });
       },
+      async getHOweek() {
+        this.ytitle = "HUM";
+        this.title = this.translate("charTempOutMonth") + " (&deg;C)";
+        this.max = 100;
+        this.loaded = false;
+        this.isShow = true;
+        this.ho = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/week/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let hours =
+                  lastDate.getHours() < 10
+                    ? "0" + lastDate.getHours()
+                    : lastDate.getHours();
+                let minutes =
+                  lastDate.getMinutes() < 10
+                    ? "0" + lastDate.getMinutes()
+                    : lastDate.getMinutes();
+                let year = lastDate.getFullYear();
+                let month = lastDate.getMonth() + 1;
+                let day = lastDate.getDate();
+                let x =
+                  year +
+                  "-" +
+                  (month + 1) +
+                  "-" +
+                  day +
+                  ";" +
+                  hours +
+                  "h" +
+                  minutes;
+                tempArray.push(x);
+                let y = d[i].ho;
+                tempArray.push(y);
+                this.ho.push(tempArray);
+              }
+              this.type = this.ho;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
       async getHOmonth() {
         this.ytitle = "HUM";
-        this.title = this.translate("charTempOut") + " (&deg;C)";
+        this.title = this.translate("charTempOutMonth") + " (&deg;C)";
         this.max = 100;
         this.loaded = false;
         this.isShow = true;
@@ -1003,7 +1323,7 @@
       },
       async getSday() {
         this.ytitle = "SOUND LEVEL";
-        this.title = this.translate("charSound");
+        this.title = this.translate("charSoundDay");
         this.max = "800";
         this.loaded = false;
         this.isShow = true;
@@ -1062,9 +1382,89 @@
             this.isShow = false;
           });
       },
+      async getSweek() {
+        this.ytitle = "SOUND LEVEL";
+        this.title = this.translate("charSoundMonth");
+        this.max = 800;
+        this.loaded = false;
+        this.isShow = true;
+        this.s = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/week/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let hours =
+                  lastDate.getHours() < 10
+                    ? "0" + lastDate.getHours()
+                    : lastDate.getHours();
+                let minutes =
+                  lastDate.getMinutes() < 10
+                    ? "0" + lastDate.getMinutes()
+                    : lastDate.getMinutes();
+                let year = lastDate.getFullYear();
+                let month = lastDate.getMonth() + 1;
+                let day = lastDate.getDate();
+                let x =
+                  year +
+                  "-" +
+                  (month + 1) +
+                  "-" +
+                  day +
+                  ";" +
+                  hours +
+                  "h" +
+                  minutes;
+                tempArray.push(x);
+                let y = d[i].s;
+                tempArray.push(y);
+                this.s.push(tempArray);
+              }
+              this.type = this.s;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
       async getSmonth() {
         this.ytitle = "SOUND LEVEL";
-        this.title = this.translate("charSound");
+        this.title = this.translate("charSoundMonth");
         this.max = 800;
         this.loaded = false;
         this.isShow = true;
@@ -1144,7 +1544,7 @@
       },
       async getWday() {
         this.ytitle = "WEIGHT";
-        this.title = this.translate("charWeight");
+        this.title = this.translate("charWeightDay");
         this.max = "60";
         this.loaded = false;
         this.isShow = true;
@@ -1203,9 +1603,89 @@
             this.isShow = false;
           });
       },
+      async getWweek() {
+        this.ytitle = "WEIGHT";
+        this.title = this.translate("charWeightMonth");
+        this.max = 60;
+        this.loaded = false;
+        this.isShow = true;
+        this.w = [];
+        await axios
+          .get(
+            "https://bhsapi.duartecota.com/device/week/" +
+              localStorage.getItem("hiveIDtoget"),
+            {
+              headers: {
+                Authorization: this.token,
+              },
+            }
+          )
+          .then((response) => {
+            let d = response.data.body.data;
+            if (d.length == 0) {
+              this.hasData = false;
+              this.isShow = false;
+              notify({
+                title: this.translate("notifWarningTitle"),
+                text: this.translate("noDataForHive"),
+                type: "warn",
+                duration: 3000,
+                speed: 500,
+              });
+            } else {
+              this.hasData = true;
+              for (let i = 0; i < d.length; i++) {
+                let lastDate = new Date(
+                  d[i].date.toLocaleString("sv-SE", {
+                    timeZone: "Atlantic/Azores",
+                  })
+                );
+                let tempArray = [];
+                let hours =
+                  lastDate.getHours() < 10
+                    ? "0" + lastDate.getHours()
+                    : lastDate.getHours();
+                let minutes =
+                  lastDate.getMinutes() < 10
+                    ? "0" + lastDate.getMinutes()
+                    : lastDate.getMinutes();
+                let year = lastDate.getFullYear();
+                let month = lastDate.getMonth() + 1;
+                let day = lastDate.getDate();
+                let x =
+                  year +
+                  "-" +
+                  (month + 1) +
+                  "-" +
+                  day +
+                  ";" +
+                  hours +
+                  "h" +
+                  minutes;
+                tempArray.push(x);
+                let y = d[i].w;
+                tempArray.push(y);
+                this.w.push(tempArray);
+              }
+              this.type = this.w;
+              this.loaded = true;
+            }
+            this.isShow = false;
+          })
+          .catch(() => {
+            this.isShow = false;
+            notify({
+              title: this.translate("notifErrorTitle"),
+              text: this.translate("mesProblem"),
+              type: "error",
+              duration: 3000,
+              speed: 500,
+            });
+          });
+      },
       async getWmonth() {
         this.ytitle = "WEIGHT";
-        this.title = this.translate("charWeight");
+        this.title = this.translate("charWeightMonth");
         this.max = 60;
         this.loaded = false;
         this.isShow = true;
@@ -1309,30 +1789,42 @@
       },
       handleChange(event) {
         if (event.target.value == "ti" && this.interval == 1) this.getTIday();
+        if (event.target.value == "ti" && this.interval == 2) this.getTIweek();
         if (event.target.value == "ti" && this.interval == 3) this.getTImonth();
         if (event.target.value == "hi" && this.interval == 1) this.getHIday();
+        if (event.target.value == "hi" && this.interval == 2) this.getHIweek();
         if (event.target.value == "hi" && this.interval == 3) this.getHImonth();
         if (event.target.value == "to" && this.interval == 1) this.getTOday();
+        if (event.target.value == "to" && this.interval == 2) this.getTOweek();
         if (event.target.value == "to" && this.interval == 3) this.getTOmonth();
         if (event.target.value == "ho" && this.interval == 1) this.getHOday();
+        if (event.target.value == "ho" && this.interval == 2) this.getHOweek();
         if (event.target.value == "ho" && this.interval == 3) this.getHOmonth();
         if (event.target.value == "s" && this.interval == 1) this.getSday();
+        if (event.target.value == "s" && this.interval == 2) this.getSweek();
         if (event.target.value == "s" && this.interval == 3) this.getSmonth();
         if (event.target.value == "w" && this.interval == 1) this.getWday();
+        if (event.target.value == "w" && this.interval == 2) this.getWweek();
         if (event.target.value == "w" && this.interval == 3) this.getWmonth();
       },
       onChange() {
         if (this.interval == 1 && this.plotType == "ti") this.getTIday();
+        if (this.interval == 2 && this.plotType == "ti") this.getTIweek();
         if (this.interval == 3 && this.plotType == "ti") this.getTImonth();
         if (this.interval == 1 && this.plotType == "hi") this.getHIday();
+        if (this.interval == 2 && this.plotType == "hi") this.getHIweek();
         if (this.interval == 3 && this.plotType == "hi") this.getHImonth();
         if (this.interval == 1 && this.plotType == "to") this.getTOday();
+        if (this.interval == 2 && this.plotType == "to") this.getTOweek();
         if (this.interval == 3 && this.plotType == "to") this.getTOmonth();
         if (this.interval == 1 && this.plotType == "ho") this.getHOday();
+        if (this.interval == 2 && this.plotType == "ho") this.getHOweek();
         if (this.interval == 3 && this.plotType == "ho") this.getHOmonth();
         if (this.interval == 1 && this.plotType == "s") this.getSday();
+        if (this.interval == 2 && this.plotType == "s") this.getSweek();
         if (this.interval == 3 && this.plotType == "s") this.getSmonth();
         if (this.interval == 1 && this.plotType == "w") this.getWday();
+        if (this.interval == 2 && this.plotType == "w") this.getWweek();
         if (this.interval == 3 && this.plotType == "w") this.getWmonth();
       },
     },
