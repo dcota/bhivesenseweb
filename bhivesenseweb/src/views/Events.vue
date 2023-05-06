@@ -176,7 +176,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
         this.isModalDeleteVisible = false;
       },
       async detailsModalHive(id) {
-        //this.toEditID = id;
         await this.detail(id);
         this.isModalDetailsVisible = true;
       },
@@ -217,16 +216,19 @@ Description: implementation of the view Gestão de Alunos (Admin)
                     this.text = this.translate("tempText");
                   } else if (events[i].type == "HUMHIGH") {
                     this.text = this.translate("humText");
+                  } else if (events[i].type == "SWARMING") {
+                    this.text = this.translate("swarmText");
+                  } else if (events[i].type == "HARVEST") {
+                    this.text = this.translate("harvestText");
                   }
-                  if (events[i].type != "HARVEST")
-                    this.hiveEvents.push({
-                      _id: events[i]._id,
-                      apiary: events[i].apiary,
-                      device: events[i].device,
-                      date: year + "-" + month + "-" + day,
-                      text: this.text,
-                    });
-                  console.log(this.hiveEvents);
+                  //if (events[i].type != "HARVEST")
+                  this.hiveEvents.push({
+                    _id: events[i]._id,
+                    apiary: events[i].apiary,
+                    device: events[i].device,
+                    date: year + "-" + month + "-" + day,
+                    text: this.text,
+                  });
                 }
               }
             }
