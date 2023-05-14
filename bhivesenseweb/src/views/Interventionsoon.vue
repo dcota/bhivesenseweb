@@ -35,6 +35,12 @@
   import axios from "axios";
   import { notify } from "@kyvg/vue3-notification";
   import ModalDetails from "@/components/ModalNextInterventions.vue";
+  import { mapGetters } from "vuex";
+  import {
+    GET_USER_TOKEN_GETTER,
+    GET_USER_LEVEL_GETTER,
+    GET_USER_ID_GETTER,
+  } from "../store/storeconstants";
   export default {
     components: {
       ModalDetails,
@@ -58,6 +64,11 @@
       };
     },
     computed: {
+      ...mapGetters("auth", {
+        token: GET_USER_TOKEN_GETTER,
+        level: GET_USER_LEVEL_GETTER,
+        _id: GET_USER_ID_GETTER,
+      }),
       attributes() {
         return [
           ...this.interventions.map((todo) => ({
@@ -157,15 +168,11 @@
         this.interventions = [];
         this.isShow = true;
         await axios
-          .get(
-            "https://bhsapi.duartecota.com/intervention/notify/" +
-              localStorage.getItem("idtointerventions"),
-            {
-              headers: {
-                Authorization: this.token,
-              },
-            }
-          )
+          .get("https://bhsapi.duartecota.com/intervention/notify/" + this._id, {
+            headers: {
+              Authorization: this.token,
+            },
+          })
           .then((response) => {
             this.isShow = false;
             if (response.data.body.length == 0) {
@@ -201,8 +208,11 @@
                   description: resArray[i].description,
                   startTime: resArray[i].startTime,
                   endTime: resArray[i].endTime,
-                  observations: resArray[i].observations,
+                  ap_observations: resArray[i].ap_observations,
                   isComplete: resArray[i].concluded,
+                  apiary: resArray[i].apiary,
+                  address: resArray[i].address,
+                  location: resArray[i].location,
                 });
               }
               if (this.warnForIntervention) {
@@ -280,7 +290,6 @@
         this.interventiontoedit = "";
         this.details = [];
         let date = new Date(day.id);
-        console.table(this.interventions);
         for (let i = 0; i < this.interventions.length; i++) {
           let sd = new Date(this.interventions[i].dates.start);
           let sdConv = this.padTo2Digits(
@@ -326,6 +335,7 @@
             //this.isModalDetailsVisible = true;
             //break;
           }
+          console.table(this.details);
           this.isModalDetailsVisible = true;
         }
       },
