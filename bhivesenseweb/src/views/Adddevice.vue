@@ -238,7 +238,6 @@ select option[disabled]:first-child {
           return false;
         } else {
           return true;
-          s;
         }
       },
       handleChange(event) {

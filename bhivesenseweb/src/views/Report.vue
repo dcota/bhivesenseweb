@@ -9,8 +9,33 @@ Description: implementation of the view Ficha de Inscrição
     <section class="container my-body">
       <h1 class="my-text-color">{{ translate("reportTitle") }}</h1>
       <section class="line-1"></section>
+
       <form class="form-signin" v-on:submit.prevent="send">
-        <section class="row mt-4">
+        <section class="mt-4">
+          <button type="submit" class="btn me-4 my-button">
+            <section v-if="!isShow">
+              <i class="fa-solid fa-share-from-square"></i>
+              {{ translate("btnSubmit") }}
+            </section>
+            <section
+              v-else
+              class="spinner-border spinner-border-sm"
+              role="status"
+            ></section>
+          </button>
+          <button @click="cleanForm" type="button" class="btn me-4 my-button">
+            <section v-if="!isShow">
+              <i class="fa-solid fa-eraser"></i>
+              {{ translate("btnClean") }}
+            </section>
+            <section
+              v-else
+              class="spinner-border spinner-border-sm"
+              role="status"
+            ></section>
+          </button>
+        </section>
+        <section class="row">
           <section class="col-md-6 g-4">
             <label for="name" class="form-label">{{
               translate("newAccNamePh")
@@ -67,46 +92,6 @@ Description: implementation of the view Ficha de Inscrição
             />
           </section>
         </section>
-
-        <section class="text-center">
-          <button type="submit" class="btn mt-4 me-4 my-button">
-            <section v-if="!isShow">
-              <i class="fa-solid fa-share-from-square"></i>
-              {{ translate("btnSubmit") }}
-            </section>
-            <section
-              v-else
-              class="spinner-border spinner-border-sm"
-              role="status"
-            ></section>
-          </button>
-          <button
-            @click="cleanForm"
-            type="button"
-            class="btn mt-4 me-4 my-button"
-          >
-            <section v-if="!isShow">
-              <i class="fa-solid fa-eraser"></i>
-              {{ translate("btnClean") }}
-            </section>
-            <section
-              v-else
-              class="spinner-border spinner-border-sm"
-              role="status"
-            ></section>
-          </button>
-          <button @click="back" type="button" class="btn mt-4 my-button">
-            <section v-if="!isShow">
-              <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
-              {{ translate("btnBack") }}
-            </section>
-            <section
-              v-else
-              class="spinner-border spinner-border-sm"
-              role="status"
-            ></section>
-          </button>
-        </section>
       </form>
       <section class="spacer"></section>
     </section>
@@ -131,7 +116,7 @@ select option[disabled]:first-child {
   import pt from "../assets/pt.js";
   import axios from "axios";
   import { notify } from "@kyvg/vue3-notification";
-  import { mapMutations, mapGetters } from "vuex";
+  import { mapGetters } from "vuex";
   import {
     GET_USER_ID_GETTER,
     GET_USER_FULLNAME_GETTER,
@@ -168,6 +153,7 @@ select option[disabled]:first-child {
     },
     methods: {
       async send() {
+        console.log("carrega");
         let postData = {
           user: this._id,
           name: this.form.name,
@@ -207,7 +193,7 @@ select option[disabled]:first-child {
                 });
               }
             })
-            .catch((error) => {
+            .catch(() => {
               this.isShow = false;
               notify({
                 title: this.translate("notifErrorTitle"),
