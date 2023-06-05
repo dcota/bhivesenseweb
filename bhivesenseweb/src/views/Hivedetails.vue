@@ -223,7 +223,9 @@
           <section class="card-body">
             <h6 class="card-title text-center">
               <strong
-                ><i class="fas fa-music"><span> dB</span></i></strong
+                ><i class="fa-solid fa-chart-simple"
+                  ><span> Hz</span></i
+                ></strong
               >
             </h6>
             <hr />
