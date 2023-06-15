@@ -1324,7 +1324,7 @@
           });
       },
       async getSday() {
-        this.ytitle = "SOUND LEVEL";
+        this.ytitle = "FREQUENCY";
         this.title = this.translate("charSoundDay");
         this.max = "800";
         this.loaded = false;
