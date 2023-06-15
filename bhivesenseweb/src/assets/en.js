@@ -10,7 +10,7 @@ export default {
                 sbarUsersManage: "Manage Users",
                 sbarDevices: "Devices",
                 sbarDevicesManage: "Manage devices",
-                sbarDevicesNew: "Register device",
+                sbarDevicesNew: "Create device",
                 sbarApiaries: "Apiaries",
                 sbarApiariesAll: "All apiaries",
                 sbarApiariesNew: "Create apiary",

@@ -529,7 +529,7 @@
 		},
 		mounted() {
 			this.getNumEvents();
-			this.timer = setInterval(this.getNumEvents, 5000);
+			this.timer = setInterval(this.getNumEvents, 1000);
 		},
 		beforeUnmount() {
 			clearInterval(this.timer);
