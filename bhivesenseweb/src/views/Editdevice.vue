@@ -8,7 +8,7 @@ Description: implementation of the view Ficha de Inscrição
   <section class="container">
     <section class="scrolling-component" ref="scrollcomponent" name="lang">
       <section class="container my-body">
-        <h1 class="my-text-color">{{ translate("editHiveTitle") }}</h1>
+        <h2 class="my-text-color">{{ translate("editHiveTitle") }}</h2>
         <section class="line-1"></section>
         <section class="mt-4">
           <button type="submit" class="btn me-4 my-button" @click="update">

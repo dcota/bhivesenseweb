@@ -16,7 +16,6 @@
         </section>
 
         <footer class="modal-footer">
-          <!--<slot name="footer"> This is the default footer! </slot>-->
           <div class="row">
             <div class="col-md-6">
               <button

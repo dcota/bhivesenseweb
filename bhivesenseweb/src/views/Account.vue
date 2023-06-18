@@ -7,7 +7,7 @@ Description: implementation of the view Alterar Conta
 <template>
   <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
-      <h1 class="my-text-color">{{ translate("accFormTitle") }}</h1>
+      <h2 class="my-text-color">{{ translate("accFormTitle") }}</h2>
       <section class="line-1"></section>
       <form class="form-signin" v-on:submit.prevent="send">
         <section class="row align-items-center" style="min-height: 15vh">
@@ -237,7 +237,7 @@ select option[disabled]:first-child {
   import axios from "axios";
   import Modal from "../components/ModalCancelAccount.vue";
   import { notify } from "@kyvg/vue3-notification";
-  import { mapGetters, mapMutations, mapActions } from "vuex";
+  import { mapGetters, mapActions } from "vuex";
   import {
     GET_USER_TOKEN_GETTER,
     GET_USER_LEVEL_GETTER,

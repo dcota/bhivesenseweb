@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Gestão de Alunos (Admin)
-*/
-
 <template id="example-modal">
   <section class="container my-body">
     <h1 class="my-text-color">{{ translate("manageHivesTitle") }}</h1>

@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Ficha de Inscrição
-*/
-
 <template>
   <!--<section class="scrolling-component" ref="scrollcomponent" name="lang">-->
   <section class="container my-body">
@@ -243,8 +237,8 @@ select option[disabled]:first-child {
                   title: this.translate("notifSuccessTitle"),
                   text: this.translate("mesNewInterventionSuccess"),
                   type: "success",
-                  duration: 3000,
-                  speed: 500,
+                  duration: 20000,
+                  speed: 100,
                 });
                 this.$router.replace("interventions");
               } else {

@@ -313,10 +313,6 @@
             date.getTime() >= sdFinal.getTime() &&
             date.getTime() <= edFinal.getTime()
           ) {
-            //this.interventiontoedit = this.interventions[i]._id;
-            //localStorage.setItem("interventiontoedit", this.interventiontoedit);
-            //this.description = this.interventions[i].description;
-            //this.observations = this.interventions[i].observations;
             let instance = {
               _id: this.interventions[i]._id,
               apiary: this.interventions[i].apiary,
@@ -332,8 +328,6 @@
               observations: this.interventions[i].observations,
             };
             this.details.push(instance);
-            //this.isModalDetailsVisible = true;
-            //break;
           }
           console.table(this.details);
           this.isModalDetailsVisible = true;
@@ -356,7 +350,6 @@
       },
       edit() {
         this.isModalDetailsVisible = false;
-        //localStorage.setItem("interventiontoedit", this.interventiontoedit);
         this.$router.push("editintervention");
       },
       async conclude() {

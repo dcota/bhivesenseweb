@@ -204,7 +204,6 @@
       }),
     },
     mounted() {
-      //localStorage.setItem("apiary", "");
       this.getDevices();
     },
     methods: {
@@ -349,9 +348,6 @@
         localStorage.setItem("idtointerventions", id);
         this.$router.push("interventions");
       },
-      getApiaryDevices(id) {
-        alert(id);
-      },
       map(lat, lon) {
         localStorage.setItem("lastroute", this.$route.path);
         localStorage.setItem("lat", lat);
@@ -379,7 +375,6 @@
         this.isModalUnassignVisible = false;
         let option = localStorage.getItem("option");
         let id = localStorage.getItem("idtounassign");
-        alert(localStorage.getItem("apiaryIDtoget"));
         await axios
           .put(
             "https://bhsapi.duartecota.com/device/unassign/" + id + "/" + option,

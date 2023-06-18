@@ -248,7 +248,6 @@
 
     <section class="card p-2" v-if="hasData" style="border-radius: 10px">
       <section class="h5 text-center" id="title" v-html="title"></section>
-      <!--<Line v-if="loaded" :data="data" :options="options" />-->
       <area-chart
         v-if="loaded"
         :data="type"

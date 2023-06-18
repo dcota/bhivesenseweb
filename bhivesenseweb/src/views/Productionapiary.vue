@@ -21,7 +21,6 @@
 
     <section class="card p-2 mt-3" v-if="hasData" style="border-radius: 10px">
       <section class="h5 text-center" id="title" v-html="title"></section>
-      <!--<Line v-if="loaded" :data="data" :options="options" />-->
       <line-chart
         v-if="loaded"
         :data="hiveProduction"
@@ -350,7 +349,6 @@
         this.isShow = true;
         this.message.type = "";
         this.message.msg = "";
-        //(this.isShow = true((this.message.type = ""))), (this.message.msg = "");
         await axios
           .get("https://bhsapi.duartecota.com/apiary/one/" + id, {
             headers: {

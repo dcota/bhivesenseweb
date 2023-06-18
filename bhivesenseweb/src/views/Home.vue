@@ -33,7 +33,6 @@ h3 {
 </style>     
 
 <script>
-  import axios from "axios";
   import { mapActions, mapGetters } from "vuex";
   import {
     IS_USER_AUTHENTICATED_GETTER,

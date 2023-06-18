@@ -2,6 +2,19 @@
   <section class="container my-body">
     <h2 class="my-text-color">{{ translate("apiaryAllTitle") }}</h2>
     <section class="line-1"></section>
+    <section class="mt-4">
+      <button type="submit" class="btn me-4 my-button" @click="gotonewapiary">
+        <section v-if="!isShow">
+          <i class="fas fa-plus me-1 act-btn"></i>
+          {{ translate("btnNew") }}
+        </section>
+        <section
+          v-else
+          class="spinner-border spinner-border-sm"
+          role="status"
+        ></section>
+      </button>
+    </section>
     <section class="row mt-4">
       <section
         class="col-12 col-md-6 col-lg-3"
@@ -112,7 +125,6 @@
       @_close="closeDeleteModal"
       @deleteAction="_delete"
     />
-    <!--<section class="spacer"></section>-->
   </section>
 </template>
 
@@ -245,7 +257,6 @@
         this.isShow = true;
         this.message.type = "";
         this.message.msg = "";
-        //(this.isShow = true((this.message.type = ""))), (this.message.msg = "");
         await axios
           .get("https://bhsapi.duartecota.com/apiary/one/" + id, {
             headers: {
@@ -324,6 +335,9 @@
       getApiaryDevices(id) {
         localStorage.setItem("apiaryIDtoget", id);
         this.$router.push("hives");
+      },
+      gotonewapiary() {
+        this.$router.push("newapiary");
       },
     },
   };

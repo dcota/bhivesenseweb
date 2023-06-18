@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Ficha de Inscrição
-*/
-
 <template>
   <section class="container">
     <section class="scrolling-component" ref="scrollcomponent" name="lang">
@@ -39,7 +33,6 @@ Description: implementation of the view Ficha de Inscrição
                 </button>
               </section>
             </section>
-
             <section class="text-center">
               <button
                 @click="showModal()"
@@ -55,16 +48,6 @@ Description: implementation of the view Ficha de Inscrição
                   role="status"
                 ></section>
               </button>
-              <!--<button @click="back" type="button" class="btn mt-5 my-button">
-                <section v-if="!isShow">
-                  {{ translate("btnBack") }}
-                </section>
-                <section
-                  v-else
-                  class="spinner-border spinner-border-sm"
-                  role="status"
-                ></section>
-              </button>-->
             </section>
           </form>
           <section class="text-center">
@@ -170,7 +153,7 @@ select option[disabled]:first-child {
                 text: this.translate("mesNewDeviceSuccess"),
                 type: "success",
                 duration: 3000,
-                speed: 500,
+                speed: 1000,
               });
             } else {
               this.isShow = false;
@@ -183,7 +166,7 @@ select option[disabled]:first-child {
               });
             }
           })
-          .catch((error) => {
+          .catch(() => {
             this.isShow = false;
             notify({
               title: this.translate("notifErrorTitle"),

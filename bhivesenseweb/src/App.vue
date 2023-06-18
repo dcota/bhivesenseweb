@@ -1,7 +1,5 @@
 <template>
   <section>
-    <!--<Sidebar />-->
-    <!--<Loader v-if="showLoader"></Loader>-->
     <Notifications
       position="top right"
       closeOnClick="true"
@@ -13,8 +11,6 @@
 </template>
 
 <script>
-  // import Modal from "@/components/Modal.vue";
-
   import { mapState } from "vuex";
   import { AUTO_LOGIN_ACTION } from "./store/storeconstants";
   export default {
@@ -32,9 +28,7 @@
         }
       },
     },
-    components: {
-      //Modal,
-    },
+    components: {},
     created() {
       this.$store.dispatch(`auth/${AUTO_LOGIN_ACTION}`);
     },

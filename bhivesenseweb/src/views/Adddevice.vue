@@ -8,7 +8,7 @@ Description: implementation of the view Ficha de Inscrição
   <section class="container">
     <section class="scrolling-component" ref="scrollcomponent" name="lang">
       <section class="container my-body">
-        <h1 class="my-text-color">{{ translate("formNewDeviceTitle") }}</h1>
+        <h2 class="my-text-color">{{ translate("formNewDeviceTitle") }}</h2>
         <section class="line-1"></section>
         <section class="mt-4">
           <button type="submit" class="btn me-4 my-button" @click="register">
@@ -22,17 +22,6 @@ Description: implementation of the view Ficha de Inscrição
               role="status"
             ></section>
           </button>
-          <!--<button @click="back" type="button" class="btn my-button">
-            <section v-if="!isShow">
-              <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
-              {{ translate("btnBack") }}
-            </section>
-            <section
-              v-else
-              class="spinner-border spinner-border-sm"
-              role="status"
-            ></section>
-          </button>-->
         </section>
         <section class="container" style="max-width: 80%">
           <form class="form-signin" @submit.prevent="submit">
@@ -193,7 +182,7 @@ select option[disabled]:first-child {
                   text: this.translate("mesRegisterDeviceSuccess"),
                   type: "success",
                   duration: 3000,
-                  speed: 500,
+                  speed: 1000,
                 });
               } else if (response.data.http == 206) {
                 this.isShow = false;

@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: component that implements all the actions concerning login and logout
-*/
-
 export const IS_USER_AUTHENTICATED_GETTER = '[getters] is user autenticated'
 
 import {
@@ -73,7 +67,6 @@ export default {
         let response = await axios.post(payload.url, postData)
         if (response.data.http === 200) {
             let expirationTime = response.data.body.expiresIn * 1000
-                //let expirationTime = 6000
             timer = setTimeout(() => {
                 context.dispatch(AUTO_LOGOUT_ACTION)
             }, expirationTime)

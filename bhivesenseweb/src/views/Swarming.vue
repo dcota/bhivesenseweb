@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Gestão de Alunos (Admin)
-*/
-
 <template id="example-modal">
   <section class="container my-body">
     <h1 class="my-text-color">{{ translate("swarmingTitle") }}</h1>
@@ -76,7 +70,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
         </table>
       </section>
     </section>
-    <!--table for intervention notifictions-->
 
     <ModalDelete
       v-show="isModalDeleteVisible"
@@ -127,7 +120,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
   } from "../store/storeconstants";
-  //import { LOADING_SPINNER_SHOW_MUTATION } from "../store/storeconstants";
   export default {
     mixins: [en, pt],
     components: {

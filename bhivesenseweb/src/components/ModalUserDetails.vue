@@ -11,14 +11,6 @@
           <slot name="header">
             {{ translate("modalDetailsTitle") }}
           </slot>
-          <!--<button
-            type="button"
-            class="btn-close"
-            @click="close"
-            aria-label="Close modal"
-          >
-            x
-          </button>-->
         </header>
 
         <section class="modal-body" id="modalDescription">

@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Ficha de Inscrição
-*/
-
 <template>
   <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
@@ -398,7 +392,7 @@ select option[disabled]:first-child {
                 });
               }
             })
-            .catch((error) => {
+            .catch(() => {
               this.isShow = false;
               notify({
                 title: this.translate("notifErrorTitle"),

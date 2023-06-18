@@ -11,14 +11,6 @@
           <slot name="header">
             {{ translate("cancelTitleModal") }}
           </slot>
-          <!--<button
-            type="button"
-            class="btn-close"
-            @click="close"
-            aria-label="Close modal"
-          >
-            x
-          </button>-->
         </header>
 
         <section class="modal-body" id="modalDescription">
@@ -27,7 +19,6 @@
         </section>
 
         <footer class="modal-footer">
-          <!--<slot name="footer"> This is the default footer! </slot>-->
           <div class="row">
             <div class="col-md-6">
               <button

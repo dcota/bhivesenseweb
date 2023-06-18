@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of vuex storage component
-*/
-
 import { createStore } from "vuex"
 import auth from './modules/auth/index'
 import { LOADING_SPINNER_SHOW_MUTATION } from './storeconstants';

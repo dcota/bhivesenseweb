@@ -14,17 +14,6 @@
           role="status"
         ></section>
       </button>
-      <!--<button @click="back" class="btn my-button">
-        <section v-if="!isShow">
-          <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
-          {{ translate("btnBack") }}
-        </section>
-        <section
-          v-else
-          class="spinner-border spinner-border-sm"
-          role="status"
-        ></section>
-      </button>-->
     </section>
 
     <section class="mt-4" v-if="hasInterventions != false">
@@ -125,13 +114,6 @@
       },
     },
     mounted() {
-      notify({
-        title: this.translate("notifWarningTitle"),
-        text: this.translate("notInterventionClick"),
-        type: "info",
-        duration: 3000,
-        speed: 500,
-      });
       this.getInterventions();
     },
     methods: {
@@ -176,18 +158,6 @@
                 else if (resArray[i].type == 2) color = "orange";
                 else color = "red";
                 let today = new Date();
-                //get num of week+******
-                let currentDate = new Date();
-                let startDate = new Date(currentDate.getFullYear(), 0, 1);
-                var days = Math.floor(
-                  (currentDate - startDate) / (24 * 60 * 60 * 1000)
-                );
-                var weekNumber = Math.ceil(days / 7);
-                // Display the calculated result
-                console.log(
-                  "Week number of " + currentDate + " is :   " + weekNumber
-                );
-                //end ************* */
                 let timeDiff = new Date(sd) - today;
                 let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
                 console.log(diffDays);

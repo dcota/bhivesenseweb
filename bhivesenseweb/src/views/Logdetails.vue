@@ -6,7 +6,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
 
 <template id="example-modal">
   <section class="container my-body">
-    <h1 class="my-text-color">{{ translate("dashLogTitle") }}</h1>
+    <h2 class="my-text-color">{{ translate("dashLogTitle") }}</h2>
     <section class="line-1"></section>
     <section class="row mt-3" v-if="hasHiveEvents">
       <h4 class="my-text-color">{{ translate("dashLogDescr") }}</h4>
@@ -84,7 +84,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
         </table>
       </section>
     </section>
-    <!--table for intervention notifictions-->
 
     <ModalDelete
       v-show="isModalDeleteVisible"
@@ -140,7 +139,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
   } from "../store/storeconstants";
-  //import { LOADING_SPINNER_SHOW_MUTATION } from "../store/storeconstants";
   export default {
     mixins: [en, pt],
     components: {
@@ -184,7 +182,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
     },
     methods: {
       filterByID: function (event) {
-        // no search, don't filter :
         if (this.searchID.length === 0) {
           return true;
         }

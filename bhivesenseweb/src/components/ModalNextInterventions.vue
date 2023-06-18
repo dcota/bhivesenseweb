@@ -108,7 +108,7 @@
   display: flex;
   flex-direction: column;
   width: 40%;
-  height: 90%;
+  height: 70%;
   position: absolute;
   left: 50%;
   top: 50%;

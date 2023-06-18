@@ -1,9 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Ficha de Inscrição
-*/
-
 <template>
   <section class="scrolling-component" ref="scrollcomponent" name="lang">
     <section class="container my-body">
@@ -37,17 +31,6 @@ Description: implementation of the view Ficha de Inscrição
               role="status"
             ></section>
           </button>
-          <!--<button @click="back" type="button" class="btn mt-4 my-button">
-            <section v-if="!isShow">
-              <i class="fas fa-arrow-left me-1 act-btn" aria-hidden="true"></i>
-              {{ translate("btnBack") }}
-            </section>
-            <section
-              v-else
-              class="spinner-border spinner-border-sm"
-              role="status"
-            ></section>
-          </button>-->
         </section>
         <section class="row">
           <section class="col-md-6 g-4">
@@ -151,7 +134,6 @@ select option[disabled]:first-child {
           location: this.form.location,
           observations: this.form.observations,
         };
-        //postData.append("lang", this.lang); //enviar se necessário para e-mail
         if (this.checkForm() == true) {
           this.isShow = true;
           await axios
@@ -169,7 +151,7 @@ select option[disabled]:first-child {
                   text: this.translate("mesNewApiarySuccess"),
                   type: "success",
                   duration: 3000,
-                  speed: 500,
+                  speed: 1000,
                 });
                 this.$router.replace("apiaries");
               } else {
@@ -183,7 +165,7 @@ select option[disabled]:first-child {
                 });
               }
             })
-            .catch((error) => {
+            .catch(() => {
               this.isShow = false;
               notify({
                 title: this.translate("notifErrorTitle"),

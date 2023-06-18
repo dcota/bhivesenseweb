@@ -1,8 +1,3 @@
-/*
-MEIW - Programação Web Avançada - projeto final
-Auhtor: Duarte Cota
-Description: implementation of the view Login
-*/
 
 <template>
   <section class="container">

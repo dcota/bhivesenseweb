@@ -5,7 +5,6 @@ Description: implementation of the view Ficha de Inscrição
 */
 
 <template>
-  <!--<section class="scrolling-component" ref="scrollcomponent" name="lang">-->
   <section class="container my-body">
     <h2 class="my-text-color">
       {{ translate("editInterventionTitle") }}
@@ -61,20 +60,6 @@ Description: implementation of the view Ficha de Inscrição
               {{ translate("lblDiv") }}
               {{ endTime }}
             </section>
-            <!--<section class="form-check mt-4">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                v-model="alterDateTime"
-                value=""
-                id="subscribenews"
-                @click="change"
-                style="text-align: left: important;"
-              />
-              <label class="form-check-label" for="subscribenews">
-                {{ translate("lblAlterDateTime") }}</label
-              >
-            </section>-->
           </section>
         </section>
         <section class="col-md-6">
@@ -152,10 +137,8 @@ Description: implementation of the view Ficha de Inscrição
         </section>
       </section>
     </form>
-
     <section class="spacer"></section>
   </section>
-  <!--</section>>-->
 </template>
 
 <style scoped>
@@ -209,7 +192,6 @@ select option[disabled]:first-child {
         startTime: "",
         endTime: "",
         newDate: true,
-        //alterDateTime: false,
         color: "",
         isShow: false,
         lang: lang,
@@ -342,7 +324,7 @@ select option[disabled]:first-child {
                 });
               }
             })
-            .catch((error) => {
+            .catch(() => {
               this.isShow = false;
               notify({
                 title: this.translate("notifErrorTitle"),

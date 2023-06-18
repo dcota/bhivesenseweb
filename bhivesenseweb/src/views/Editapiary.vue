@@ -181,7 +181,6 @@ select option[disabled]:first-child {
           location: this.form.location,
           observations: this.form.observations,
         };
-        //postData.append("lang", this.lang); //enviar se necessário para e-mail
         if (this.checkForm() == true) {
           this.isShow = true;
           await axios
@@ -211,7 +210,7 @@ select option[disabled]:first-child {
                 });
               }
             })
-            .catch((error) => {
+            .catch(() => {
               this.isShow = false;
               notify({
                 title: this.translate("notifErrorTitle"),

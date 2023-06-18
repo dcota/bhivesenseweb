@@ -598,11 +598,11 @@ h3 {
           .then((response) => {
             if (response.data.body.length == 0) {
               this.nInterventions = 0;
-              this.interventionsText = this.translate("dashIntervTextNo");
+              this.interventionsText = this.translate("interventionsTextNo");
             } else {
               this.interventions = response.data.body;
               this.nInterventions = response.data.body.length;
-              this.interventionsText = this.translate("dashIntervTextYes");
+              this.interventionsText = this.translate("interventionsTextYes");
             }
           });
       },

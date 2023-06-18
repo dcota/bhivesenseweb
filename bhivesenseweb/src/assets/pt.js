@@ -342,6 +342,8 @@ export default {
                 swarmingLbl: "Lista de possíveis eventos de swarming:",
                 swarmTextNo: "Não existem eventos de swarming para verificar.",
                 modalUnassignText: "Deseja desassociar a colmeia deste apiário?",
+                interventionsTextYes: "Tem intervenções nos próximos dias",
+                interventionsTextNo: "Sem intervenções nos próximos dias",
                 modalUnassignSave: "Guardar dados da colmeia?",
                 productionTitle: "ANALÍTICAS DE PRODUÇÃO: Escolha o apiário",
                 lblToolTipAnalytics: "Analíticas",

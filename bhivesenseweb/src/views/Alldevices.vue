@@ -6,7 +6,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
 
 <template id="example-modal">
   <section class="container my-body">
-    <h1 class="my-text-color">{{ translate("manageDevicesTitle") }}</h1>
+    <h2 class="my-text-color">{{ translate("manageDevicesTitle") }}</h2>
     <section class="line-1"></section>
     <section class="row mt-3">
       <h4 class="my-text-color">{{ translate("manageDevicesLabel") }}</h4>
@@ -32,25 +32,12 @@ Description: implementation of the view Gestão de Alunos (Admin)
             <tr>
               <th>{{ translate("thdDevicesID") }}</th>
               <th>{{ translate("thdDevicesUser") }}</th>
-              <!--<th class="text-center">{{ translate("thdUsersStatus") }}</th>-->
               <th class="text-center">{{ translate("thdUsersActions") }}</th>
             </tr>
             <tr v-for="device in filteredPersons" :key="device.id">
               <td>{{ device.id }}</td>
               <td>{{ device.user }}</td>
               <td class="text-center">
-                <!--<button
-                  data-bs-toggle="tooltip"
-                  v-bind:title="translate('lblDetailsUser')"
-                  data-bs-placement="bottom"
-                  data-bs-custom-class="custom-tooltip"
-                  @click="detailsModal(device.id)"
-                  type="button"
-                  class="btn btn-success btn-sm me-2 ac-btn"
-                  style="width: 50px"
-                >
-                  <i class="fas fa-search" aria-hidden="true"></i>
-                </button>-->
                 <button
                   data-bs-toggle="tooltip"
                   v-bind:title="translate('lblDelete')"
@@ -111,7 +98,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
     GET_USER_LEVEL_GETTER,
     GET_USER_ID_GETTER,
   } from "../store/storeconstants";
-  //import { LOADING_SPINNER_SHOW_MUTATION } from "../store/storeconstants";
   export default {
     mixins: [en, pt],
     components: {
@@ -154,7 +140,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
     },
     methods: {
       filterByName: function (device) {
-        // no search, don't filter :
         if (this.searchName.length === 0) {
           return true;
         }
@@ -266,7 +251,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
         this.isShow = true;
         this.message.type = "";
         this.message.msg = "";
-        //(this.isShow = true((this.message.type = ""))), (this.message.msg = "");
         await axios
           .get("https://bhsapi.duartecota.com/user/" + id, {
             headers: {
@@ -306,7 +290,6 @@ Description: implementation of the view Gestão de Alunos (Admin)
                 this.notifications = this.translate("modalNotifFalse");
                 break;
             }
-            let img = response.data.body.img;
             this.img = response.data.body.img;
             this.isShow = false;
             return true;
@@ -332,7 +315,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
       closeModalDelete() {
         this.isModalDeleteVisible = false;
       },
-      async cancelUser(id) {
+      async cancelUser() {
         await this.cancel(this.usertodelete);
         this.isModalDeleteVisible = false;
       },
