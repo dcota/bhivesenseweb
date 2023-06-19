@@ -18,12 +18,14 @@
           <tbody>
             <tr>
               <th>{{ translate("thdUsersName") }}</th>
+              <th class="text-center">{{ translate("thdUsersLevel") }}</th>
               <th class="text-center">{{ translate("thdUsersStatus") }}</th>
               <th class="text-center">{{ translate("thdUsersLastAccess") }}</th>
               <th class="text-center">{{ translate("thdUsersActions") }}</th>
             </tr>
             <tr v-for="user of this.users" :key="user._id">
               <td>{{ user.name }}</td>
+              <td class="text-center">{{ user.level }}</td>
               <td class="text-center">{{ user.status }}</td>
               <td class="text-center">{{ user.lastlogin }}</td>
               <td class="text-center">
@@ -52,6 +54,34 @@
                   style="width: 50px"
                 >
                   <i class="far fa-trash-alt" aria-hidden="true"></i>
+                </button>
+                <button
+                  v-if="user.level == 'beekeeper'"
+                  data-bs-toggle="tooltip"
+                  v-bind:title="translate('lblChangeAD')"
+                  data-bs-placement="bottom"
+                  data-bs-custom-class="custom-tooltip"
+                  @click="deleteModal(user._id)"
+                  type="button"
+                  class="btn btn-info btn-sm me-2 ac-btn"
+                  :disabled="!user.active"
+                  style="width: 50px"
+                >
+                  <i class="fa-solid fa-warehouse" aria-hidden="true"></i>
+                </button>
+                <button
+                  v-else
+                  data-bs-toggle="tooltip"
+                  v-bind:title="translate('lblChangeBK')"
+                  data-bs-placement="bottom"
+                  data-bs-custom-class="custom-tooltip"
+                  @click="deleteModal(user._id)"
+                  type="button"
+                  class="btn btn-info btn-sm me-2 ac-btn"
+                  :disabled="!user.active"
+                  style="width: 50px"
+                >
+                  <i class="fa-solid fa-user-tie" aria-hidden="true"></i>
                 </button>
               </td>
             </tr>
@@ -129,6 +159,7 @@
         },
         name: "",
         type: "",
+        level: "",
         email: "",
         mobile: "",
         bdate: "",
@@ -170,10 +201,11 @@
             this.isShow = false;
             let users = response.data.body;
             for (let i = 0; i < users.length; i++) {
-              if (users[i].level == "beekeeper") {
+              if (users[i].level == "beekeeper" || users[i].level == "admin") {
                 this.users.push({
                   _id: users[i]._id,
                   name: users[i].name,
+                  level: users[i].level,
                   active: users[i].active,
                   status:
                     users[i].active == true
