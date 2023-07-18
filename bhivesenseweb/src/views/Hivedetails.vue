@@ -342,9 +342,9 @@
     created() {
       this.loaded = false;
       this.getLatest();
-      this.getTIday();
-      this.plotType = "ti";
-      this.type = this.ti;
+      //this.getTIday();
+      //this.plotType = "ti";
+      //this.type = this.ti;
       this.timer = setInterval(this.getLatest, 300000);
     },
     beforeUnmount() {
@@ -372,8 +372,8 @@
             }
           )
           .then((response) => {
-            let device = response.data.body.data;
-            if (!device) {
+            let device = response.data.body;
+            if (!Object.keys(device).length) {
               this.hasData = false;
               this.isShow = false;
               notify({
@@ -384,7 +384,10 @@
                 speed: 500,
               });
             } else {
+              let device = response.data.body.data;
               this.hasData = true;
+              this.plotType = "ti";
+              this.type = this.ti;
               this.latestData.lat = response.data.body.lat;
               this.latestData.lon = response.data.body.lon;
               this.latestData.ti = device.ti;
@@ -428,7 +431,7 @@
           })
           .catch(() => {
             this.isShow = false;
-            this.showsection = true;
+            //this.showsection = true;
           });
       },
       async getTIday() {
