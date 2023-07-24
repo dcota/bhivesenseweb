@@ -549,7 +549,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -629,7 +629,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
