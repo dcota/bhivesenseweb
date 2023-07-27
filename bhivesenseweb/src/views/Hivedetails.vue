@@ -770,7 +770,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -850,7 +850,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -991,7 +991,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -1071,7 +1071,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -1212,7 +1212,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -1292,7 +1292,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -1328,7 +1328,7 @@
       async getSday() {
         this.ytitle = "FREQUENCY";
         this.title = this.translate("charSoundDay");
-        this.max = "800";
+        //this.max = "800";
         this.loaded = false;
         this.isShow = true;
         this.s = [];
@@ -1356,6 +1356,11 @@
               });
             } else {
               this.hasData = true;
+              //check ymax
+              this.max = d[0].s;
+              for (let i = 0; i < d.length; i++) {
+                if (d[i].s > this.max) this.max = parseInt(d[i].s + 200);
+              }
               for (let i = 0; i < d.length; i++) {
                 let lastDate = new Date(
                   d[i].date.toLocaleString("sv-SE", {
@@ -1389,7 +1394,7 @@
       async getSweek() {
         this.ytitle = "SOUND LEVEL";
         this.title = this.translate("charSoundMonth");
-        this.max = 800;
+        //this.max = 800;
         this.loaded = false;
         this.isShow = true;
         this.s = [];
@@ -1417,6 +1422,11 @@
               });
             } else {
               this.hasData = true;
+              //check ymax
+              this.max = d[0].s;
+              for (let i = 0; i < d.length; i++) {
+                if (d[i].s > this.max) this.max = parseInt(d[i].s + 200);
+              }
               for (let i = 0; i < d.length; i++) {
                 let lastDate = new Date(
                   d[i].date.toLocaleString("sv-SE", {
@@ -1433,7 +1443,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -1469,7 +1479,7 @@
       async getSmonth() {
         this.ytitle = "SOUND LEVEL";
         this.title = this.translate("charSoundMonth");
-        this.max = 800;
+        //this.max = 800;
         this.loaded = false;
         this.isShow = true;
         this.s = [];
@@ -1497,6 +1507,11 @@
               });
             } else {
               this.hasData = true;
+              //check ymax
+              this.max = d[0].s;
+              for (let i = 0; i < d.length; i++) {
+                if (d[i].s > this.max) this.max = parseInt(d[i].s + 200);
+              }
               for (let i = 0; i < d.length; i++) {
                 let lastDate = new Date(
                   d[i].date.toLocaleString("sv-SE", {
@@ -1513,7 +1528,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -1654,7 +1669,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
@@ -1734,7 +1749,7 @@
                     ? "0" + lastDate.getMinutes()
                     : lastDate.getMinutes();
                 let year = lastDate.getFullYear();
-                let month = lastDate.getMonth() + 1;
+                let month = lastDate.getMonth();
                 let day = lastDate.getDate();
                 let x =
                   year +
