@@ -160,102 +160,102 @@
       
 <style scoped>
 .modal-backdrop {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .modal {
-  background: #ffffff;
-  border-radius: 6px;
-  box-shadow: 2px 2px 20px 1px;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  height: 70%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+	background: #ffffff;
+	border-radius: 6px;
+	box-shadow: 2px 2px 20px 1px;
+	overflow-x: hidden;
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+	height: 80%;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .modal-header,
 .modal-footer {
-  padding: 15px;
-  display: flex;
+	padding: 15px;
+	display: flex;
 }
 
 .modal-header {
-  position: relative;
-  border-bottom: 1px solid #eeeeee;
-  color: #4aae9b;
-  justify-content: space-between;
+	position: relative;
+	border-bottom: 1px solid #eeeeee;
+	color: #4aae9b;
+	justify-content: space-between;
 }
 
 .modal-footer {
-  border-top: 1px solid #eeeeee;
-  flex-direction: column;
+	border-top: 1px solid #eeeeee;
+	flex-direction: column;
 }
 
 .modal-body {
-  position: relative;
-  padding: 20px 10px;
+	position: relative;
+	padding: 20px 10px;
 }
 
 .btn {
-  width: 150px;
+	width: 150px;
 }
 </style>
       
 <script>
-  import en from "../assets/en.js";
-  import pt from "../assets/pt.js";
-  import { mapGetters } from "vuex";
-  import { IS_USER_AUTHENTICATED_GETTER } from "../store/storeconstants";
-  export default {
-    name: "Modal",
-    mixins: [en, pt],
-    props: ["details"],
-    data() {
-      const lang = localStorage.getItem("lang") || "pt";
-      return {
-        lang: lang,
-        altImg: require("../assets/avatar.png"),
-      };
-    },
-    computed: {
-      ...mapGetters("auth", {
-        isAuthenticated: IS_USER_AUTHENTICATED_GETTER,
-        auth: localStorage.getItem("auth"),
-      }),
-    },
-    mounted() {},
-    methods: {
-      close() {
-        this.$emit("close");
-      },
-      edit(id) {
-        localStorage.setItem("interventiontoedit", id);
-        this.$emit("edit");
-      },
-      done(id) {
-        localStorage.setItem("interventiontoedit", id);
-        this.$emit("done");
-      },
-      cancel(id) {
-        localStorage.setItem("interventiontoedit", id);
-        this.$emit("delete");
-      },
-      translate(prop) {
-        return this[this.lang][prop];
-      },
-    },
-  };
+	import en from "../assets/en.js";
+	import pt from "../assets/pt.js";
+	import { mapGetters } from "vuex";
+	import { IS_USER_AUTHENTICATED_GETTER } from "../store/storeconstants";
+	export default {
+		name: "Modal",
+		mixins: [en, pt],
+		props: ["details"],
+		data() {
+			const lang = localStorage.getItem("lang") || "pt";
+			return {
+				lang: lang,
+				altImg: require("../assets/avatar.png"),
+			};
+		},
+		computed: {
+			...mapGetters("auth", {
+				isAuthenticated: IS_USER_AUTHENTICATED_GETTER,
+				auth: localStorage.getItem("auth"),
+			}),
+		},
+		mounted() {},
+		methods: {
+			close() {
+				this.$emit("close");
+			},
+			edit(id) {
+				localStorage.setItem("interventiontoedit", id);
+				this.$emit("edit");
+			},
+			done(id) {
+				localStorage.setItem("interventiontoedit", id);
+				this.$emit("done");
+			},
+			cancel(id) {
+				localStorage.setItem("interventiontoedit", id);
+				this.$emit("delete");
+			},
+			translate(prop) {
+				return this[this.lang][prop];
+			},
+		},
+	};
 </script>
