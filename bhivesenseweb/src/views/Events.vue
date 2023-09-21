@@ -197,7 +197,7 @@ Description: implementation of the view Gestão de Alunos (Admin)
             this.isShow = false;
             let events = response.data.body;
             if (!events.length == 0) {
-              for (let i = 0; i < events.length; i++) {
+              for (let i = events.length - 1; i >= 0; i--) {
                 if (events[i].cat == "hive") {
                   let date = new Date(events[i].registration_date);
                   let year = date.getFullYear();

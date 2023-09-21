@@ -237,7 +237,7 @@ select option[disabled]:first-child {
                   title: this.translate("notifSuccessTitle"),
                   text: this.translate("mesNewInterventionSuccess"),
                   type: "success",
-                  duration: 20000,
+                  duration: 3000,
                   speed: 100,
                 });
                 this.$router.replace("interventions");

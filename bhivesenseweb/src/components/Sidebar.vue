@@ -535,6 +535,7 @@
       }),
       async numEventsChng(num) {
         await this._numEventsChng(num);
+        this._numEvents = GET_NUMEVENTS_GETTER;
       },
       async getNumEvents() {
         if (this.isAuthenticated) {

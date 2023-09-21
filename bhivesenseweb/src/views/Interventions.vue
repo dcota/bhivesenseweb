@@ -161,10 +161,14 @@
                 let timeDiff = new Date(sd) - today;
                 let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
                 console.log(diffDays);
-                if (diffDays < 0 && resArray[i].concluded == false) {
+                if (diffDays < 0) {
                   color = "gray";
+                }
+                if (diffDays < 0 && resArray[i].concluded == false) {
+                  color = "blue";
                   this.warnForIntervention = true;
                 }
+
                 this.interventions.push({
                   _id: resArray[i]._id,
                   color: color,
